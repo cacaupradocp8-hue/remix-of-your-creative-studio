@@ -117,7 +117,7 @@ function QuizPage() {
       
       // Save results
       try {
-        await saveQuizResult({ data: { archetype, answers: newAnswers } });
+        await saveQuizResultLocal({ email: undefined, archetype, answers: newAnswers });
         // Store in session for results page
         sessionStorage.setItem('casa_oracula_archetype', archetype);
         navigate({ to: '/quiz/resultado' });
