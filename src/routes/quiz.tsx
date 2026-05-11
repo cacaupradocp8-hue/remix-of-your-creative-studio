@@ -138,7 +138,7 @@ function QuizPage() {
       <Outlet />
       
       {/* Quiz UI - Hidden when showing children (results) */}
-      <div className="max-w-xl w-full space-y-12 data-[state=hidden]:hidden" data-state={window.location.pathname.includes('resultado') ? 'hidden' : 'visible'}>
+      <div className="max-w-xl w-full space-y-12 data-[state=hidden]:hidden" data-state={location.pathname.includes('resultado') ? 'hidden' : 'visible'}>
         {/* Progress Bar */}
         <div className="w-full h-1 bg-wine/10 rounded-full overflow-hidden">
           <div 
