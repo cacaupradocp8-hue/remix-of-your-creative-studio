@@ -1,7 +1,13 @@
-import { createFileRoute, useNavigate, Link, useLocation } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createFileRoute, useNavigate, useLocation } from '@tanstack/react-router';
 import { supabase } from '@/integrations/supabase/client';
-import { Play, Pause, ChevronRight, ChevronLeft, Lock } from 'lucide-react';
+import { Play, Pause } from 'lucide-react';
+import { Eyebrow } from '@/components/casa/Eyebrow';
+import { SectionOpener } from '@/components/casa/SectionOpener';
+import { QuietLink } from '@/components/casa/QuietLink';
+import { Rule } from '@/components/casa/Rule';
+import { ProgressDot } from '@/components/casa/ProgressDot';
+import { RomanNumeral } from '@/components/casa/RomanNumeral';
 
 export const Route = createFileRoute('/travessia/$day')({
   component: TravessiaPage,
@@ -11,24 +17,16 @@ function TravessiaPage() {
   const { day } = Route.useParams();
   const dayNum = parseInt(day);
   const navigate = useNavigate();
-  const location = useLocation();
   
   const [module, setModule] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
-
-  // Gating logic for Day 4+ (Placeholder for Sprint 2)
-  useEffect(() => {
-    if (dayNum > 3) {
-      // For now, just show the gate. In Sprint 2 this will redirect to Auth.
-    }
-  }, [dayNum]);
+  const [progress, setProgress] = useState(30); // Placeholder for audio progress
 
   useEffect(() => {
     async function fetchModule() {
       setLoading(true);
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('route_modules')
         .select(`
           *,
@@ -40,11 +38,6 @@ function TravessiaPage() {
 
       if (data) {
         setModule(data);
-        // Note: audio_path is used to generate a signed URL in a real production environment.
-        // For MVP Sprint 1, we assume a public bucket or local testing path if applicable.
-        // If we want to test audio, we'd normally use supabase.storage.from(...).createSignedUrl()
-        // but since we are in public bonding, we can use a placeholder for the URL if needed.
-        setAudioUrl(`https://lovable-uploads.s3.us-west-2.amazonaws.com/placeholder-audio.mp3`); 
       }
       setLoading(false);
     }
@@ -57,99 +50,143 @@ function TravessiaPage() {
   }, [dayNum]);
 
   if (loading) {
-    return <div className="min-h-screen bg-bone flex items-center justify-center text-wine italic">Aguarde...</div>;
+    return (
+      <div className="min-h-screen bg-paper flex items-center justify-center">
+        <span className="caption italic text-ink-3 animate-pulse">Aguarde...</span>
+      </div>
+    );
   }
 
   // Day 4+ Gate UI
   if (dayNum > 3) {
     return (
-      <div className="min-h-screen bg-bone flex flex-col items-center justify-center px-6 text-center">
-        <div className="max-w-md space-y-8 animate-in fade-in zoom-in">
-          <div className="w-16 h-16 bg-wine/5 rounded-full flex items-center justify-center mx-auto">
-            <Lock className="text-wine w-6 h-6" />
+      <div className="fixed inset-0 bg-ink text-paper z-50 flex flex-col items-center justify-center px-6 text-center">
+        <div className="max-w-[1120px] space-y-16 animate-in fade-in zoom-in duration-1000">
+          <SectionOpener 
+            inverted
+            eyebrow="Travessia · Limiar"
+            title="Algumas travessias pedem permanência."
+            lead="A próxima porta abre quando há compromisso com a escuta."
+            className="items-center"
+          />
+          <div className="pt-12">
+            <QuietLink to="/" className="text-paper/40 hover:text-paper">
+              Retornar ao início.
+            </QuietLink>
           </div>
-          <div className="space-y-4">
-            <h1 className="text-wine text-3xl font-serif">O Portal se fechou</h1>
-            <p className="text-wine/70 leading-relaxed font-light">
-              A partir do Dia 4, sua jornada exige um compromisso maior. 
-              Crie seu acesso para continuar tecendo sua história.
-            </p>
-          </div>
-          <div className="pt-6">
-            <button className="px-10 py-4 bg-wine text-bone font-serif text-lg rounded-sm opacity-50 cursor-not-allowed">
-              Criar Acesso (Sprint 2)
-            </button>
-          </div>
-          <Link to="/" className="block text-wine/40 text-sm hover:text-wine transition-colors underline">
-            Voltar ao Início
-          </Link>
         </div>
       </div>
     );
   }
 
-  if (!module) return <div className="min-h-screen bg-bone flex items-center justify-center text-wine">Módulo não encontrado.</div>;
+  if (!module) {
+    return (
+      <div className="min-h-screen bg-paper flex flex-col items-center justify-center space-y-8">
+        <SectionOpener 
+          eyebrow="Erro"
+          title="Este território ainda não se revelou."
+          className="items-center text-center"
+        />
+        <QuietLink to="/">Retornar</QuietLink>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-bone flex flex-col items-center justify-center px-6 py-12 selection:bg-wine/10 selection:text-wine">
-      <div className="max-w-xl w-full space-y-12 animate-in fade-in slide-in-from-bottom-4">
+    <div className="min-h-screen bg-paper selection:bg-oxblood/10 selection:text-oxblood flex flex-col items-center justify-center px-6 py-24">
+      <div className="max-w-[1120px] w-full flex flex-col items-center space-y-24 animate-in fade-in slide-in-from-bottom-4 duration-1000">
         
         {/* Navigation Header */}
-        <div className="flex justify-between items-center text-gold uppercase tracking-[0.2em] text-[10px] font-bold">
-          <Link 
-            to="/travessia/$day" 
-            params={{ day: (dayNum - 1).toString() }}
+        <div className="w-full flex justify-between items-center max-w-[680px]">
+          <QuietLink 
+            onClick={() => navigate({ to: '/travessia/$day', params: { day: (dayNum - 1).toString() } })}
             disabled={dayNum === 1}
-            className={`flex items-center gap-1 ${dayNum === 1 ? 'opacity-0' : 'hover:text-wine transition-colors'}`}
+            className="flex items-center gap-2"
           >
-            <ChevronLeft size={14} /> Anterior
-          </Link>
-          <span>Travessia Zero — Dia {day}</span>
-          <Link 
-            to="/travessia/$day" 
-            params={{ day: (dayNum + 1).toString() }}
-            disabled={dayNum === 3}
-            className={`flex items-center gap-1 ${dayNum === 3 ? 'opacity-50 grayscale' : 'hover:text-wine transition-colors'}`}
+            Retornar
+          </QuietLink>
+          
+          <div className="flex items-center gap-4">
+            <Eyebrow className="hidden md:flex">Travessia Zero</Eyebrow>
+            <div className="w-8 md:w-16">
+              <ProgressDot current={dayNum} total={8} />
+            </div>
+            <RomanNumeral value={dayNum} />
+          </div>
+
+          <QuietLink 
+            onClick={() => navigate({ to: '/travessia/$day', params: { day: (dayNum + 1).toString() } })}
+            className="flex items-center gap-2"
           >
-            {dayNum === 3 ? 'Bloqueado' : 'Próximo'} <ChevronRight size={14} />
-          </Link>
+            Seguir
+          </QuietLink>
         </div>
 
         {/* Content Area */}
-        <div className="text-center space-y-6">
-          <h1 className="text-wine text-4xl md:text-5xl font-serif italic">
-            {module.title}
-          </h1>
-          <div className="w-12 h-px bg-gold mx-auto opacity-40" />
+        <div className="text-center space-y-8 max-w-[680px]">
+          <SectionOpener 
+            eyebrow={`Dia ${dayNum}`}
+            title={module.title}
+            className="items-center"
+          />
         </div>
 
-        {/* Player Component */}
-        <div className="bg-white/40 p-10 border border-wine/5 rounded-sm shadow-xl shadow-wine/5 flex flex-col items-center gap-10">
-          <button 
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="w-24 h-24 rounded-full bg-wine flex items-center justify-center text-bone shadow-2xl shadow-wine/30 transition-transform active:scale-95 hover:scale-105"
-          >
-            {isPlaying ? <Pause size={32} fill="currentColor" /> : <Play size={32} fill="currentColor" className="ml-1" />}
-          </button>
-          
-          <div className="w-full space-y-2">
-            <div className="h-1 bg-wine/10 rounded-full w-full overflow-hidden">
-              <div className="h-full bg-gold w-1/3 transition-all duration-300" />
-            </div>
-            <div className="flex justify-between text-[10px] text-wine/40 font-mono tracking-widest uppercase">
-              <span>03:45</span>
-              <span>12:00</span>
-            </div>
+        {/* Circular Ritual Player */}
+        <div className="relative flex flex-col items-center gap-12">
+          <div className="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center group">
+            {/* Progress Ring */}
+            <svg className="absolute inset-0 w-full h-full -rotate-90">
+              <circle
+                cx="50%"
+                cy="50%"
+                r="48%"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+                className="text-rule"
+              />
+              <circle
+                cx="50%"
+                cy="50%"
+                r="48%"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeDasharray="100 100"
+                strokeDashoffset={100 - progress}
+                className="text-leaf transition-all duration-500"
+                style={{ strokeDasharray: '301.6', strokeDashoffset: (301.6 * (100 - progress)) / 100 }}
+              />
+            </svg>
+
+            {/* Play Button */}
+            <button 
+              onClick={() => setIsPlaying(!isPlaying)}
+              className="w-32 h-32 md:w-44 md:h-44 rounded-full bg-ink flex items-center justify-center text-paper transition-all duration-500 hover:bg-oxblood active:scale-95 z-10"
+            >
+              {isPlaying ? (
+                <Pause size={32} fill="currentColor" />
+              ) : (
+                <Play size={32} fill="currentColor" className="ml-2" />
+              )}
+            </button>
+          </div>
+
+          <div className="flex flex-col items-center gap-2 text-[10px] caption text-ink-3 tabular-nums tracking-widest">
+            <span>03:45 / 12:00</span>
           </div>
         </div>
 
         {/* Reflection Prompt */}
         {module.reflection_prompt && (
-          <div className="text-center space-y-4 px-4 py-8 border-t border-wine/5">
-            <span className="text-gold text-[10px] uppercase tracking-widest font-bold">Reflexão Simbólica</span>
-            <p className="text-wine/80 font-light italic text-lg leading-relaxed">
-              "{module.reflection_prompt}"
-            </p>
+          <div className="max-w-[560px] text-center space-y-8 pt-24 border-t border-rule">
+            <div className="w-1.5 h-1.5 rounded-full bg-leaf mx-auto" />
+            <div className="space-y-4">
+              <Eyebrow className="justify-center">Reflexão Simbólica</Eyebrow>
+              <p className="serif-lead italic text-ink-2">
+                "{module.reflection_prompt}"
+              </p>
+            </div>
           </div>
         )}
 
