@@ -167,6 +167,7 @@ function QuizPage() {
           </div>
         </div>
       </div>
+      <Outlet />
     </div>
   );
 }
