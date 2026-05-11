@@ -44,7 +44,7 @@ function TravessiaPage() {
         // For MVP Sprint 1, we assume a public bucket or local testing path if applicable.
         // If we want to test audio, we'd normally use supabase.storage.from(...).createSignedUrl()
         // but since we are in public bonding, we can use a placeholder for the URL if needed.
-        setAudioUrl(`https://placeholder-audio.com/${data.audio_path}`); 
+        setAudioUrl(`https://lovable-uploads.s3.us-west-2.amazonaws.com/placeholder-audio.mp3`); 
       }
       setLoading(false);
     }
