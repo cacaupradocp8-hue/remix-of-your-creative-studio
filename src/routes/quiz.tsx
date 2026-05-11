@@ -6,7 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 // Server function to save anonymous quiz results
 const saveQuizResult = createServerFn({ method: 'POST' })
   .validator((data: { email?: string; archetype: string; answers: any }) => data)
-  .handler(async ({ data }) => {
+  .handler(async ({ data }: { data: { email?: string; archetype: string; answers: any } }) => {
     const { error } = await supabase
       .from('quiz_results')
       .insert({
