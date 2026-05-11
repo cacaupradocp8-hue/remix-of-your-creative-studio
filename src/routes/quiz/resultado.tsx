@@ -1,5 +1,5 @@
-import { createFileRoute, useNavigate, Link } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { EditorialButton } from '@/components/casa/EditorialButton';
 import { Eyebrow } from '@/components/casa/Eyebrow';
 import { SectionOpener } from '@/components/casa/SectionOpener';
