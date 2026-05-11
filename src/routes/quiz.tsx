@@ -98,6 +98,7 @@ function QuizPage() {
   const [answers, setAnswers] = useState<any[]>([]);
   const [scores, setScores] = useState({ Amante: 0, Guardiã: 0, Tecelã: 0, Visionária: 0 });
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSelect = async (option: any) => {
     const newScores = { ...scores };
