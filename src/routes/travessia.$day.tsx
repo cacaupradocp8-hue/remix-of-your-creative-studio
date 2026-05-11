@@ -11,6 +11,7 @@ function TravessiaPage() {
   const { day } = Route.useParams();
   const dayNum = parseInt(day);
   const navigate = useNavigate();
+  const location = useLocation();
   
   const [module, setModule] = useState<any>(null);
   const [loading, setLoading] = useState(true);
