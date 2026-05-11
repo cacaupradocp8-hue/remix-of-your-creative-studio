@@ -119,12 +119,10 @@ function QuizPage() {
       // Save results
       try {
         await saveQuizResultLocal({ email: undefined, archetype, answers: newAnswers });
-        // Store in session for results page
         sessionStorage.setItem('casa_oracula_archetype', archetype);
         navigate({ to: '/quiz/resultado' });
       } catch (err) {
         console.error("Error saving quiz result:", err);
-        // Fallback to navigate even if save fails for MVP speed
         sessionStorage.setItem('casa_oracula_archetype', archetype);
         navigate({ to: '/quiz/resultado' });
       }
