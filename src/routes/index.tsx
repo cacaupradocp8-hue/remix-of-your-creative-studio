@@ -3,6 +3,7 @@ import { SectionOpener } from '@/components/casa/SectionOpener';
 import { EditorialButton } from '@/components/casa/EditorialButton';
 import { Rule } from '@/components/casa/Rule';
 import { QuietLink } from '@/components/casa/QuietLink';
+import casaOraculaLogo from '@/assets/casa-oracula-logo.png';
 
 export const Route = createFileRoute('/')({
   component: LandingPage,
@@ -14,6 +15,12 @@ function LandingPage() {
       {/* 1. Hero Movement */}
       <section className="min-h-[85vh] flex flex-col md:flex-row border-b border-rule">
         <div className="flex-1 flex flex-col justify-center px-6 md:px-24 py-24 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+          <img
+            src={casaOraculaLogo}
+            alt="Casa Orácula"
+            className="w-64 md:w-80 h-auto -ml-4 md:-ml-6 select-none"
+            draggable={false}
+          />
           <SectionOpener 
             eyebrow="Casa Orácula"
             title="Bem-vinda à Casa Orácula."
