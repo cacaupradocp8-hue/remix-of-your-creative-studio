@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as Quiz_resultadoRouteImport } from './routes/quiz_resultado'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TravessiaDayRouteImport } from './routes/travessia.$day'
 
 const Quiz_resultadoRoute = Quiz_resultadoRouteImport.update({
   id: '/quiz_resultado',
@@ -28,35 +29,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TravessiaDayRoute = TravessiaDayRouteImport.update({
+  id: '/travessia/$day',
+  path: '/travessia/$day',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/quiz': typeof QuizRoute
   '/quiz_resultado': typeof Quiz_resultadoRoute
+  '/travessia/$day': typeof TravessiaDayRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/quiz': typeof QuizRoute
   '/quiz_resultado': typeof Quiz_resultadoRoute
+  '/travessia/$day': typeof TravessiaDayRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/quiz': typeof QuizRoute
   '/quiz_resultado': typeof Quiz_resultadoRoute
+  '/travessia/$day': typeof TravessiaDayRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/quiz' | '/quiz_resultado'
+  fullPaths: '/' | '/quiz' | '/quiz_resultado' | '/travessia/$day'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/quiz' | '/quiz_resultado'
-  id: '__root__' | '/' | '/quiz' | '/quiz_resultado'
+  to: '/' | '/quiz' | '/quiz_resultado' | '/travessia/$day'
+  id: '__root__' | '/' | '/quiz' | '/quiz_resultado' | '/travessia/$day'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   QuizRoute: typeof QuizRoute
   Quiz_resultadoRoute: typeof Quiz_resultadoRoute
+  TravessiaDayRoute: typeof TravessiaDayRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/travessia/$day': {
+      id: '/travessia/$day'
+      path: '/travessia/$day'
+      fullPath: '/travessia/$day'
+      preLoaderRoute: typeof TravessiaDayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,7 +106,18 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   QuizRoute: QuizRoute,
   Quiz_resultadoRoute: Quiz_resultadoRoute,
+  TravessiaDayRoute: TravessiaDayRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
