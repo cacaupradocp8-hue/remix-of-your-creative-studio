@@ -1,27 +1,23 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
-import { createServerFn } from '@tanstack/start';
 import { supabase } from '@/integrations/supabase/client';
-
-// Server function to save anonymous quiz results
-const saveQuizResult = createServerFn({ method: 'POST' })
-  .validator((data: { email?: string; archetype: string; answers: any }) => data)
-  .handler(async ({ data }: { data: { email?: string; archetype: string; answers: any } }) => {
-    const { error } = await supabase
-      .from('quiz_results')
-      .insert({
-        email: data.email,
-        archetype: data.archetype,
-        answers: data.answers,
-      });
-
-    if (error) throw error;
-    return { success: true };
-  });
 
 export const Route = createFileRoute('/quiz')({
   component: QuizPage,
 });
+
+// Client-side helper for MVP Sprint 1
+const saveQuizResultLocal = async (data: { email?: string; archetype: string; answers: any }) => {
+  const { error } = await supabase
+    .from('quiz_results')
+    .insert({
+      email: data.email,
+      archetype: data.archetype,
+      answers: data.answers,
+    });
+  if (error) throw error;
+  return { success: true };
+};
 
 const QUESTIONS = [
   {
