@@ -14,205 +14,8698 @@ export type Database = {
   }
   public: {
     Tables: {
-      audit_logs: {
+      academy_progress: {
         Row: {
-          action: string
-          changed_at: string
-          changed_by: string | null
+          badges_json: Json
+          created_at: string
           id: string
-          new_data: Json | null
-          old_data: Json | null
-          record_id: string
-          table_name: string
+          level: number
+          points: number
+          specialties: string[] | null
+          updated_at: string
+          user_id: string
         }
         Insert: {
-          action: string
-          changed_at?: string
-          changed_by?: string | null
+          badges_json?: Json
+          created_at?: string
           id?: string
-          new_data?: Json | null
-          old_data?: Json | null
-          record_id: string
-          table_name: string
+          level?: number
+          points?: number
+          specialties?: string[] | null
+          updated_at?: string
+          user_id: string
         }
         Update: {
-          action?: string
-          changed_at?: string
-          changed_by?: string | null
+          badges_json?: Json
+          created_at?: string
           id?: string
-          new_data?: Json | null
-          old_data?: Json | null
-          record_id?: string
-          table_name?: string
+          level?: number
+          points?: number
+          specialties?: string[] | null
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
-      casa_media: {
+      access_expiration_logs: {
         Row: {
-          content: string | null
+          expired_at: string
+          id: string
+          previous_portal: string | null
+          reason: string | null
+          user_id: string | null
+        }
+        Insert: {
+          expired_at?: string
+          id?: string
+          previous_portal?: string | null
+          reason?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          expired_at?: string
+          id?: string
+          previous_portal?: string | null
+          reason?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "access_expiration_logs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      admin_action_history: {
+        Row: {
+          action_reason_at_action: string | null
+          action_type: string
+          channel: string
+          churn_risk_at_action: number | null
+          conversion_risk_at_action: number | null
+          id: string
+          last_value_timestamp_at_action: string | null
+          saas_value_risk_at_action: number | null
+          sent_at: string | null
+          sent_by: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action_reason_at_action?: string | null
+          action_type: string
+          channel: string
+          churn_risk_at_action?: number | null
+          conversion_risk_at_action?: number | null
+          id?: string
+          last_value_timestamp_at_action?: string | null
+          saas_value_risk_at_action?: number | null
+          sent_at?: string | null
+          sent_by?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action_reason_at_action?: string | null
+          action_type?: string
+          channel?: string
+          churn_risk_at_action?: number | null
+          conversion_risk_at_action?: number | null
+          id?: string
+          last_value_timestamp_at_action?: string | null
+          saas_value_risk_at_action?: number | null
+          sent_at?: string | null
+          sent_by?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admin_action_history_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      admin_automation_audit: {
+        Row: {
+          action: string
+          admin_id: string | null
+          created_at: string | null
+          id: string
+          reason: string | null
+          rule_id: string | null
+          snapshot_data: Json | null
+        }
+        Insert: {
+          action: string
+          admin_id?: string | null
+          created_at?: string | null
+          id?: string
+          reason?: string | null
+          rule_id?: string | null
+          snapshot_data?: Json | null
+        }
+        Update: {
+          action?: string
+          admin_id?: string | null
+          created_at?: string | null
+          id?: string
+          reason?: string | null
+          rule_id?: string | null
+          snapshot_data?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admin_automation_audit_rule_id_fkey"
+            columns: ["rule_id"]
+            isOneToOne: false
+            referencedRelation: "admin_automation_rules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      admin_automation_rules: {
+        Row: {
+          action_type: string
+          approval_reason: string | null
+          channel: string
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          last_snapshot_at: string | null
+          last_success_rate: number | null
+          last_volume: number | null
+          measurement_window_days: number | null
+          min_success_rate: number
+          portal: string | null
+          risk_type: string
+          updated_at: string | null
+        }
+        Insert: {
+          action_type: string
+          approval_reason?: string | null
+          channel: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_snapshot_at?: string | null
+          last_success_rate?: number | null
+          last_volume?: number | null
+          measurement_window_days?: number | null
+          min_success_rate?: number
+          portal?: string | null
+          risk_type: string
+          updated_at?: string | null
+        }
+        Update: {
+          action_type?: string
+          approval_reason?: string | null
+          channel?: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_snapshot_at?: string | null
+          last_success_rate?: number | null
+          last_volume?: number | null
+          measurement_window_days?: number | null
+          min_success_rate?: number
+          portal?: string | null
+          risk_type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      agente_conversas: {
+        Row: {
+          agente_id: string
           created_at: string
           id: string
-          media_type: Database["public"]["Enums"]["casa_media_type"]
+          titulo: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          agente_id: string
+          created_at?: string
+          id?: string
+          titulo?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          agente_id?: string
+          created_at?: string
+          id?: string
+          titulo?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agente_conversas_agente_id_fkey"
+            columns: ["agente_id"]
+            isOneToOne: false
+            referencedRelation: "agentes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agente_mensagens: {
+        Row: {
+          content: string
+          conversa_id: string
+          created_at: string
+          id: string
+          role: string
+        }
+        Insert: {
+          content: string
+          conversa_id: string
+          created_at?: string
+          id?: string
+          role: string
+        }
+        Update: {
+          content?: string
+          conversa_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agente_mensagens_conversa_id_fkey"
+            columns: ["conversa_id"]
+            isOneToOne: false
+            referencedRelation: "agente_conversas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agentes: {
+        Row: {
+          contextos_permitidos:
+            | Database["public"]["Enums"]["block_context_type"][]
+            | null
+          created_at: string
+          descricao: string
+          icone: string | null
+          id: string
+          instrucoes_base: string
+          max_tokens: number | null
+          modelo_preferido: string | null
+          nome: string
+          portal_minimo: Database["public"]["Enums"]["portal_type"]
+          prompt_personalidade: string | null
+          status: Database["public"]["Enums"]["agente_status"]
+          temperatura: number | null
+          updated_at: string
+        }
+        Insert: {
+          contextos_permitidos?:
+            | Database["public"]["Enums"]["block_context_type"][]
+            | null
+          created_at?: string
+          descricao: string
+          icone?: string | null
+          id?: string
+          instrucoes_base?: string
+          max_tokens?: number | null
+          modelo_preferido?: string | null
+          nome: string
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          prompt_personalidade?: string | null
+          status?: Database["public"]["Enums"]["agente_status"]
+          temperatura?: number | null
+          updated_at?: string
+        }
+        Update: {
+          contextos_permitidos?:
+            | Database["public"]["Enums"]["block_context_type"][]
+            | null
+          created_at?: string
+          descricao?: string
+          icone?: string | null
+          id?: string
+          instrucoes_base?: string
+          max_tokens?: number | null
+          modelo_preferido?: string | null
+          nome?: string
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          prompt_personalidade?: string | null
+          status?: Database["public"]["Enums"]["agente_status"]
+          temperatura?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      ai_global_settings: {
+        Row: {
+          ativo: boolean
+          chave: string
+          created_at: string
+          descricao: string | null
+          id: string
+          updated_at: string
+          valor: string
+        }
+        Insert: {
+          ativo?: boolean
+          chave: string
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          updated_at?: string
+          valor: string
+        }
+        Update: {
+          ativo?: boolean
+          chave?: string
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          updated_at?: string
+          valor?: string
+        }
+        Relationships: []
+      }
+      ai_interaction_logs: {
+        Row: {
+          agente_id: string | null
+          context_id: string | null
+          context_type: Database["public"]["Enums"]["block_context_type"] | null
+          created_at: string
+          error_message: string | null
+          id: string
+          input_text: string
+          latency_ms: number | null
+          modelo_usado: string | null
+          output_text: string | null
+          success: boolean | null
+          tokens_used: number | null
+          user_id: string
+        }
+        Insert: {
+          agente_id?: string | null
+          context_id?: string | null
+          context_type?:
+            | Database["public"]["Enums"]["block_context_type"]
+            | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          input_text: string
+          latency_ms?: number | null
+          modelo_usado?: string | null
+          output_text?: string | null
+          success?: boolean | null
+          tokens_used?: number | null
+          user_id: string
+        }
+        Update: {
+          agente_id?: string | null
+          context_id?: string | null
+          context_type?:
+            | Database["public"]["Enums"]["block_context_type"]
+            | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          input_text?: string
+          latency_ms?: number | null
+          modelo_usado?: string | null
+          output_text?: string | null
+          success?: boolean | null
+          tokens_used?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_interaction_logs_agente_id_fkey"
+            columns: ["agente_id"]
+            isOneToOne: false
+            referencedRelation: "agentes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_provider_prices: {
+        Row: {
+          id: string
+          input_price_per_1m_tokens: number
+          model_name: string
+          output_price_per_1m_tokens: number
+          provider: string
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          input_price_per_1m_tokens: number
+          model_name: string
+          output_price_per_1m_tokens: number
+          provider: string
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          input_price_per_1m_tokens?: number
+          model_name?: string
+          output_price_per_1m_tokens?: number
+          provider?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      ai_recommendations: {
+        Row: {
+          client_id: string
+          created_at: string | null
+          descricao: string | null
+          distrito_sugerido_id: string | null
+          id: string
+          resolved_at: string | null
+          session_id: string | null
+          status: string | null
+          tipo: string
+          titulo: string | null
+          tool_sugerida_id: string | null
+        }
+        Insert: {
+          client_id: string
+          created_at?: string | null
+          descricao?: string | null
+          distrito_sugerido_id?: string | null
+          id?: string
+          resolved_at?: string | null
+          session_id?: string | null
+          status?: string | null
+          tipo?: string
+          titulo?: string | null
+          tool_sugerida_id?: string | null
+        }
+        Update: {
+          client_id?: string
+          created_at?: string | null
+          descricao?: string | null
+          distrito_sugerido_id?: string | null
+          id?: string
+          resolved_at?: string | null
+          session_id?: string | null
+          status?: string | null
+          tipo?: string
+          titulo?: string | null
+          tool_sugerida_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_recommendations_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_recommendations_distrito_sugerido_id_fkey"
+            columns: ["distrito_sugerido_id"]
+            isOneToOne: false
+            referencedRelation: "city_districts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_recommendations_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_recommendations_tool_sugerida_id_fkey"
+            columns: ["tool_sugerida_id"]
+            isOneToOne: false
+            referencedRelation: "tools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      app_settings: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          key: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          key: string
+          updated_at?: string
+          value: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          key?: string
+          updated_at?: string
+          value?: string
+        }
+        Relationships: []
+      }
+      archetypal_profile_snapshots: {
+        Row: {
+          client_id: string
+          clinical_question: string | null
+          dominant_archetype: string | null
+          evolution_call: string | null
+          generated_at: string
+          id: string
+          psychic_movement: string | null
+          shadow_archetype: string | null
+          source_data_json: Json | null
+        }
+        Insert: {
+          client_id: string
+          clinical_question?: string | null
+          dominant_archetype?: string | null
+          evolution_call?: string | null
+          generated_at?: string
+          id?: string
+          psychic_movement?: string | null
+          shadow_archetype?: string | null
+          source_data_json?: Json | null
+        }
+        Update: {
+          client_id?: string
+          clinical_question?: string | null
+          dominant_archetype?: string | null
+          evolution_call?: string | null
+          generated_at?: string
+          id?: string
+          psychic_movement?: string | null
+          shadow_archetype?: string | null
+          source_data_json?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "archetypal_profile_snapshots_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      archetype_tools: {
+        Row: {
+          archetype_id: string
+          created_at: string | null
+          id: string
+          tipo: string | null
+          tool_id: string
+        }
+        Insert: {
+          archetype_id: string
+          created_at?: string | null
+          id?: string
+          tipo?: string | null
+          tool_id: string
+        }
+        Update: {
+          archetype_id?: string
+          created_at?: string | null
+          id?: string
+          tipo?: string | null
+          tool_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "archetype_tools_archetype_id_fkey"
+            columns: ["archetype_id"]
+            isOneToOne: false
+            referencedRelation: "founding_archetypes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "archetype_tools_tool_id_fkey"
+            columns: ["tool_id"]
+            isOneToOne: false
+            referencedRelation: "tools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      atelie_conteudos: {
+        Row: {
+          conteudo_gerado: Json | null
+          created_at: string | null
+          created_by: string | null
+          duracao: string | null
+          id: string
+          ideias_chave: string
+          jornada: string
+          objetivo: string
+          portal: string
+          status: string | null
+          template_id: string | null
+          tom: string
+          updated_at: string | null
+        }
+        Insert: {
+          conteudo_gerado?: Json | null
+          created_at?: string | null
+          created_by?: string | null
+          duracao?: string | null
+          id?: string
+          ideias_chave: string
+          jornada: string
+          objetivo: string
+          portal: string
+          status?: string | null
+          template_id?: string | null
+          tom: string
+          updated_at?: string | null
+        }
+        Update: {
+          conteudo_gerado?: Json | null
+          created_at?: string | null
+          created_by?: string | null
+          duracao?: string | null
+          id?: string
+          ideias_chave?: string
+          jornada?: string
+          objetivo?: string
+          portal?: string
+          status?: string | null
+          template_id?: string | null
+          tom?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "atelie_conteudos_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "atelie_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      atelie_templates: {
+        Row: {
+          ativo: boolean | null
+          created_at: string | null
+          descricao: string | null
+          id: string
+          is_default: boolean | null
+          nome: string
+          template_content: string
+          updated_at: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string | null
+          descricao?: string | null
+          id?: string
+          is_default?: boolean | null
+          nome: string
+          template_content: string
+          updated_at?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string | null
+          descricao?: string | null
+          id?: string
+          is_default?: boolean | null
+          nome?: string
+          template_content?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      atlas_arquetipos_femininos: {
+        Row: {
+          ativo: boolean | null
+          chave: string
+          cor_acento: string | null
+          created_at: string | null
+          descricao_clinica: string
+          icone: string | null
+          id: string
+          manifestacoes_frequentes: string[] | null
+          nome: string
+          ordem: number | null
+          perguntas_sessao: string[] | null
+          posicao_x: number | null
+          posicao_y: number | null
+          riscos_projecao: string[] | null
+          territorio: string
+          trabalhar_forca_sem_reforcar_ferida: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          chave: string
+          cor_acento?: string | null
+          created_at?: string | null
+          descricao_clinica: string
+          icone?: string | null
+          id?: string
+          manifestacoes_frequentes?: string[] | null
+          nome: string
+          ordem?: number | null
+          perguntas_sessao?: string[] | null
+          posicao_x?: number | null
+          posicao_y?: number | null
+          riscos_projecao?: string[] | null
+          territorio: string
+          trabalhar_forca_sem_reforcar_ferida?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          chave?: string
+          cor_acento?: string | null
+          created_at?: string | null
+          descricao_clinica?: string
+          icone?: string | null
+          id?: string
+          manifestacoes_frequentes?: string[] | null
+          nome?: string
+          ordem?: number | null
+          perguntas_sessao?: string[] | null
+          posicao_x?: number | null
+          posicao_y?: number | null
+          riscos_projecao?: string[] | null
+          territorio?: string
+          trabalhar_forca_sem_reforcar_ferida?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      atlas_arquetipos_registros: {
+        Row: {
+          arquetipo_dominante: string | null
+          arquetipo_dormindo: string | null
+          arquetipos_atividade: Json
+          arquetipos_descricao: Json
+          arquetipos_selecionados: string[]
+          arquetipos_situacoes: Json
+          atividade_media: number | null
+          client_id: string
+          conflitos_arquetipos: string | null
+          created_at: string
+          dinamica_geral: string | null
+          harmonias_arquetipos: string | null
+          id: string
+          o_que_poderia_trazer: string | null
+          reflexao_dominante: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          arquetipo_dominante?: string | null
+          arquetipo_dormindo?: string | null
+          arquetipos_atividade?: Json
+          arquetipos_descricao?: Json
+          arquetipos_selecionados?: string[]
+          arquetipos_situacoes?: Json
+          atividade_media?: number | null
+          client_id: string
+          conflitos_arquetipos?: string | null
+          created_at?: string
+          dinamica_geral?: string | null
+          harmonias_arquetipos?: string | null
+          id?: string
+          o_que_poderia_trazer?: string | null
+          reflexao_dominante?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          arquetipo_dominante?: string | null
+          arquetipo_dormindo?: string | null
+          arquetipos_atividade?: Json
+          arquetipos_descricao?: Json
+          arquetipos_selecionados?: string[]
+          arquetipos_situacoes?: Json
+          atividade_media?: number | null
+          client_id?: string
+          conflitos_arquetipos?: string | null
+          created_at?: string
+          dinamica_geral?: string | null
+          harmonias_arquetipos?: string | null
+          id?: string
+          o_que_poderia_trazer?: string | null
+          reflexao_dominante?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "atlas_arquetipos_registros_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      audio_assets: {
+        Row: {
+          capa_url: string | null
+          categoria: string | null
+          created_at: string | null
+          descricao: string | null
+          duracao_segundos: number | null
+          file_path: string
+          id: string
+          ordem: number | null
+          porta_psiquica: string | null
+          portal_minimo: Database["public"]["Enums"]["portal_type"] | null
+          publicado: boolean | null
+          titulo: string
+          updated_at: string | null
+        }
+        Insert: {
+          capa_url?: string | null
+          categoria?: string | null
+          created_at?: string | null
+          descricao?: string | null
+          duracao_segundos?: number | null
+          file_path: string
+          id?: string
+          ordem?: number | null
+          porta_psiquica?: string | null
+          portal_minimo?: Database["public"]["Enums"]["portal_type"] | null
+          publicado?: boolean | null
+          titulo: string
+          updated_at?: string | null
+        }
+        Update: {
+          capa_url?: string | null
+          categoria?: string | null
+          created_at?: string | null
+          descricao?: string | null
+          duracao_segundos?: number | null
+          file_path?: string
+          id?: string
+          ordem?: number | null
+          porta_psiquica?: string | null
+          portal_minimo?: Database["public"]["Enums"]["portal_type"] | null
+          publicado?: boolean | null
+          titulo?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      aulas: {
+        Row: {
+          conteudo_gerado: Json | null
+          conteudo_raw: string | null
+          created_at: string
+          created_by: string | null
+          duracao: string | null
+          id: string
+          motor_geracao: string | null
+          nivel_conteudo: string | null
+          ordem: number
+          portal_id: string
+          status: string
+          subtitulo: string | null
+          titulo: string
+          tom: string | null
+          updated_at: string
+        }
+        Insert: {
+          conteudo_gerado?: Json | null
+          conteudo_raw?: string | null
+          created_at?: string
+          created_by?: string | null
+          duracao?: string | null
+          id?: string
+          motor_geracao?: string | null
+          nivel_conteudo?: string | null
+          ordem?: number
+          portal_id: string
+          status?: string
+          subtitulo?: string | null
+          titulo: string
+          tom?: string | null
+          updated_at?: string
+        }
+        Update: {
+          conteudo_gerado?: Json | null
+          conteudo_raw?: string | null
+          created_at?: string
+          created_by?: string | null
+          duracao?: string | null
+          id?: string
+          motor_geracao?: string | null
+          nivel_conteudo?: string | null
+          ordem?: number
+          portal_id?: string
+          status?: string
+          subtitulo?: string | null
+          titulo?: string
+          tom?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "aulas_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: false
+            referencedRelation: "portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      automation_alerts: {
+        Row: {
+          alert_type: string
+          created_at: string | null
+          id: string
+          is_resolved: boolean | null
+          message: string
+          metadata: Json | null
+          rule_id: string | null
+          severity: string
+        }
+        Insert: {
+          alert_type: string
+          created_at?: string | null
+          id?: string
+          is_resolved?: boolean | null
+          message: string
+          metadata?: Json | null
+          rule_id?: string | null
+          severity: string
+        }
+        Update: {
+          alert_type?: string
+          created_at?: string | null
+          id?: string
+          is_resolved?: boolean | null
+          message?: string
+          metadata?: Json | null
+          rule_id?: string | null
+          severity?: string
+        }
+        Relationships: []
+      }
+      automation_execution_logs: {
+        Row: {
+          channel: string
+          error_message: string | null
+          id: string
+          response_time_ms: number | null
+          rule_id: string
+          status: string
+          triggered_at: string | null
+          user_id: string
+        }
+        Insert: {
+          channel: string
+          error_message?: string | null
+          id?: string
+          response_time_ms?: number | null
+          rule_id: string
+          status: string
+          triggered_at?: string | null
+          user_id: string
+        }
+        Update: {
+          channel?: string
+          error_message?: string | null
+          id?: string
+          response_time_ms?: number | null
+          rule_id?: string
+          status?: string
+          triggered_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      automation_rules: {
+        Row: {
+          action_type: string
+          channel: string
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          last_performance_check: string | null
+          paused_until: string | null
+          rule_type: string
+          success_threshold: number | null
+        }
+        Insert: {
+          action_type: string
+          channel: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_performance_check?: string | null
+          paused_until?: string | null
+          rule_type: string
+          success_threshold?: number | null
+        }
+        Update: {
+          action_type?: string
+          channel?: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_performance_check?: string | null
+          paused_until?: string | null
+          rule_type?: string
+          success_threshold?: number | null
+        }
+        Relationships: []
+      }
+      automation_settings: {
+        Row: {
+          id: string
+          key: string
+          updated_at: string
+          updated_by: string | null
+          value: Json
+        }
+        Insert: {
+          id?: string
+          key: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+        }
+        Update: {
+          id?: string
+          key?: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+        }
+        Relationships: []
+      }
+      biblioteca_casos: {
+        Row: {
+          ativa: boolean | null
+          autor_id: string | null
+          cena: string
+          created_at: string | null
+          erro_comum: string
+          fonte: string | null
+          id: string
+          leitura_oracula: string
+          ordem: number | null
+          porta_id: string | null
+          porta_nome: string | null
+          resultado: string
+          risco_tipo: string | null
+          tags: string[] | null
+          titulo: string | null
+          torre_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          ativa?: boolean | null
+          autor_id?: string | null
+          cena: string
+          created_at?: string | null
+          erro_comum: string
+          fonte?: string | null
+          id?: string
+          leitura_oracula: string
+          ordem?: number | null
+          porta_id?: string | null
+          porta_nome?: string | null
+          resultado: string
+          risco_tipo?: string | null
+          tags?: string[] | null
+          titulo?: string | null
+          torre_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          ativa?: boolean | null
+          autor_id?: string | null
+          cena?: string
+          created_at?: string | null
+          erro_comum?: string
+          fonte?: string | null
+          id?: string
+          leitura_oracula?: string
+          ordem?: number | null
+          porta_id?: string | null
+          porta_nome?: string | null
+          resultado?: string
+          risco_tipo?: string | null
+          tags?: string[] | null
+          titulo?: string | null
+          torre_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "biblioteca_casos_porta_id_fkey"
+            columns: ["porta_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_portas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      big5_funcional_dimensoes: {
+        Row: {
+          ativo: boolean
+          chave: string
+          cor: string
+          created_at: string
+          descricao: string
+          id: string
+          interpretacao_alto: string | null
+          interpretacao_baixo: string | null
+          nome: string
+          nome_ingles: string
+          ordem: number
+          ponto_atencao_alto: string | null
+          ponto_atencao_baixo: string | null
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          chave: string
+          cor: string
+          created_at?: string
+          descricao: string
+          id?: string
+          interpretacao_alto?: string | null
+          interpretacao_baixo?: string | null
+          nome: string
+          nome_ingles: string
+          ordem?: number
+          ponto_atencao_alto?: string | null
+          ponto_atencao_baixo?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          chave?: string
+          cor?: string
+          created_at?: string
+          descricao?: string
+          id?: string
+          interpretacao_alto?: string | null
+          interpretacao_baixo?: string | null
+          nome?: string
+          nome_ingles?: string
+          ordem?: number
+          ponto_atencao_alto?: string | null
+          ponto_atencao_baixo?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      big5_funcional_perguntas: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          dimensao_id: string
+          id: string
+          ordem: number
+          texto_pergunta: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          dimensao_id: string
+          id?: string
+          ordem?: number
+          texto_pergunta: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          dimensao_id?: string
+          id?: string
+          ordem?: number
+          texto_pergunta?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "big5_funcional_perguntas_dimensao_id_fkey"
+            columns: ["dimensao_id"]
+            isOneToOne: false
+            referencedRelation: "big5_funcional_dimensoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      big5_oracular_fatores: {
+        Row: {
+          ativo: boolean | null
+          chave: string
+          cor_primaria: string | null
+          created_at: string | null
+          descricao_simbolica: string | null
+          id: string
+          narrativa_elevada: string | null
+          narrativa_fragil: string | null
+          nome: string
+          nome_ocean: string
+          ordem: number
+          simbolo: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          chave: string
+          cor_primaria?: string | null
+          created_at?: string | null
+          descricao_simbolica?: string | null
+          id?: string
+          narrativa_elevada?: string | null
+          narrativa_fragil?: string | null
+          nome: string
+          nome_ocean: string
+          ordem: number
+          simbolo?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          chave?: string
+          cor_primaria?: string | null
+          created_at?: string | null
+          descricao_simbolica?: string | null
+          id?: string
+          narrativa_elevada?: string | null
+          narrativa_fragil?: string | null
+          nome?: string
+          nome_ocean?: string
+          ordem?: number
+          simbolo?: string | null
+        }
+        Relationships: []
+      }
+      big5_oracular_perguntas: {
+        Row: {
+          ativo: boolean | null
+          created_at: string | null
+          fator_id: string
+          id: string
+          ordem: number
+          texto_pergunta: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string | null
+          fator_id: string
+          id?: string
+          ordem: number
+          texto_pergunta: string
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string | null
+          fator_id?: string
+          id?: string
+          ordem?: number
+          texto_pergunta?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "big5_oracular_perguntas_fator_id_fkey"
+            columns: ["fator_id"]
+            isOneToOne: false
+            referencedRelation: "big5_oracular_fatores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      big5_oracular_registros: {
+        Row: {
+          created_at: string | null
+          fator_fragilizado: string | null
+          fator_predominante: string | null
+          id: string
+          medias_json: Json
+          reflexao_pessoal: string | null
+          respostas_json: Json
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          fator_fragilizado?: string | null
+          fator_predominante?: string | null
+          id?: string
+          medias_json?: Json
+          reflexao_pessoal?: string | null
+          respostas_json?: Json
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          fator_fragilizado?: string | null
+          fator_predominante?: string | null
+          id?: string
+          medias_json?: Json
+          reflexao_pessoal?: string | null
+          respostas_json?: Json
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      big5_porta_mapeamento: {
+        Row: {
+          ativo: boolean | null
+          created_at: string | null
+          descricao_combinacao: string | null
+          fator_alto: string
+          fator_baixo: string
+          id: string
+          narrativa_curta: string | null
+          ordem: number | null
+          porta_associada: string
+          porta_tipo_campo: string | null
+          ritual_id: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string | null
+          descricao_combinacao?: string | null
+          fator_alto: string
+          fator_baixo: string
+          id?: string
+          narrativa_curta?: string | null
+          ordem?: number | null
+          porta_associada: string
+          porta_tipo_campo?: string | null
+          ritual_id?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string | null
+          descricao_combinacao?: string | null
+          fator_alto?: string
+          fator_baixo?: string
+          id?: string
+          narrativa_curta?: string | null
+          ordem?: number | null
+          porta_associada?: string
+          porta_tipo_campo?: string | null
+          ritual_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "big5_porta_mapeamento_ritual_id_fkey"
+            columns: ["ritual_id"]
+            isOneToOne: false
+            referencedRelation: "rituais_simbolicos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      big5_registros: {
+        Row: {
+          abertura: number
+          amabilidade: number
+          caso_id: string | null
+          cliente_id: string | null
+          conscienciosidade: number
+          created_at: string
+          extroversao: number
+          id: string
+          impacto_clinico: string | null
+          neuroticismo: number
+          notas: string | null
+          terapeuta_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          abertura: number
+          amabilidade: number
+          caso_id?: string | null
+          cliente_id?: string | null
+          conscienciosidade: number
+          created_at?: string
+          extroversao: number
+          id?: string
+          impacto_clinico?: string | null
+          neuroticismo: number
+          notas?: string | null
+          terapeuta_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          abertura?: number
+          amabilidade?: number
+          caso_id?: string | null
+          cliente_id?: string | null
+          conscienciosidade?: number
+          created_at?: string
+          extroversao?: number
+          id?: string
+          impacto_clinico?: string | null
+          neuroticismo?: number
+          notas?: string | null
+          terapeuta_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_big5_caso"
+            columns: ["caso_id"]
+            isOneToOne: false
+            referencedRelation: "casos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      big5_ritual_registros: {
+        Row: {
+          acessou_narroterapia: boolean | null
+          big5_registro_id: string | null
+          completado_em: string | null
+          created_at: string | null
+          id: string
+          porta_acessada: string | null
+          ritual_id: string | null
+          user_id: string
+        }
+        Insert: {
+          acessou_narroterapia?: boolean | null
+          big5_registro_id?: string | null
+          completado_em?: string | null
+          created_at?: string | null
+          id?: string
+          porta_acessada?: string | null
+          ritual_id?: string | null
+          user_id: string
+        }
+        Update: {
+          acessou_narroterapia?: boolean | null
+          big5_registro_id?: string | null
+          completado_em?: string | null
+          created_at?: string | null
+          id?: string
+          porta_acessada?: string | null
+          ritual_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "big5_ritual_registros_big5_registro_id_fkey"
+            columns: ["big5_registro_id"]
+            isOneToOne: false
+            referencedRelation: "big5_oracular_registros"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "big5_ritual_registros_ritual_id_fkey"
+            columns: ["ritual_id"]
+            isOneToOne: false
+            referencedRelation: "rituais_simbolicos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      big5_symbolic_afirmacoes: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          force_id: string
+          id: string
+          ordem: number
+          peso: number
+          texto_afirmacao: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          force_id: string
+          id?: string
+          ordem?: number
+          peso?: number
+          texto_afirmacao: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          force_id?: string
+          id?: string
+          ordem?: number
+          peso?: number
+          texto_afirmacao?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "big5_symbolic_afirmacoes_force_id_fkey"
+            columns: ["force_id"]
+            isOneToOne: false
+            referencedRelation: "big5_symbolic_forces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      big5_symbolic_forces: {
+        Row: {
+          ativo: boolean
+          chave: string
+          conflito_recorrente: string | null
+          cor_primaria: string | null
+          created_at: string
+          descricao_simbolica: string
+          icone: string | null
+          id: string
+          microcopy_reflexao: string | null
+          narrativa_elevada: string | null
+          narrativa_fragil: string | null
+          nome: string
+          nome_en: string | null
+          ordem: number
+          padrao_emocional: string | null
+          potencial_inexplorado: string | null
+          pratica_sugerida: string | null
+          repeticao_comportamental: string | null
+          risco_clinico: string | null
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          chave: string
+          conflito_recorrente?: string | null
+          cor_primaria?: string | null
+          created_at?: string
+          descricao_simbolica: string
+          icone?: string | null
+          id?: string
+          microcopy_reflexao?: string | null
+          narrativa_elevada?: string | null
+          narrativa_fragil?: string | null
+          nome: string
+          nome_en?: string | null
+          ordem?: number
+          padrao_emocional?: string | null
+          potencial_inexplorado?: string | null
+          pratica_sugerida?: string | null
+          repeticao_comportamental?: string | null
+          risco_clinico?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          chave?: string
+          conflito_recorrente?: string | null
+          cor_primaria?: string | null
+          created_at?: string
+          descricao_simbolica?: string
+          icone?: string | null
+          id?: string
+          microcopy_reflexao?: string | null
+          narrativa_elevada?: string | null
+          narrativa_fragil?: string | null
+          nome?: string
+          nome_en?: string | null
+          ordem?: number
+          padrao_emocional?: string | null
+          potencial_inexplorado?: string | null
+          pratica_sugerida?: string | null
+          repeticao_comportamental?: string | null
+          risco_clinico?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      big5_symbolic_registros: {
+        Row: {
+          abertura_intensidade: string | null
+          cliente_id: string | null
+          created_at: string
+          expressao_intensidade: string | null
+          id: string
+          narrativa_editada: boolean | null
+          narrativa_localizacao: string | null
+          nome_simbolico: string | null
+          notas: string | null
+          notas_terapeuta: string | null
+          reflexao_final: string | null
+          relacional_intensidade: string | null
+          respostas_json: Json | null
+          sensibilidade_intensidade: string | null
+          session_case_id: string | null
+          suporte_intensidade: string | null
+          terapeuta_id: string | null
+          territorio_predominante: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          abertura_intensidade?: string | null
+          cliente_id?: string | null
+          created_at?: string
+          expressao_intensidade?: string | null
+          id?: string
+          narrativa_editada?: boolean | null
+          narrativa_localizacao?: string | null
+          nome_simbolico?: string | null
+          notas?: string | null
+          notas_terapeuta?: string | null
+          reflexao_final?: string | null
+          relacional_intensidade?: string | null
+          respostas_json?: Json | null
+          sensibilidade_intensidade?: string | null
+          session_case_id?: string | null
+          suporte_intensidade?: string | null
+          terapeuta_id?: string | null
+          territorio_predominante?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          abertura_intensidade?: string | null
+          cliente_id?: string | null
+          created_at?: string
+          expressao_intensidade?: string | null
+          id?: string
+          narrativa_editada?: boolean | null
+          narrativa_localizacao?: string | null
+          nome_simbolico?: string | null
+          notas?: string | null
+          notas_terapeuta?: string | null
+          reflexao_final?: string | null
+          relacional_intensidade?: string | null
+          respostas_json?: Json | null
+          sensibilidade_intensidade?: string | null
+          session_case_id?: string | null
+          suporte_intensidade?: string | null
+          terapeuta_id?: string | null
+          territorio_predominante?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "big5_symbolic_registros_session_case_id_fkey"
+            columns: ["session_case_id"]
+            isOneToOne: false
+            referencedRelation: "session_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      book_links: {
+        Row: {
+          from_book_id: string
+          id: string
+          link_type: string
+          note: string | null
+          to_book_id: string
+        }
+        Insert: {
+          from_book_id: string
+          id?: string
+          link_type: string
+          note?: string | null
+          to_book_id: string
+        }
+        Update: {
+          from_book_id?: string
+          id?: string
+          link_type?: string
+          note?: string | null
+          to_book_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "book_links_from_book_id_fkey"
+            columns: ["from_book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "book_links_to_book_id_fkey"
+            columns: ["to_book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      book_media: {
+        Row: {
+          caption: string | null
+          created_at: string
+          credit: string | null
+          file_kind: string
+          file_url: string
+          id: string
+          order_index: number
+          published: boolean
+          source_url: string | null
+          station_id: string
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          credit?: string | null
+          file_kind?: string
+          file_url: string
+          id?: string
+          order_index?: number
+          published?: boolean
+          source_url?: string | null
+          station_id: string
+          title?: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          credit?: string | null
+          file_kind?: string
+          file_url?: string
+          id?: string
+          order_index?: number
+          published?: boolean
+          source_url?: string | null
+          station_id?: string
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "book_media_station_id_fkey"
+            columns: ["station_id"]
+            isOneToOne: false
+            referencedRelation: "clube_estacoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      book_tours: {
+        Row: {
+          ativo: boolean
+          book_id: string
+          como_atravessar: string | null
+          created_at: string
+          habilidade_simbolica: string | null
+          id: string
+          jornada: string
+          o_que_nao_fazer: string | null
+          onde_entra_jornada: string | null
+          quando_encerrar: string | null
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          book_id: string
+          como_atravessar?: string | null
+          created_at?: string
+          habilidade_simbolica?: string | null
+          id?: string
+          jornada?: string
+          o_que_nao_fazer?: string | null
+          onde_entra_jornada?: string | null
+          quando_encerrar?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          book_id?: string
+          como_atravessar?: string | null
+          created_at?: string
+          habilidade_simbolica?: string | null
+          id?: string
+          jornada?: string
+          o_que_nao_fazer?: string | null
+          onde_entra_jornada?: string | null
+          quando_encerrar?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "book_tours_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: true
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      books: {
+        Row: {
+          author: string | null
+          category: string
+          central_theme: string | null
+          cover_url: string | null
+          created_at: string | null
+          description_short: string | null
+          how_to_read: string | null
+          id: string
+          is_multipolar: boolean | null
+          key_archetypes: string[] | null
+          key_symbols: string[] | null
+          manifesto_short: string | null
+          summary_symbolic: string | null
+          tension_axis: string | null
+          title: string
+          updated_at: string | null
+          why_here: string | null
+        }
+        Insert: {
+          author?: string | null
+          category: string
+          central_theme?: string | null
+          cover_url?: string | null
+          created_at?: string | null
+          description_short?: string | null
+          how_to_read?: string | null
+          id?: string
+          is_multipolar?: boolean | null
+          key_archetypes?: string[] | null
+          key_symbols?: string[] | null
+          manifesto_short?: string | null
+          summary_symbolic?: string | null
+          tension_axis?: string | null
+          title: string
+          updated_at?: string | null
+          why_here?: string | null
+        }
+        Update: {
+          author?: string | null
+          category?: string
+          central_theme?: string | null
+          cover_url?: string | null
+          created_at?: string | null
+          description_short?: string | null
+          how_to_read?: string | null
+          id?: string
+          is_multipolar?: boolean | null
+          key_archetypes?: string[] | null
+          key_symbols?: string[] | null
+          manifesto_short?: string | null
+          summary_symbolic?: string | null
+          tension_axis?: string | null
+          title?: string
+          updated_at?: string | null
+          why_here?: string | null
+        }
+        Relationships: []
+      }
+      canteiro_reactions: {
+        Row: {
+          created_at: string
+          entry_id: string
+          id: string
+          reaction_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entry_id: string
+          id?: string
+          reaction_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entry_id?: string
+          id?: string
+          reaction_type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "canteiro_reactions_entry_id_fkey"
+            columns: ["entry_id"]
+            isOneToOne: false
+            referencedRelation: "collective_bed_entries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cartografia_complexos: {
+        Row: {
+          client_id: string
+          complexo_dominante: string | null
+          complexo_latente: string | null
+          complexos_json: Json
+          created_at: string
+          gatilhos_gerais: string | null
+          id: string
+          padrao_central: string | null
+          reflexao_final: string | null
+          reflexao_origem: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          complexo_dominante?: string | null
+          complexo_latente?: string | null
+          complexos_json?: Json
+          created_at?: string
+          gatilhos_gerais?: string | null
+          id?: string
+          padrao_central?: string | null
+          reflexao_final?: string | null
+          reflexao_origem?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          complexo_dominante?: string | null
+          complexo_latente?: string | null
+          complexos_json?: Json
+          created_at?: string
+          gatilhos_gerais?: string | null
+          id?: string
+          padrao_central?: string | null
+          reflexao_final?: string | null
+          reflexao_origem?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cartografia_complexos_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cartografia_psiquica: {
+        Row: {
+          atmosfera: string[]
+          client_id: string | null
+          conflitos_tensoes: string | null
+          cor_predominante: string
+          created_at: string
+          id: string
+          indice_equilibrio: number | null
+          metadata_json: Json | null
+          ponto_partida: string | null
+          por_que_simbolo: string | null
+          recursos_internos: string | null
+          resumo_narrativo: string | null
+          simbolo_pessoal: string | null
+          sugestao_proximo_passo: string | null
+          territorios_principais: string[]
+          therapist_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          atmosfera?: string[]
+          client_id?: string | null
+          conflitos_tensoes?: string | null
+          cor_predominante: string
+          created_at?: string
+          id?: string
+          indice_equilibrio?: number | null
+          metadata_json?: Json | null
+          ponto_partida?: string | null
+          por_que_simbolo?: string | null
+          recursos_internos?: string | null
+          resumo_narrativo?: string | null
+          simbolo_pessoal?: string | null
+          sugestao_proximo_passo?: string | null
+          territorios_principais?: string[]
+          therapist_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          atmosfera?: string[]
+          client_id?: string | null
+          conflitos_tensoes?: string | null
+          cor_predominante?: string
+          created_at?: string
+          id?: string
+          indice_equilibrio?: number | null
+          metadata_json?: Json | null
+          ponto_partida?: string | null
+          por_que_simbolo?: string | null
+          recursos_internos?: string | null
+          resumo_narrativo?: string | null
+          simbolo_pessoal?: string | null
+          sugestao_proximo_passo?: string | null
+          territorios_principais?: string[]
+          therapist_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cartografia_psiquica_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cartographer_engine: {
+        Row: {
+          arquetipo_regente_id: string | null
+          client_id: string
+          created_at: string | null
+          distrito_ativo: string | null
+          fase_jornada: string | null
+          id: string
+          input_snapshot: Json | null
+          modo_sessao: string | null
+          porta_ativa: string | null
+          session_id: string | null
+          therapist_id: string
+          torre_ativa: string | null
+          trigger_type: string
+        }
+        Insert: {
+          arquetipo_regente_id?: string | null
+          client_id: string
+          created_at?: string | null
+          distrito_ativo?: string | null
+          fase_jornada?: string | null
+          id?: string
+          input_snapshot?: Json | null
+          modo_sessao?: string | null
+          porta_ativa?: string | null
+          session_id?: string | null
+          therapist_id: string
+          torre_ativa?: string | null
+          trigger_type?: string
+        }
+        Update: {
+          arquetipo_regente_id?: string | null
+          client_id?: string
+          created_at?: string | null
+          distrito_ativo?: string | null
+          fase_jornada?: string | null
+          id?: string
+          input_snapshot?: Json | null
+          modo_sessao?: string | null
+          porta_ativa?: string | null
+          session_id?: string | null
+          therapist_id?: string
+          torre_ativa?: string | null
+          trigger_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cartographer_engine_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cartographer_engine_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cartographer_recommendations: {
+        Row: {
+          aceita: boolean | null
+          arquetipo_sugerido: string | null
+          confianca: number | null
+          created_at: string | null
+          distrito_sugerido: string | null
+          engine_id: string
+          ferramenta_escolhida_id: string | null
+          id: string
+          observacao_feedback: string | null
+          pergunta_sugerida: string | null
+          respondido_em: string | null
+          ritual_sugerido: string | null
+          tool_complementar_id: string | null
+          tool_principal_id: string | null
+        }
+        Insert: {
+          aceita?: boolean | null
+          arquetipo_sugerido?: string | null
+          confianca?: number | null
+          created_at?: string | null
+          distrito_sugerido?: string | null
+          engine_id: string
+          ferramenta_escolhida_id?: string | null
+          id?: string
+          observacao_feedback?: string | null
+          pergunta_sugerida?: string | null
+          respondido_em?: string | null
+          ritual_sugerido?: string | null
+          tool_complementar_id?: string | null
+          tool_principal_id?: string | null
+        }
+        Update: {
+          aceita?: boolean | null
+          arquetipo_sugerido?: string | null
+          confianca?: number | null
+          created_at?: string | null
+          distrito_sugerido?: string | null
+          engine_id?: string
+          ferramenta_escolhida_id?: string | null
+          id?: string
+          observacao_feedback?: string | null
+          pergunta_sugerida?: string | null
+          respondido_em?: string | null
+          ritual_sugerido?: string | null
+          tool_complementar_id?: string | null
+          tool_principal_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cartographer_recommendations_engine_id_fkey"
+            columns: ["engine_id"]
+            isOneToOne: false
+            referencedRelation: "cartographer_engine"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cartographer_recommendations_ferramenta_escolhida_id_fkey"
+            columns: ["ferramenta_escolhida_id"]
+            isOneToOne: false
+            referencedRelation: "tools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cartographer_recommendations_tool_complementar_id_fkey"
+            columns: ["tool_complementar_id"]
+            isOneToOne: false
+            referencedRelation: "tools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cartographer_recommendations_tool_principal_id_fkey"
+            columns: ["tool_principal_id"]
+            isOneToOne: false
+            referencedRelation: "tools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cartographies: {
+        Row: {
+          classification_json: Json | null
+          client_id: string
+          created_at: string
+          date: string
+          id: string
+          scores_json: Json
+          session_id: string | null
+        }
+        Insert: {
+          classification_json?: Json | null
+          client_id: string
+          created_at?: string
+          date?: string
+          id?: string
+          scores_json?: Json
+          session_id?: string | null
+        }
+        Update: {
+          classification_json?: Json | null
+          client_id?: string
+          created_at?: string
+          date?: string
+          id?: string
+          scores_json?: Json
+          session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cartographies_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cartographies_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      casa_circulo_replies: {
+        Row: {
+          autor_id: string
+          conteudo: string
+          created_at: string
+          id: string
+          thread_id: string
+          updated_at: string
+        }
+        Insert: {
+          autor_id: string
+          conteudo: string
+          created_at?: string
+          id?: string
+          thread_id: string
+          updated_at?: string
+        }
+        Update: {
+          autor_id?: string
+          conteudo?: string
+          created_at?: string
+          id?: string
+          thread_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "casa_circulo_replies_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "casa_circulo_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      casa_circulo_threads: {
+        Row: {
+          autor_id: string
+          conteudo: string
+          created_at: string
+          fixado: boolean | null
+          id: string
+          portal_minimo: Database["public"]["Enums"]["portal_type"] | null
+          respostas_count: number | null
+          status: string | null
+          titulo: string
+          ultima_atividade: string | null
+          updated_at: string
+        }
+        Insert: {
+          autor_id: string
+          conteudo: string
+          created_at?: string
+          fixado?: boolean | null
+          id?: string
+          portal_minimo?: Database["public"]["Enums"]["portal_type"] | null
+          respostas_count?: number | null
+          status?: string | null
+          titulo: string
+          ultima_atividade?: string | null
+          updated_at?: string
+        }
+        Update: {
+          autor_id?: string
+          conteudo?: string
+          created_at?: string
+          fixado?: boolean | null
+          id?: string
+          portal_minimo?: Database["public"]["Enums"]["portal_type"] | null
+          respostas_count?: number | null
+          status?: string | null
+          titulo?: string
+          ultima_atividade?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      casos: {
+        Row: {
+          cliente_id: string
+          codinome: string
+          created_at: string
+          historico_breve: string | null
+          id: string
+          tags: string[] | null
+          tema_central: string
+          terapeuta_id: string
+          updated_at: string
+        }
+        Insert: {
+          cliente_id: string
+          codinome: string
+          created_at?: string
+          historico_breve?: string | null
+          id?: string
+          tags?: string[] | null
+          tema_central: string
+          terapeuta_id: string
+          updated_at?: string
+        }
+        Update: {
+          cliente_id?: string
+          codinome?: string
+          created_at?: string
+          historico_breve?: string | null
+          id?: string
+          tags?: string[] | null
+          tema_central?: string
+          terapeuta_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cidadela_mapa_vivo: {
+        Row: {
+          distrito: string
+          historico: Json | null
+          id: string
+          nivel: number | null
+          status: string | null
+          ultima_atualizacao: string | null
+          user_id: string
+        }
+        Insert: {
+          distrito: string
+          historico?: Json | null
+          id?: string
+          nivel?: number | null
+          status?: string | null
+          ultima_atualizacao?: string | null
+          user_id: string
+        }
+        Update: {
+          distrito?: string
+          historico?: Json | null
+          id?: string
+          nivel?: number | null
+          status?: string | null
+          ultima_atualizacao?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      cidadela_oracle_cards: {
+        Row: {
+          base_question: string | null
+          color_hex: string | null
+          created_at: string
+          description: string | null
+          district_id: string | null
+          family: string
+          id: string
+          image_url: string | null
+          is_active: boolean
+          keyword: string | null
+          name: string
+          ordem: number
+          suggested_intervention_id: string | null
+          suggested_tool: string | null
+          suggested_tool_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          base_question?: string | null
+          color_hex?: string | null
+          created_at?: string
+          description?: string | null
+          district_id?: string | null
+          family: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          keyword?: string | null
+          name: string
+          ordem?: number
+          suggested_intervention_id?: string | null
+          suggested_tool?: string | null
+          suggested_tool_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          base_question?: string | null
+          color_hex?: string | null
+          created_at?: string
+          description?: string | null
+          district_id?: string | null
+          family?: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          keyword?: string | null
+          name?: string
+          ordem?: number
+          suggested_intervention_id?: string | null
+          suggested_tool?: string | null
+          suggested_tool_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cidadela_oracle_cards_district_id_fkey"
+            columns: ["district_id"]
+            isOneToOne: false
+            referencedRelation: "districts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cidadela_oracle_cards_suggested_tool_id_fkey"
+            columns: ["suggested_tool_id"]
+            isOneToOne: false
+            referencedRelation: "tools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cidadela_oracle_usage: {
+        Row: {
+          card_id: string
+          client_id: string
+          count: number
+          id: string
+          last_used_at: string
+        }
+        Insert: {
+          card_id: string
+          client_id: string
+          count?: number
+          id?: string
+          last_used_at?: string
+        }
+        Update: {
+          card_id?: string
+          client_id?: string
+          count?: number
+          id?: string
+          last_used_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cidadela_oracle_usage_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "cidadela_oracle_cards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cidadela_oracle_usage_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      circulos_sagrados: {
+        Row: {
+          created_at: string
+          data_hora: string
+          distritos_ativados: string[] | null
+          facilitadora_id: string
+          id: string
+          local_link: string | null
+          nome_circulo: string
+          participantes_ids: string[] | null
+          ritual_base: string
+          status_circulo: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          data_hora: string
+          distritos_ativados?: string[] | null
+          facilitadora_id: string
+          id?: string
+          local_link?: string | null
+          nome_circulo: string
+          participantes_ids?: string[] | null
+          ritual_base: string
+          status_circulo?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          data_hora?: string
+          distritos_ativados?: string[] | null
+          facilitadora_id?: string
+          id?: string
+          local_link?: string | null
+          nome_circulo?: string
+          participantes_ids?: string[] | null
+          ritual_base?: string
+          status_circulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      city_districts: {
+        Row: {
+          ativo: boolean | null
+          cor_principal: string | null
+          created_at: string | null
+          descricao: string | null
+          funcao_simbolica: string | null
+          icone: string | null
+          id: string
+          nome: string
+          ordem: number | null
+          quando_ativo: string | null
+          slug: string
+          updated_at: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          cor_principal?: string | null
+          created_at?: string | null
+          descricao?: string | null
+          funcao_simbolica?: string | null
+          icone?: string | null
+          id?: string
+          nome: string
+          ordem?: number | null
+          quando_ativo?: string | null
+          slug: string
+          updated_at?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          cor_principal?: string | null
+          created_at?: string | null
+          descricao?: string | null
+          funcao_simbolica?: string | null
+          icone?: string | null
+          id?: string
+          nome?: string
+          ordem?: number | null
+          quando_ativo?: string | null
+          slug?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      client_archetype_state: {
+        Row: {
+          arquitipo_evolucao_id: string | null
+          arquitipo_regente_id: string | null
+          arquitipo_sombra_id: string | null
+          client_id: string
+          created_at: string | null
+          fonte: string | null
+          id: string
+          observacoes: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          arquitipo_evolucao_id?: string | null
+          arquitipo_regente_id?: string | null
+          arquitipo_sombra_id?: string | null
+          client_id: string
+          created_at?: string | null
+          fonte?: string | null
+          id?: string
+          observacoes?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          arquitipo_evolucao_id?: string | null
+          arquitipo_regente_id?: string | null
+          arquitipo_sombra_id?: string | null
+          client_id?: string
+          created_at?: string | null
+          fonte?: string | null
+          id?: string
+          observacoes?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_archetype_state_arquitipo_evolucao_id_fkey"
+            columns: ["arquitipo_evolucao_id"]
+            isOneToOne: false
+            referencedRelation: "founding_archetypes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_archetype_state_arquitipo_regente_id_fkey"
+            columns: ["arquitipo_regente_id"]
+            isOneToOne: false
+            referencedRelation: "founding_archetypes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_archetype_state_arquitipo_sombra_id_fkey"
+            columns: ["arquitipo_sombra_id"]
+            isOneToOne: false
+            referencedRelation: "founding_archetypes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_archetype_state_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_cidadela_map: {
+        Row: {
+          arquetipos_emergentes: string[] | null
+          client_id: string
+          created_at: string
+          distrito_atual: string | null
+          ferramentas_utilizadas: string[] | null
+          historico_sessoes: Json | null
+          id: string
+          insights_ia: Json | null
+          labirintos_visitados: string[] | null
+          portas_cruzadas: string[] | null
+          therapist_id: string
+          torres_identificadas: string[] | null
+          ultima_sessao: string | null
+          updated_at: string
+        }
+        Insert: {
+          arquetipos_emergentes?: string[] | null
+          client_id: string
+          created_at?: string
+          distrito_atual?: string | null
+          ferramentas_utilizadas?: string[] | null
+          historico_sessoes?: Json | null
+          id?: string
+          insights_ia?: Json | null
+          labirintos_visitados?: string[] | null
+          portas_cruzadas?: string[] | null
+          therapist_id: string
+          torres_identificadas?: string[] | null
+          ultima_sessao?: string | null
+          updated_at?: string
+        }
+        Update: {
+          arquetipos_emergentes?: string[] | null
+          client_id?: string
+          created_at?: string
+          distrito_atual?: string | null
+          ferramentas_utilizadas?: string[] | null
+          historico_sessoes?: Json | null
+          id?: string
+          insights_ia?: Json | null
+          labirintos_visitados?: string[] | null
+          portas_cruzadas?: string[] | null
+          therapist_id?: string
+          torres_identificadas?: string[] | null
+          ultima_sessao?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_cidadela_map_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_city_state: {
+        Row: {
+          arquetipo_ativo: string | null
+          client_id: string
+          created_at: string | null
+          distrito_ativo: string | null
+          distrito_id: string | null
+          id: string
+          ultima_ferramenta_id: string | null
+          ultima_sessao_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          arquetipo_ativo?: string | null
+          client_id: string
+          created_at?: string | null
+          distrito_ativo?: string | null
+          distrito_id?: string | null
+          id?: string
+          ultima_ferramenta_id?: string | null
+          ultima_sessao_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          arquetipo_ativo?: string | null
+          client_id?: string
+          created_at?: string | null
+          distrito_ativo?: string | null
+          distrito_id?: string | null
+          id?: string
+          ultima_ferramenta_id?: string | null
+          ultima_sessao_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_city_state_arquetipo_ativo_fkey"
+            columns: ["arquetipo_ativo"]
+            isOneToOne: false
+            referencedRelation: "founding_archetypes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_city_state_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_city_state_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "city_districts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_city_state_ultima_ferramenta_id_fkey"
+            columns: ["ultima_ferramenta_id"]
+            isOneToOne: false
+            referencedRelation: "tools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_city_state_ultima_sessao_id_fkey"
+            columns: ["ultima_sessao_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_labyrinths: {
+        Row: {
+          acoes_ruptura: string[] | null
+          client_id: string
+          created_at: string
+          descricao: string | null
+          gatilhos: string[] | null
+          id: string
+          nome_padrao: string
+          notas: string | null
+          sessoes_relacionadas: number | null
+          severidade: string
+          status: string
+          therapist_id: string
+          tipo: string
+          ultima_ocorrencia: string | null
+          updated_at: string
+        }
+        Insert: {
+          acoes_ruptura?: string[] | null
+          client_id: string
+          created_at?: string
+          descricao?: string | null
+          gatilhos?: string[] | null
+          id?: string
+          nome_padrao: string
+          notas?: string | null
+          sessoes_relacionadas?: number | null
+          severidade?: string
+          status?: string
+          therapist_id: string
+          tipo?: string
+          ultima_ocorrencia?: string | null
+          updated_at?: string
+        }
+        Update: {
+          acoes_ruptura?: string[] | null
+          client_id?: string
+          created_at?: string
+          descricao?: string | null
+          gatilhos?: string[] | null
+          id?: string
+          nome_padrao?: string
+          notas?: string | null
+          sessoes_relacionadas?: number | null
+          severidade?: string
+          status?: string
+          therapist_id?: string
+          tipo?: string
+          ultima_ocorrencia?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_labyrinths_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_live_map_entries: {
+        Row: {
+          client_user_id: string
+          created_at: string
+          direcao_conducao: string
+          estado_campo: string
+          estagio: string
+          ferramenta_utilizada: string | null
+          id: string
+          mensagem_simbolica: string | null
+          risco: string
+          ritmo_travessia: string | null
+          session_id: string | null
+          tensao_ativa: string | null
+          therapist_user_id: string
+          tipo_registro: string
+        }
+        Insert: {
+          client_user_id: string
+          created_at?: string
+          direcao_conducao: string
+          estado_campo: string
+          estagio?: string
+          ferramenta_utilizada?: string | null
+          id?: string
+          mensagem_simbolica?: string | null
+          risco?: string
+          ritmo_travessia?: string | null
+          session_id?: string | null
+          tensao_ativa?: string | null
+          therapist_user_id: string
+          tipo_registro?: string
+        }
+        Update: {
+          client_user_id?: string
+          created_at?: string
+          direcao_conducao?: string
+          estado_campo?: string
+          estagio?: string
+          ferramenta_utilizada?: string | null
+          id?: string
+          mensagem_simbolica?: string | null
+          risco?: string
+          ritmo_travessia?: string | null
+          session_id?: string | null
+          tensao_ativa?: string | null
+          therapist_user_id?: string
+          tipo_registro?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_live_map_entries_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_pattern_stats: {
+        Row: {
+          client_id: string
+          created_at: string
+          id: string
+          last_seen_at: string
+          occurrence_count: number
+          pattern_name: string
+          pattern_type: Database["public"]["Enums"]["pattern_stat_type"]
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          id?: string
+          last_seen_at?: string
+          occurrence_count?: number
+          pattern_name: string
+          pattern_type: Database["public"]["Enums"]["pattern_stat_type"]
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          id?: string
+          last_seen_at?: string
+          occurrence_count?: number
+          pattern_name?: string
+          pattern_type?: Database["public"]["Enums"]["pattern_stat_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_pattern_stats_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_seasons: {
+        Row: {
+          client_id: string
+          created_at: string
+          data_registro: string
+          descricao: string | null
+          energia_predominante: string | null
+          estacao: string
+          id: string
+          intervencao_sugerida: string | null
+          necessidade_central: string | null
+          notas: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          data_registro?: string
+          descricao?: string | null
+          energia_predominante?: string | null
+          estacao: string
+          id?: string
+          intervencao_sugerida?: string | null
+          necessidade_central?: string | null
+          notas?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          data_registro?: string
+          descricao?: string | null
+          energia_predominante?: string | null
+          estacao?: string
+          id?: string
+          intervencao_sugerida?: string | null
+          necessidade_central?: string | null
+          notas?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_seasons_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clientes: {
+        Row: {
+          accepted_at: string | null
+          archetypal_profile_history: Json | null
+          archetypal_profile_json: Json | null
+          cartografia_sessao: Json | null
+          client_user_id: string | null
+          codigo_interno: string | null
+          created_at: string
+          data_inicio: string | null
+          data_nascimento: string | null
+          email: string | null
+          estado_civil: string | null
+          has_initial_cartography: boolean
+          has_initial_cidadela: boolean
+          id: string
+          informacoes_relevantes: string | null
+          invitation_sent_at: string | null
+          invited_by: string | null
+          nome: string
+          notes_internal: string | null
+          numero_filhos: number | null
+          objetivo_terapeutico: string | null
+          observacao_segura: string | null
+          status: Database["public"]["Enums"]["cliente_status"]
+          telefone: string | null
+          terapeuta_id: string
+          updated_at: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          archetypal_profile_history?: Json | null
+          archetypal_profile_json?: Json | null
+          cartografia_sessao?: Json | null
+          client_user_id?: string | null
+          codigo_interno?: string | null
+          created_at?: string
+          data_inicio?: string | null
+          data_nascimento?: string | null
+          email?: string | null
+          estado_civil?: string | null
+          has_initial_cartography?: boolean
+          has_initial_cidadela?: boolean
+          id?: string
+          informacoes_relevantes?: string | null
+          invitation_sent_at?: string | null
+          invited_by?: string | null
+          nome: string
+          notes_internal?: string | null
+          numero_filhos?: number | null
+          objetivo_terapeutico?: string | null
+          observacao_segura?: string | null
+          status?: Database["public"]["Enums"]["cliente_status"]
+          telefone?: string | null
+          terapeuta_id: string
+          updated_at?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          archetypal_profile_history?: Json | null
+          archetypal_profile_json?: Json | null
+          cartografia_sessao?: Json | null
+          client_user_id?: string | null
+          codigo_interno?: string | null
+          created_at?: string
+          data_inicio?: string | null
+          data_nascimento?: string | null
+          email?: string | null
+          estado_civil?: string | null
+          has_initial_cartography?: boolean
+          has_initial_cidadela?: boolean
+          id?: string
+          informacoes_relevantes?: string | null
+          invitation_sent_at?: string | null
+          invited_by?: string | null
+          nome?: string
+          notes_internal?: string | null
+          numero_filhos?: number | null
+          objetivo_terapeutico?: string | null
+          observacao_segura?: string | null
+          status?: Database["public"]["Enums"]["cliente_status"]
+          telefone?: string | null
+          terapeuta_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      clube_audio_albums: {
+        Row: {
+          capa_url: string | null
+          created_at: string
+          descricao: string | null
+          estacao_id: string
+          id: string
+          ordem: number
+          status: Database["public"]["Enums"]["album_status"]
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          capa_url?: string | null
+          created_at?: string
+          descricao?: string | null
+          estacao_id: string
+          id?: string
+          ordem?: number
+          status?: Database["public"]["Enums"]["album_status"]
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          capa_url?: string | null
+          created_at?: string
+          descricao?: string | null
+          estacao_id?: string
+          id?: string
+          ordem?: number
+          status?: Database["public"]["Enums"]["album_status"]
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_audio_albums_estacao_id_fkey"
+            columns: ["estacao_id"]
+            isOneToOne: false
+            referencedRelation: "clube_estacoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_audio_progress: {
+        Row: {
+          concluido: boolean
+          id: string
+          posicao_segundos: number
+          track_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          concluido?: boolean
+          id?: string
+          posicao_segundos?: number
+          track_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          concluido?: boolean
+          id?: string
+          posicao_segundos?: number
+          track_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_audio_progress_track_id_fkey"
+            columns: ["track_id"]
+            isOneToOne: false
+            referencedRelation: "clube_audio_tracks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_audio_tracks: {
+        Row: {
+          album_id: string
+          audio_url: string
+          created_at: string
+          duracao_segundos: number | null
+          id: string
+          ordem: number
+          publicado: boolean
+          tags: string[] | null
+          tipo: Database["public"]["Enums"]["track_type"]
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          album_id: string
+          audio_url: string
+          created_at?: string
+          duracao_segundos?: number | null
+          id?: string
+          ordem?: number
+          publicado?: boolean
+          tags?: string[] | null
+          tipo?: Database["public"]["Enums"]["track_type"]
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          album_id?: string
+          audio_url?: string
+          created_at?: string
+          duracao_segundos?: number | null
+          id?: string
+          ordem?: number
+          publicado?: boolean
+          tags?: string[] | null
+          tipo?: Database["public"]["Enums"]["track_type"]
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_audio_tracks_album_id_fkey"
+            columns: ["album_id"]
+            isOneToOne: false
+            referencedRelation: "clube_audio_albums"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_audit_log: {
+        Row: {
+          acao: string
+          campo_alterado: string | null
+          created_at: string
+          id: string
+          registro_id: string
+          tabela: string
+          user_id: string
+          valor_anterior: string | null
+          valor_novo: string | null
+        }
+        Insert: {
+          acao: string
+          campo_alterado?: string | null
+          created_at?: string
+          id?: string
+          registro_id: string
+          tabela: string
+          user_id: string
+          valor_anterior?: string | null
+          valor_novo?: string | null
+        }
+        Update: {
+          acao?: string
+          campo_alterado?: string | null
+          created_at?: string
+          id?: string
+          registro_id?: string
+          tabela?: string
+          user_id?: string
+          valor_anterior?: string | null
+          valor_novo?: string | null
+        }
+        Relationships: []
+      }
+      clube_carrossel_slides: {
+        Row: {
+          created_at: string
+          estacao_id: string | null
+          icone: string | null
+          id: string
+          ordem: number
+          rota_slug: string | null
+          status: string
+          subtitulo: string | null
+          texto: string | null
+          titulo: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          estacao_id?: string | null
+          icone?: string | null
+          id?: string
+          ordem?: number
+          rota_slug?: string | null
+          status?: string
+          subtitulo?: string | null
+          texto?: string | null
+          titulo?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          estacao_id?: string | null
+          icone?: string | null
+          id?: string
+          ordem?: number
+          rota_slug?: string | null
+          status?: string
+          subtitulo?: string | null
+          texto?: string | null
+          titulo?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_carrossel_slides_estacao_id_fkey"
+            columns: ["estacao_id"]
+            isOneToOne: false
+            referencedRelation: "oracular_seasons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_engajamento: {
+        Row: {
+          acessos: number
+          ciclo_id: string | null
+          encontros_participados: number
+          estacao_id: string | null
+          id: string
+          nivel: string
+          progresso: number
+          reflexoes_salvas: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          acessos?: number
+          ciclo_id?: string | null
+          encontros_participados?: number
+          estacao_id?: string | null
+          id?: string
+          nivel?: string
+          progresso?: number
+          reflexoes_salvas?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          acessos?: number
+          ciclo_id?: string | null
+          encontros_participados?: number
+          estacao_id?: string | null
+          id?: string
+          nivel?: string
+          progresso?: number
+          reflexoes_salvas?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_engajamento_estacao_id_fkey"
+            columns: ["estacao_id"]
+            isOneToOne: false
+            referencedRelation: "clube_estacoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_estacao_registros: {
+        Row: {
+          created_at: string
+          estacao_id: string
+          id: string
+          texto: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          estacao_id: string
+          id?: string
+          texto?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          estacao_id?: string
+          id?: string
+          texto?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_estacao_registros_estacao_id_fkey"
+            columns: ["estacao_id"]
+            isOneToOne: false
+            referencedRelation: "clube_estacoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_estacoes: {
+        Row: {
+          aplicacao_acao: string | null
+          aplicacao_reflexao: string | null
+          aplicar_grupo_dinamica: string | null
+          aplicar_grupo_regra: string | null
+          aplicar_grupo_risco: string | null
+          aplicar_mim_exercicio: string | null
+          aplicar_mim_instrucao: string | null
+          aplicar_sessao_intervencao: string | null
+          aplicar_sessao_pergunta: string | null
+          aplicar_sessao_risco: string | null
+          ativa: boolean | null
+          banner_url: string | null
+          cartografia_id: string | null
+          created_at: string
+          descricao: string | null
+          essencia_nucleo: string | null
+          essencia_tensao: string | null
+          essencia_transformacao: string | null
+          fase_lunar: string | null
+          id: string
+          livro_autor: string | null
+          livro_capa_url: string | null
+          livro_imagem_banner_url: string | null
+          livro_titulo: string
+          numero: number
+          ordem: number
+          publicada: boolean | null
+          quiz_id: string | null
+          status: Database["public"]["Enums"]["clube_status"] | null
+          subtitulo: string
+          titulo: string
+          traducao_aula: string | null
+          traducao_circulo: string | null
+          traducao_sessao: string | null
+          updated_at: string
+        }
+        Insert: {
+          aplicacao_acao?: string | null
+          aplicacao_reflexao?: string | null
+          aplicar_grupo_dinamica?: string | null
+          aplicar_grupo_regra?: string | null
+          aplicar_grupo_risco?: string | null
+          aplicar_mim_exercicio?: string | null
+          aplicar_mim_instrucao?: string | null
+          aplicar_sessao_intervencao?: string | null
+          aplicar_sessao_pergunta?: string | null
+          aplicar_sessao_risco?: string | null
+          ativa?: boolean | null
+          banner_url?: string | null
+          cartografia_id?: string | null
+          created_at?: string
+          descricao?: string | null
+          essencia_nucleo?: string | null
+          essencia_tensao?: string | null
+          essencia_transformacao?: string | null
+          fase_lunar?: string | null
+          id?: string
+          livro_autor?: string | null
+          livro_capa_url?: string | null
+          livro_imagem_banner_url?: string | null
+          livro_titulo: string
+          numero: number
+          ordem?: number
+          publicada?: boolean | null
+          quiz_id?: string | null
+          status?: Database["public"]["Enums"]["clube_status"] | null
+          subtitulo: string
+          titulo: string
+          traducao_aula?: string | null
+          traducao_circulo?: string | null
+          traducao_sessao?: string | null
+          updated_at?: string
+        }
+        Update: {
+          aplicacao_acao?: string | null
+          aplicacao_reflexao?: string | null
+          aplicar_grupo_dinamica?: string | null
+          aplicar_grupo_regra?: string | null
+          aplicar_grupo_risco?: string | null
+          aplicar_mim_exercicio?: string | null
+          aplicar_mim_instrucao?: string | null
+          aplicar_sessao_intervencao?: string | null
+          aplicar_sessao_pergunta?: string | null
+          aplicar_sessao_risco?: string | null
+          ativa?: boolean | null
+          banner_url?: string | null
+          cartografia_id?: string | null
+          created_at?: string
+          descricao?: string | null
+          essencia_nucleo?: string | null
+          essencia_tensao?: string | null
+          essencia_transformacao?: string | null
+          fase_lunar?: string | null
+          id?: string
+          livro_autor?: string | null
+          livro_capa_url?: string | null
+          livro_imagem_banner_url?: string | null
+          livro_titulo?: string
+          numero?: number
+          ordem?: number
+          publicada?: boolean | null
+          quiz_id?: string | null
+          status?: Database["public"]["Enums"]["clube_status"] | null
+          subtitulo?: string
+          titulo?: string
+          traducao_aula?: string | null
+          traducao_circulo?: string | null
+          traducao_sessao?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_estacoes_cartografia_id_fkey"
+            columns: ["cartografia_id"]
+            isOneToOne: false
+            referencedRelation: "cartographies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "clube_estacoes_quiz_id_fkey"
+            columns: ["quiz_id"]
+            isOneToOne: false
+            referencedRelation: "quizzes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_jornadas: {
+        Row: {
+          ativa: boolean
+          conteudo_semanal_id: string | null
+          cor: string | null
+          created_at: string
+          descricao: string | null
+          estacao_id: string
+          icone: string | null
+          id: string
+          nome: string
+          ordem: number
+          slug: string
+          subtitulo: string | null
+          tipo: Database["public"]["Enums"]["clube_jornada_tipo"]
+          updated_at: string
+        }
+        Insert: {
+          ativa?: boolean
+          conteudo_semanal_id?: string | null
+          cor?: string | null
+          created_at?: string
+          descricao?: string | null
+          estacao_id: string
+          icone?: string | null
+          id?: string
+          nome: string
+          ordem?: number
+          slug: string
+          subtitulo?: string | null
+          tipo?: Database["public"]["Enums"]["clube_jornada_tipo"]
+          updated_at?: string
+        }
+        Update: {
+          ativa?: boolean
+          conteudo_semanal_id?: string | null
+          cor?: string | null
+          created_at?: string
+          descricao?: string | null
+          estacao_id?: string
+          icone?: string | null
+          id?: string
+          nome?: string
+          ordem?: number
+          slug?: string
+          subtitulo?: string | null
+          tipo?: Database["public"]["Enums"]["clube_jornada_tipo"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_jornadas_estacao_id_fkey"
+            columns: ["estacao_id"]
+            isOneToOne: false
+            referencedRelation: "clube_estacoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_livro_aulas: {
+        Row: {
+          ativo: boolean | null
+          ciclo_id: string
+          conteudo: string | null
+          created_at: string
+          descricao: string | null
+          duracao: string | null
+          id: string
+          media_type: string | null
           media_url: string | null
-          room: Database["public"]["Enums"]["casa_room"]
+          ordem: number | null
+          porta_id: string | null
+          publicado: boolean | null
+          subtitulo: string | null
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          ciclo_id: string
+          conteudo?: string | null
+          created_at?: string
+          descricao?: string | null
+          duracao?: string | null
+          id?: string
+          media_type?: string | null
+          media_url?: string | null
+          ordem?: number | null
+          porta_id?: string | null
+          publicado?: boolean | null
+          subtitulo?: string | null
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean | null
+          ciclo_id?: string
+          conteudo?: string | null
+          created_at?: string
+          descricao?: string | null
+          duracao?: string | null
+          id?: string
+          media_type?: string | null
+          media_url?: string | null
+          ordem?: number | null
+          porta_id?: string | null
+          publicado?: boolean | null
+          subtitulo?: string | null
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_livro_aulas_porta_id_fkey"
+            columns: ["porta_id"]
+            isOneToOne: false
+            referencedRelation: "clube_livro_portas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_livro_chat_interactions: {
+        Row: {
+          book_id: string | null
+          created_at: string | null
+          cycle_id: string | null
+          id: string
+          interaction_type: string | null
+          message: string
+          metadata: Json | null
+          portal_id: string | null
+          response: string
+          rota_id: string | null
+          saved_to_jardim: boolean | null
+          sent_to_forja: boolean | null
+          tokens_estimated: number | null
+          user_id: string
+        }
+        Insert: {
+          book_id?: string | null
+          created_at?: string | null
+          cycle_id?: string | null
+          id?: string
+          interaction_type?: string | null
+          message: string
+          metadata?: Json | null
+          portal_id?: string | null
+          response: string
+          rota_id?: string | null
+          saved_to_jardim?: boolean | null
+          sent_to_forja?: boolean | null
+          tokens_estimated?: number | null
+          user_id: string
+        }
+        Update: {
+          book_id?: string | null
+          created_at?: string | null
+          cycle_id?: string | null
+          id?: string
+          interaction_type?: string | null
+          message?: string
+          metadata?: Json | null
+          portal_id?: string | null
+          response?: string
+          rota_id?: string | null
+          saved_to_jardim?: boolean | null
+          sent_to_forja?: boolean | null
+          tokens_estimated?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_livro_chat_interactions_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_livro_encontros: {
+        Row: {
+          ativo: boolean | null
+          ciclo_id: string | null
+          created_at: string
+          data_encontro: string | null
+          descricao: string | null
+          estacao_id: string | null
+          id: string
+          link_ao_vivo: string | null
+          orientacao_encontro: string | null
+          replay_url: string | null
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          ciclo_id?: string | null
+          created_at?: string
+          data_encontro?: string | null
+          descricao?: string | null
+          estacao_id?: string | null
+          id?: string
+          link_ao_vivo?: string | null
+          orientacao_encontro?: string | null
+          replay_url?: string | null
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean | null
+          ciclo_id?: string | null
+          created_at?: string
+          data_encontro?: string | null
+          descricao?: string | null
+          estacao_id?: string | null
+          id?: string
+          link_ao_vivo?: string | null
+          orientacao_encontro?: string | null
+          replay_url?: string | null
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_livro_encontros_estacao_id_fkey"
+            columns: ["estacao_id"]
+            isOneToOne: false
+            referencedRelation: "clube_estacoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_livro_escuta_progress: {
+        Row: {
+          concluido: boolean
+          escuta_id: string
+          id: string
+          posicao_segundos: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          concluido?: boolean
+          escuta_id: string
+          id?: string
+          posicao_segundos?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          concluido?: boolean
+          escuta_id?: string
+          id?: string
+          posicao_segundos?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      clube_livro_integracao_8020: {
+        Row: {
+          aplicacao_pessoal_acao: string | null
+          aplicacao_pessoal_comportamento: string | null
+          aplicacao_pessoal_onde: string | null
+          ciclo_id: string
+          created_at: string
+          id: string
+          notas_profissionais: string | null
+          registro_livre: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          aplicacao_pessoal_acao?: string | null
+          aplicacao_pessoal_comportamento?: string | null
+          aplicacao_pessoal_onde?: string | null
+          ciclo_id: string
+          created_at?: string
+          id?: string
+          notas_profissionais?: string | null
+          registro_livre?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          aplicacao_pessoal_acao?: string | null
+          aplicacao_pessoal_comportamento?: string | null
+          aplicacao_pessoal_onde?: string | null
+          ciclo_id?: string
+          created_at?: string
+          id?: string
+          notas_profissionais?: string | null
+          registro_livre?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      clube_livro_integracao_8020_config: {
+        Row: {
+          aula_conceito: string | null
+          aula_exemplo: string | null
+          aula_exercicio: string | null
+          ciclo_id: string
+          comportamento_abandonar: string | null
+          created_at: string
+          essencia_texto: string | null
+          id: string
+          palestra_convite: string | null
+          palestra_ideia: string | null
+          palestra_narrativa: string | null
+          sessao_escuta: string | null
+          sessao_pergunta: string | null
+          sessao_resistencia: string | null
+          tensao_central: string | null
+          transformacao_proposta: string | null
+          updated_at: string
+        }
+        Insert: {
+          aula_conceito?: string | null
+          aula_exemplo?: string | null
+          aula_exercicio?: string | null
+          ciclo_id: string
+          comportamento_abandonar?: string | null
+          created_at?: string
+          essencia_texto?: string | null
+          id?: string
+          palestra_convite?: string | null
+          palestra_ideia?: string | null
+          palestra_narrativa?: string | null
+          sessao_escuta?: string | null
+          sessao_pergunta?: string | null
+          sessao_resistencia?: string | null
+          tensao_central?: string | null
+          transformacao_proposta?: string | null
+          updated_at?: string
+        }
+        Update: {
+          aula_conceito?: string | null
+          aula_exemplo?: string | null
+          aula_exercicio?: string | null
+          ciclo_id?: string
+          comportamento_abandonar?: string | null
+          created_at?: string
+          essencia_texto?: string | null
+          id?: string
+          palestra_convite?: string | null
+          palestra_ideia?: string | null
+          palestra_narrativa?: string | null
+          sessao_escuta?: string | null
+          sessao_pergunta?: string | null
+          sessao_resistencia?: string | null
+          tensao_central?: string | null
+          transformacao_proposta?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      clube_livro_integracao_config: {
+        Row: {
+          ciclo_id: string
+          created_at: string
+          id: string
+          movimento_1: string | null
+          movimento_2: string | null
+          movimento_3: string | null
+          pergunta_central: string | null
+          ritual_instrucao: string | null
+          texto_introdutorio: string | null
+          updated_at: string
+        }
+        Insert: {
+          ciclo_id: string
+          created_at?: string
+          id?: string
+          movimento_1?: string | null
+          movimento_2?: string | null
+          movimento_3?: string | null
+          pergunta_central?: string | null
+          ritual_instrucao?: string | null
+          texto_introdutorio?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ciclo_id?: string
+          created_at?: string
+          id?: string
+          movimento_1?: string | null
+          movimento_2?: string | null
+          movimento_3?: string | null
+          pergunta_central?: string | null
+          ritual_instrucao?: string | null
+          texto_introdutorio?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      clube_livro_integracoes: {
+        Row: {
+          ciclo_id: string
+          created_at: string
+          id: string
+          movimentos_concluidos: boolean[] | null
+          registro_oracular: string | null
+          ritual_concluido: boolean | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ciclo_id: string
+          created_at?: string
+          id?: string
+          movimentos_concluidos?: boolean[] | null
+          registro_oracular?: string | null
+          ritual_concluido?: boolean | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ciclo_id?: string
+          created_at?: string
+          id?: string
+          movimentos_concluidos?: boolean[] | null
+          registro_oracular?: string | null
+          ritual_concluido?: boolean | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      clube_livro_perguntas: {
+        Row: {
+          ativo: boolean | null
+          created_at: string
+          fase_id: string
+          id: string
+          ordem: number | null
+          texto_pergunta: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string
+          fase_id: string
+          id?: string
+          ordem?: number | null
+          texto_pergunta: string
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string
+          fase_id?: string
+          id?: string
+          ordem?: number | null
+          texto_pergunta?: string
+        }
+        Relationships: []
+      }
+      clube_livro_portas: {
+        Row: {
+          ativo: boolean | null
+          ciclo_id: string
+          cor: string | null
+          created_at: string | null
+          descricao: string | null
+          icone: string | null
+          id: string
+          jornada: string
+          ordem: number | null
+          titulo: string
+          updated_at: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          ciclo_id: string
+          cor?: string | null
+          created_at?: string | null
+          descricao?: string | null
+          icone?: string | null
+          id?: string
+          jornada: string
+          ordem?: number | null
+          titulo: string
+          updated_at?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          ciclo_id?: string
+          cor?: string | null
+          created_at?: string | null
+          descricao?: string | null
+          icone?: string | null
+          id?: string
+          jornada?: string
+          ordem?: number | null
+          titulo?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      clube_livro_respostas: {
+        Row: {
+          ciclo_id: string
+          created_at: string
+          fase_id: string
+          id: string
+          jardim_registro_id: string | null
+          pergunta_id: string
+          resposta: string | null
+          salvo_jardim: boolean | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ciclo_id: string
+          created_at?: string
+          fase_id: string
+          id?: string
+          jardim_registro_id?: string | null
+          pergunta_id: string
+          resposta?: string | null
+          salvo_jardim?: boolean | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ciclo_id?: string
+          created_at?: string
+          fase_id?: string
+          id?: string
+          jardim_registro_id?: string | null
+          pergunta_id?: string
+          resposta?: string | null
+          salvo_jardim?: boolean | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_livro_respostas_pergunta_id_fkey"
+            columns: ["pergunta_id"]
+            isOneToOne: false
+            referencedRelation: "clube_livro_perguntas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_livro_ritual_aceites: {
+        Row: {
+          aceito_em: string
+          ciclo_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          aceito_em?: string
+          ciclo_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          aceito_em?: string
+          ciclo_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      clube_obras_essencia_8020: {
+        Row: {
+          aplicacao_terapeutica: string | null
+          book_id: string
+          created_at: string
+          distorcao_comum: string | null
+          exercicio: string | null
+          id: string
+          imagem_organizadora: string | null
+          nucleo_vivo: string | null
+          perguntas_clinicas: string[] | null
+          resumo_premium: string | null
+          riscos_eticos: string | null
+          tensao_central: string | null
+          updated_at: string
+        }
+        Insert: {
+          aplicacao_terapeutica?: string | null
+          book_id: string
+          created_at?: string
+          distorcao_comum?: string | null
+          exercicio?: string | null
+          id?: string
+          imagem_organizadora?: string | null
+          nucleo_vivo?: string | null
+          perguntas_clinicas?: string[] | null
+          resumo_premium?: string | null
+          riscos_eticos?: string | null
+          tensao_central?: string | null
+          updated_at?: string
+        }
+        Update: {
+          aplicacao_terapeutica?: string | null
+          book_id?: string
+          created_at?: string
+          distorcao_comum?: string | null
+          exercicio?: string | null
+          id?: string
+          imagem_organizadora?: string | null
+          nucleo_vivo?: string | null
+          perguntas_clinicas?: string[] | null
+          resumo_premium?: string | null
+          riscos_eticos?: string | null
+          tensao_central?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_obras_essencia_8020_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: true
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_portais: {
+        Row: {
+          acao_pequena: string | null
+          aplicacao_aula: string | null
+          aplicacao_circulo: string | null
+          aplicacao_pessoal: string | null
+          aplicacao_profissional: string | null
+          aplicacao_sessao: string | null
+          ativo: boolean
+          audio_duracao: string | null
+          audio_roteiro: string | null
+          audio_titulo: string | null
+          audio_url: string | null
+          aula_data: string | null
+          aula_link: string | null
+          aula_replay_url: string | null
+          aula_titulo: string | null
+          created_at: string
+          essencia_8020: string | null
+          estrutura_replicavel: string[] | null
+          ferramenta_campos: Json | null
+          ferramenta_descricao: string | null
+          ferramenta_nome: string | null
+          forja_ajuste_fino: string | null
+          forja_cenario: string | null
+          forja_conducao: string[] | null
+          forja_erros_comuns: string[] | null
+          forja_portal_ativo: string | null
+          habilidade_simbolica: string | null
+          icone: string | null
+          id: string
+          jardim_heroina: string | null
+          jardim_psique: string | null
+          jornada_id: string
+          laboratorio_8020: string | null
+          laboratorio_integracao: string | null
+          laboratorio_resultado_esperado: string | null
+          leitura_etica: string | null
+          narroterapia_abertura: string | null
+          narroterapia_conto_sugerido: string | null
+          narroterapia_perguntas: string[] | null
+          nome: string
+          o_que_nao_fazer: string | null
+          onde_estamos_jornada: string | null
+          ordem: number
+          raiz_psiquica: string | null
+          regulacao_emocional: string | null
+          riscos_eticos: string[] | null
+          slug: string
+          subtitulo: string | null
+          tensao_central: string | null
+          texto_simbolico: string | null
+          tipo_portal: string | null
+          updated_at: string
+        }
+        Insert: {
+          acao_pequena?: string | null
+          aplicacao_aula?: string | null
+          aplicacao_circulo?: string | null
+          aplicacao_pessoal?: string | null
+          aplicacao_profissional?: string | null
+          aplicacao_sessao?: string | null
+          ativo?: boolean
+          audio_duracao?: string | null
+          audio_roteiro?: string | null
+          audio_titulo?: string | null
+          audio_url?: string | null
+          aula_data?: string | null
+          aula_link?: string | null
+          aula_replay_url?: string | null
+          aula_titulo?: string | null
+          created_at?: string
+          essencia_8020?: string | null
+          estrutura_replicavel?: string[] | null
+          ferramenta_campos?: Json | null
+          ferramenta_descricao?: string | null
+          ferramenta_nome?: string | null
+          forja_ajuste_fino?: string | null
+          forja_cenario?: string | null
+          forja_conducao?: string[] | null
+          forja_erros_comuns?: string[] | null
+          forja_portal_ativo?: string | null
+          habilidade_simbolica?: string | null
+          icone?: string | null
+          id?: string
+          jardim_heroina?: string | null
+          jardim_psique?: string | null
+          jornada_id: string
+          laboratorio_8020?: string | null
+          laboratorio_integracao?: string | null
+          laboratorio_resultado_esperado?: string | null
+          leitura_etica?: string | null
+          narroterapia_abertura?: string | null
+          narroterapia_conto_sugerido?: string | null
+          narroterapia_perguntas?: string[] | null
+          nome: string
+          o_que_nao_fazer?: string | null
+          onde_estamos_jornada?: string | null
+          ordem?: number
+          raiz_psiquica?: string | null
+          regulacao_emocional?: string | null
+          riscos_eticos?: string[] | null
+          slug: string
+          subtitulo?: string | null
+          tensao_central?: string | null
+          texto_simbolico?: string | null
+          tipo_portal?: string | null
+          updated_at?: string
+        }
+        Update: {
+          acao_pequena?: string | null
+          aplicacao_aula?: string | null
+          aplicacao_circulo?: string | null
+          aplicacao_pessoal?: string | null
+          aplicacao_profissional?: string | null
+          aplicacao_sessao?: string | null
+          ativo?: boolean
+          audio_duracao?: string | null
+          audio_roteiro?: string | null
+          audio_titulo?: string | null
+          audio_url?: string | null
+          aula_data?: string | null
+          aula_link?: string | null
+          aula_replay_url?: string | null
+          aula_titulo?: string | null
+          created_at?: string
+          essencia_8020?: string | null
+          estrutura_replicavel?: string[] | null
+          ferramenta_campos?: Json | null
+          ferramenta_descricao?: string | null
+          ferramenta_nome?: string | null
+          forja_ajuste_fino?: string | null
+          forja_cenario?: string | null
+          forja_conducao?: string[] | null
+          forja_erros_comuns?: string[] | null
+          forja_portal_ativo?: string | null
+          habilidade_simbolica?: string | null
+          icone?: string | null
+          id?: string
+          jardim_heroina?: string | null
+          jardim_psique?: string | null
+          jornada_id?: string
+          laboratorio_8020?: string | null
+          laboratorio_integracao?: string | null
+          laboratorio_resultado_esperado?: string | null
+          leitura_etica?: string | null
+          narroterapia_abertura?: string | null
+          narroterapia_conto_sugerido?: string | null
+          narroterapia_perguntas?: string[] | null
+          nome?: string
+          o_que_nao_fazer?: string | null
+          onde_estamos_jornada?: string | null
+          ordem?: number
+          raiz_psiquica?: string | null
+          regulacao_emocional?: string | null
+          riscos_eticos?: string[] | null
+          slug?: string
+          subtitulo?: string | null
+          tensao_central?: string | null
+          texto_simbolico?: string | null
+          tipo_portal?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_portais_jornada_id_fkey"
+            columns: ["jornada_id"]
+            isOneToOne: false
+            referencedRelation: "clube_jornadas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_portal_audios: {
+        Row: {
+          audio_url: string | null
+          created_at: string
+          descricao: string | null
+          duracao_estimada: string | null
+          id: string
+          ordem: number | null
+          portal_id: string
+          roteiro: string | null
+          status: Database["public"]["Enums"]["clube_audio_status"] | null
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          audio_url?: string | null
+          created_at?: string
+          descricao?: string | null
+          duracao_estimada?: string | null
+          id?: string
+          ordem?: number | null
+          portal_id: string
+          roteiro?: string | null
+          status?: Database["public"]["Enums"]["clube_audio_status"] | null
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          audio_url?: string | null
+          created_at?: string
+          descricao?: string | null
+          duracao_estimada?: string | null
+          id?: string
+          ordem?: number | null
+          portal_id?: string
+          roteiro?: string | null
+          status?: Database["public"]["Enums"]["clube_audio_status"] | null
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_portal_audios_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: false
+            referencedRelation: "clube_portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_portal_insights: {
+        Row: {
+          created_at: string
+          estacao_id: string | null
+          frase: string
+          frequencia: string | null
+          id: string
+          intensidade: string | null
+          ordem: number
+          rota_slug: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          estacao_id?: string | null
+          frase: string
+          frequencia?: string | null
+          id?: string
+          intensidade?: string | null
+          ordem?: number
+          rota_slug?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          estacao_id?: string | null
+          frase?: string
+          frequencia?: string | null
+          id?: string
+          intensidade?: string | null
+          ordem?: number
+          rota_slug?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_portal_insights_estacao_id_fkey"
+            columns: ["estacao_id"]
+            isOneToOne: false
+            referencedRelation: "oracular_seasons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_portal_materiais: {
+        Row: {
+          conteudo_texto: string | null
+          created_at: string
+          descricao: string | null
+          file_url: string | null
+          id: string
+          link_externo: string | null
+          ordem: number | null
+          portal_id: string
+          tipo: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          conteudo_texto?: string | null
+          created_at?: string
+          descricao?: string | null
+          file_url?: string | null
+          id?: string
+          link_externo?: string | null
+          ordem?: number | null
+          portal_id: string
+          tipo?: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          conteudo_texto?: string | null
+          created_at?: string
+          descricao?: string | null
+          file_url?: string | null
+          id?: string
+          link_externo?: string | null
+          ordem?: number | null
+          portal_id?: string
+          tipo?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_portal_materiais_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: false
+            referencedRelation: "clube_portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_progresso_passos: {
+        Row: {
+          concluido: boolean | null
+          concluido_em: string | null
+          id: string
+          passo_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          concluido?: boolean | null
+          concluido_em?: string | null
+          id?: string
+          passo_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          concluido?: boolean | null
+          concluido_em?: string | null
+          id?: string
+          passo_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_progresso_passos_passo_id_fkey"
+            columns: ["passo_id"]
+            isOneToOne: false
+            referencedRelation: "clube_rota_itens"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_reflexoes: {
+        Row: {
+          ciclo_id: string | null
+          conteudo_semanal_id: string | null
+          created_at: string
+          estacao_id: string | null
+          id: string
+          texto: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ciclo_id?: string | null
+          conteudo_semanal_id?: string | null
+          created_at?: string
+          estacao_id?: string | null
+          id?: string
+          texto: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ciclo_id?: string | null
+          conteudo_semanal_id?: string | null
+          created_at?: string
+          estacao_id?: string | null
+          id?: string
+          texto?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_reflexoes_estacao_id_fkey"
+            columns: ["estacao_id"]
+            isOneToOne: false
+            referencedRelation: "clube_estacoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_rota_itens: {
+        Row: {
+          campo: string | null
+          cenario_treinamento: string | null
+          conteudo_inline: Json | null
+          created_at: string | null
+          estacao_id: string
+          frase_guia: string | null
+          icone: string | null
+          id: string
+          image_url: string | null
+          impacto_cidadela: Json | null
+          jardim_prompt: string | null
+          labirinto: string | null
+          leitura_referencia: string | null
+          metadata: Json | null
+          obrigatorio: boolean | null
+          ordem: number
+          porta: string | null
+          publicado: boolean | null
+          ref_id: string | null
+          ref_tipo: Database["public"]["Enums"]["clube_rota_ref_tipo"] | null
+          rota_custom: string | null
+          slug: string
+          status: string | null
+          subtitulo: string | null
+          tipo: string
+          tipo_passo: Database["public"]["Enums"]["clube_item_type"] | null
+          titulo: string
+          torre: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          campo?: string | null
+          cenario_treinamento?: string | null
+          conteudo_inline?: Json | null
+          created_at?: string | null
+          estacao_id: string
+          frase_guia?: string | null
+          icone?: string | null
+          id?: string
+          image_url?: string | null
+          impacto_cidadela?: Json | null
+          jardim_prompt?: string | null
+          labirinto?: string | null
+          leitura_referencia?: string | null
+          metadata?: Json | null
+          obrigatorio?: boolean | null
+          ordem: number
+          porta?: string | null
+          publicado?: boolean | null
+          ref_id?: string | null
+          ref_tipo?: Database["public"]["Enums"]["clube_rota_ref_tipo"] | null
+          rota_custom?: string | null
+          slug: string
+          status?: string | null
+          subtitulo?: string | null
+          tipo: string
+          tipo_passo?: Database["public"]["Enums"]["clube_item_type"] | null
+          titulo: string
+          torre?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          campo?: string | null
+          cenario_treinamento?: string | null
+          conteudo_inline?: Json | null
+          created_at?: string | null
+          estacao_id?: string
+          frase_guia?: string | null
+          icone?: string | null
+          id?: string
+          image_url?: string | null
+          impacto_cidadela?: Json | null
+          jardim_prompt?: string | null
+          labirinto?: string | null
+          leitura_referencia?: string | null
+          metadata?: Json | null
+          obrigatorio?: boolean | null
+          ordem?: number
+          porta?: string | null
+          publicado?: boolean | null
+          ref_id?: string | null
+          ref_tipo?: Database["public"]["Enums"]["clube_rota_ref_tipo"] | null
+          rota_custom?: string | null
+          slug?: string
+          status?: string | null
+          subtitulo?: string | null
+          tipo?: string
+          tipo_passo?: Database["public"]["Enums"]["clube_item_type"] | null
+          titulo?: string
+          torre?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_rota_itens_estacao_id_fkey"
+            columns: ["estacao_id"]
+            isOneToOne: false
+            referencedRelation: "clube_estacoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_rota_progresso: {
+        Row: {
+          created_at: string | null
+          data_conclusao: string | null
+          data_inicio: string | null
+          estacao_id: string
+          id: string
+          rota_item_id: string
+          status: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          data_conclusao?: string | null
+          data_inicio?: string | null
+          estacao_id: string
+          id?: string
+          rota_item_id: string
+          status?: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          data_conclusao?: string | null
+          data_inicio?: string | null
+          estacao_id?: string
+          id?: string
+          rota_item_id?: string
+          status?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_rota_progresso_estacao_id_fkey"
+            columns: ["estacao_id"]
+            isOneToOne: false
+            referencedRelation: "clube_estacoes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "clube_rota_progresso_rota_item_id_fkey"
+            columns: ["rota_item_id"]
+            isOneToOne: false
+            referencedRelation: "clube_rota_itens"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_v3_routes: {
+        Row: {
+          cover_image_url: string | null
+          created_at: string
+          description: string | null
+          display_order: number | null
+          id: string
+          status: string | null
           title: string
           updated_at: string
         }
         Insert: {
-          content?: string | null
+          cover_image_url?: string | null
           created_at?: string
+          description?: string | null
+          display_order?: number | null
           id?: string
-          media_type?: Database["public"]["Enums"]["casa_media_type"]
-          media_url?: string | null
-          room?: Database["public"]["Enums"]["casa_room"]
+          status?: string | null
           title: string
           updated_at?: string
         }
         Update: {
-          content?: string | null
+          cover_image_url?: string | null
           created_at?: string
+          description?: string | null
+          display_order?: number | null
           id?: string
-          media_type?: Database["public"]["Enums"]["casa_media_type"]
-          media_url?: string | null
-          room?: Database["public"]["Enums"]["casa_room"]
+          status?: string | null
           title?: string
           updated_at?: string
         }
         Relationships: []
       }
-      comments: {
+      clube_v3_station_audios: {
         Row: {
-          author_id: string
-          content: string
+          audio_url: string
           created_at: string
+          display_order: number | null
           id: string
-          post_id: string
+          station_id: string | null
+          status: string | null
+          title: string
           updated_at: string
         }
         Insert: {
-          author_id: string
-          content: string
+          audio_url: string
           created_at?: string
+          display_order?: number | null
           id?: string
-          post_id: string
+          station_id?: string | null
+          status?: string | null
+          title: string
           updated_at?: string
         }
         Update: {
-          author_id?: string
-          content?: string
+          audio_url?: string
           created_at?: string
+          display_order?: number | null
           id?: string
-          post_id?: string
+          station_id?: string | null
+          status?: string | null
+          title?: string
           updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: "comments_author_id_fkey"
-            columns: ["author_id"]
+            foreignKeyName: "clube_v3_station_audios_station_id_fkey"
+            columns: ["station_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "clube_v3_stations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_v3_station_content: {
+        Row: {
+          contemplative_question: string | null
+          created_at: string
+          id: string
+          jungian_reflection: string | null
+          letter_content: string | null
+          station_id: string | null
+          support_material: string | null
+          therapeutic_practice: string | null
+          updated_at: string
+        }
+        Insert: {
+          contemplative_question?: string | null
+          created_at?: string
+          id?: string
+          jungian_reflection?: string | null
+          letter_content?: string | null
+          station_id?: string | null
+          support_material?: string | null
+          therapeutic_practice?: string | null
+          updated_at?: string
+        }
+        Update: {
+          contemplative_question?: string | null
+          created_at?: string
+          id?: string
+          jungian_reflection?: string | null
+          letter_content?: string | null
+          station_id?: string | null
+          support_material?: string | null
+          therapeutic_practice?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_v3_station_content_station_id_fkey"
+            columns: ["station_id"]
+            isOneToOne: true
+            referencedRelation: "clube_v3_stations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_v3_stations: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number | null
+          id: string
+          route_id: string | null
+          status: string | null
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          route_id?: string | null
+          status?: string | null
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          route_id?: string | null
+          status?: string | null
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_v3_stations_route_id_fkey"
+            columns: ["route_id"]
+            isOneToOne: false
+            referencedRelation: "clube_v3_routes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clube_v3_user_progress: {
+        Row: {
+          audio_completed: boolean | null
+          created_at: string
+          id: string
+          letter_completed: boolean | null
+          practice_completed: boolean | null
+          question_completed: boolean | null
+          reflection_completed: boolean | null
+          station_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          audio_completed?: boolean | null
+          created_at?: string
+          id?: string
+          letter_completed?: boolean | null
+          practice_completed?: boolean | null
+          question_completed?: boolean | null
+          reflection_completed?: boolean | null
+          station_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          audio_completed?: boolean | null
+          created_at?: string
+          id?: string
+          letter_completed?: boolean | null
+          practice_completed?: boolean | null
+          question_completed?: boolean | null
+          reflection_completed?: boolean | null
+          station_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clube_v3_user_progress_station_id_fkey"
+            columns: ["station_id"]
+            isOneToOne: false
+            referencedRelation: "clube_v3_stations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_ai_recommendations: {
+        Row: {
+          campo_psiquico: string | null
+          client_id: string
+          created_at: string
+          distrito: string | null
+          id: string
+          motivo: string | null
+          session_id: string | null
+          tool_complementar_id: string | null
+          tool_sugerida_id: string | null
+        }
+        Insert: {
+          campo_psiquico?: string | null
+          client_id: string
+          created_at?: string
+          distrito?: string | null
+          id?: string
+          motivo?: string | null
+          session_id?: string | null
+          tool_complementar_id?: string | null
+          tool_sugerida_id?: string | null
+        }
+        Update: {
+          campo_psiquico?: string | null
+          client_id?: string
+          created_at?: string
+          distrito?: string | null
+          id?: string
+          motivo?: string | null
+          session_id?: string | null
+          tool_complementar_id?: string | null
+          tool_sugerida_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_ai_recommendations_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "comments_post_id_fkey"
+            foreignKeyName: "co_ai_recommendations_tool_complementar_id_fkey"
+            columns: ["tool_complementar_id"]
+            isOneToOne: false
+            referencedRelation: "sala_ferramentas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_ai_recommendations_tool_sugerida_id_fkey"
+            columns: ["tool_sugerida_id"]
+            isOneToOne: false
+            referencedRelation: "sala_ferramentas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_appointments: {
+        Row: {
+          client_id: string
+          created_at: string
+          fim: string
+          id: string
+          inicio: string
+          origem: string
+          status: string
+          terapeuta_user_id: string
+          workspace_id: string | null
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          fim: string
+          id?: string
+          inicio: string
+          origem?: string
+          status?: string
+          terapeuta_user_id: string
+          workspace_id?: string | null
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          fim?: string
+          id?: string
+          inicio?: string
+          origem?: string
+          status?: string
+          terapeuta_user_id?: string
+          workspace_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_appointments_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_appointments_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "co_workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_camara_sussurro_casos: {
+        Row: {
+          ativo: boolean
+          camadas_leitura: string | null
+          categoria: string | null
+          ciclo_id: string | null
+          contexto: string | null
+          created_at: string
+          dificuldade: string | null
+          distrito_dominante: string | null
+          distrito_esperado: string | null
+          erro_comum: string | null
+          explicacao_leve: string | null
+          explicacao_simples: string | null
+          fala_inicial: string | null
+          feedback_tecnico: string | null
+          ferramenta_principal: string | null
+          hipotese_esperada: string | null
+          id: string
+          idade: string | null
+          leitura_simbolica: string | null
+          nivel: string | null
+          nivel_produto: string
+          opcoes_leitura: Json | null
+          pergunta_ideal: string | null
+          proximo_treino_id: string | null
+          resposta_correta: string | null
+          risco_etico: string | null
+          tema_emocional: string | null
+          tipo_cliente: string | null
+          titulo: string
+          torre_provavel: string | null
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          camadas_leitura?: string | null
+          categoria?: string | null
+          ciclo_id?: string | null
+          contexto?: string | null
+          created_at?: string
+          dificuldade?: string | null
+          distrito_dominante?: string | null
+          distrito_esperado?: string | null
+          erro_comum?: string | null
+          explicacao_leve?: string | null
+          explicacao_simples?: string | null
+          fala_inicial?: string | null
+          feedback_tecnico?: string | null
+          ferramenta_principal?: string | null
+          hipotese_esperada?: string | null
+          id?: string
+          idade?: string | null
+          leitura_simbolica?: string | null
+          nivel?: string | null
+          nivel_produto?: string
+          opcoes_leitura?: Json | null
+          pergunta_ideal?: string | null
+          proximo_treino_id?: string | null
+          resposta_correta?: string | null
+          risco_etico?: string | null
+          tema_emocional?: string | null
+          tipo_cliente?: string | null
+          titulo: string
+          torre_provavel?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          camadas_leitura?: string | null
+          categoria?: string | null
+          ciclo_id?: string | null
+          contexto?: string | null
+          created_at?: string
+          dificuldade?: string | null
+          distrito_dominante?: string | null
+          distrito_esperado?: string | null
+          erro_comum?: string | null
+          explicacao_leve?: string | null
+          explicacao_simples?: string | null
+          fala_inicial?: string | null
+          feedback_tecnico?: string | null
+          ferramenta_principal?: string | null
+          hipotese_esperada?: string | null
+          id?: string
+          idade?: string | null
+          leitura_simbolica?: string | null
+          nivel?: string | null
+          nivel_produto?: string
+          opcoes_leitura?: Json | null
+          pergunta_ideal?: string | null
+          proximo_treino_id?: string | null
+          resposta_correta?: string | null
+          risco_etico?: string | null
+          tema_emocional?: string | null
+          tipo_cliente?: string | null
+          titulo?: string
+          torre_provavel?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_camara_sussurro_casos_proximo_treino_id_fkey"
+            columns: ["proximo_treino_id"]
+            isOneToOne: false
+            referencedRelation: "co_camara_sussurro_casos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_cartografia_profile: {
+        Row: {
+          cartografia_id: string | null
+          client_user_id: string | null
+          contexto: string
+          created_at: string
+          id: string
+          intensidade_oracular: string | null
+          medias_json: Json
+          oracula_inicial: string | null
+          profile_json: Json
+          therapist_user_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cartografia_id?: string | null
+          client_user_id?: string | null
+          contexto?: string
+          created_at?: string
+          id?: string
+          intensidade_oracular?: string | null
+          medias_json?: Json
+          oracula_inicial?: string | null
+          profile_json?: Json
+          therapist_user_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cartografia_id?: string | null
+          client_user_id?: string | null
+          contexto?: string
+          created_at?: string
+          id?: string
+          intensidade_oracular?: string | null
+          medias_json?: Json
+          oracula_inicial?: string | null
+          profile_json?: Json
+          therapist_user_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      co_city_history: {
+        Row: {
+          client_id: string
+          created_at: string
+          detalhe: string | null
+          distrito: string | null
+          evento: string
+          id: string
+          session_id: string | null
+          tool_id: string | null
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          detalhe?: string | null
+          distrito?: string | null
+          evento: string
+          id?: string
+          session_id?: string | null
+          tool_id?: string | null
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          detalhe?: string | null
+          distrito?: string | null
+          evento?: string
+          id?: string
+          session_id?: string | null
+          tool_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_city_history_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_city_history_tool_id_fkey"
+            columns: ["tool_id"]
+            isOneToOne: false
+            referencedRelation: "sala_ferramentas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_client_invites: {
+        Row: {
+          accepted_at: string | null
+          client_email: string
+          created_at: string
+          expires_at: string
+          id: string
+          status: string
+          therapist_user_id: string
+          token: string
+          updated_at: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          client_email: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          status?: string
+          therapist_user_id: string
+          token?: string
+          updated_at?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          client_email?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          status?: string
+          therapist_user_id?: string
+          token?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      co_client_profile: {
+        Row: {
+          client_id: string
+          created_at: string
+          dinamico: Json
+          estrutural: Json
+          evolutivo: Json
+          id: string
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          dinamico?: Json
+          estrutural?: Json
+          evolutivo?: Json
+          id?: string
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          dinamico?: Json
+          estrutural?: Json
+          evolutivo?: Json
+          id?: string
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_client_profile_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_client_profiles: {
+        Row: {
+          arquetipo_evolucao: string | null
+          arquetipo_regente: string | null
+          arquetipo_sombra: string | null
+          client_id: string
+          distrito_ativo: string | null
+          fase_jornada: string | null
+          id: string
+          observacoes: string | null
+          porta_ativa: string | null
+          torre_dominante: string | null
+          updated_at: string
+        }
+        Insert: {
+          arquetipo_evolucao?: string | null
+          arquetipo_regente?: string | null
+          arquetipo_sombra?: string | null
+          client_id: string
+          distrito_ativo?: string | null
+          fase_jornada?: string | null
+          id?: string
+          observacoes?: string | null
+          porta_ativa?: string | null
+          torre_dominante?: string | null
+          updated_at?: string
+        }
+        Update: {
+          arquetipo_evolucao?: string | null
+          arquetipo_regente?: string | null
+          arquetipo_sombra?: string | null
+          client_id?: string
+          distrito_ativo?: string | null
+          fase_jornada?: string | null
+          id?: string
+          observacoes?: string | null
+          porta_ativa?: string | null
+          torre_dominante?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_client_profiles_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: true
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_convites: {
+        Row: {
+          accepted_at: string | null
+          cliente_id: string
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          status: string
+          terapeuta_id: string
+          token: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          cliente_id: string
+          created_at?: string
+          email: string
+          expires_at?: string
+          id?: string
+          status?: string
+          terapeuta_id: string
+          token?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          cliente_id?: string
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          status?: string
+          terapeuta_id?: string
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_convites_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_detectores_eventos: {
+        Row: {
+          client_user_id: string
+          contexto: string | null
+          created_at: string
+          descricao: string | null
+          detector_tipo: string
+          id: string
+          intensidade: string
+          origem: string
+          payload_hash: string | null
+          session_id: string | null
+          therapist_user_id: string
+        }
+        Insert: {
+          client_user_id: string
+          contexto?: string | null
+          created_at?: string
+          descricao?: string | null
+          detector_tipo: string
+          id?: string
+          intensidade?: string
+          origem?: string
+          payload_hash?: string | null
+          session_id?: string | null
+          therapist_user_id: string
+        }
+        Update: {
+          client_user_id?: string
+          contexto?: string | null
+          created_at?: string
+          descricao?: string | null
+          detector_tipo?: string
+          id?: string
+          intensidade?: string
+          origem?: string
+          payload_hash?: string | null
+          session_id?: string | null
+          therapist_user_id?: string
+        }
+        Relationships: []
+      }
+      co_escutas: {
+        Row: {
+          client_user_id: string
+          conteudo: string | null
+          created_at: string
+          created_by: string
+          id: string
+          sessao_id: string | null
+          therapist_user_id: string
+          tipo: string
+          updated_at: string
+        }
+        Insert: {
+          client_user_id: string
+          conteudo?: string | null
+          created_at?: string
+          created_by: string
+          id?: string
+          sessao_id?: string | null
+          therapist_user_id: string
+          tipo?: string
+          updated_at?: string
+        }
+        Update: {
+          client_user_id?: string
+          conteudo?: string | null
+          created_at?: string
+          created_by?: string
+          id?: string
+          sessao_id?: string | null
+          therapist_user_id?: string
+          tipo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_escutas_sessao_id_fkey"
+            columns: ["sessao_id"]
+            isOneToOne: false
+            referencedRelation: "co_sessoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_garden_flowers: {
+        Row: {
+          client_id: string
+          created_at: string
+          descricao: string | null
+          id: string
+          origem_registro_id: string | null
+          tipo_flor: string
+          titulo: string | null
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          origem_registro_id?: string | null
+          tipo_flor: string
+          titulo?: string | null
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          origem_registro_id?: string | null
+          tipo_flor?: string
+          titulo?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_garden_flowers_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_garden_flowers_origem_registro_id_fkey"
+            columns: ["origem_registro_id"]
+            isOneToOne: false
+            referencedRelation: "co_journey_records"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_intervencoes: {
+        Row: {
+          client_user_id: string
+          created_at: string
+          descricao: string | null
+          houve_deslocamento: boolean
+          id: string
+          session_id: string | null
+          therapist_user_id: string
+          tipo: string
+        }
+        Insert: {
+          client_user_id: string
+          created_at?: string
+          descricao?: string | null
+          houve_deslocamento?: boolean
+          id?: string
+          session_id?: string | null
+          therapist_user_id: string
+          tipo: string
+        }
+        Update: {
+          client_user_id?: string
+          created_at?: string
+          descricao?: string | null
+          houve_deslocamento?: boolean
+          id?: string
+          session_id?: string | null
+          therapist_user_id?: string
+          tipo?: string
+        }
+        Relationships: []
+      }
+      co_intervencoes_aplicadas: {
+        Row: {
+          categoria_alvo: string | null
+          client_user_id: string
+          created_at: string
+          id: string
+          percepcao_terapeuta: string | null
+          resposta_cliente: string | null
+          session_id: string | null
+          therapist_user_id: string
+          tipo_intervencao: string
+          updated_at: string
+        }
+        Insert: {
+          categoria_alvo?: string | null
+          client_user_id: string
+          created_at?: string
+          id?: string
+          percepcao_terapeuta?: string | null
+          resposta_cliente?: string | null
+          session_id?: string | null
+          therapist_user_id: string
+          tipo_intervencao: string
+          updated_at?: string
+        }
+        Update: {
+          categoria_alvo?: string | null
+          client_user_id?: string
+          created_at?: string
+          id?: string
+          percepcao_terapeuta?: string | null
+          resposta_cliente?: string | null
+          session_id?: string | null
+          therapist_user_id?: string
+          tipo_intervencao?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      co_jardim_entries: {
+        Row: {
+          analisado_ia: boolean
+          client_user_id: string
+          content: string | null
+          created_at: string
+          created_by: string
+          emocao: string | null
+          entry_type: string
+          id: string
+          jardim_id: string
+          movimento: string | null
+          padrao_detectado: string | null
+          shared_with_therapist: boolean
+          therapist_user_id: string
+          updated_at: string
+          visibility_to_client: boolean
+        }
+        Insert: {
+          analisado_ia?: boolean
+          client_user_id: string
+          content?: string | null
+          created_at?: string
+          created_by: string
+          emocao?: string | null
+          entry_type?: string
+          id?: string
+          jardim_id: string
+          movimento?: string | null
+          padrao_detectado?: string | null
+          shared_with_therapist?: boolean
+          therapist_user_id: string
+          updated_at?: string
+          visibility_to_client?: boolean
+        }
+        Update: {
+          analisado_ia?: boolean
+          client_user_id?: string
+          content?: string | null
+          created_at?: string
+          created_by?: string
+          emocao?: string | null
+          entry_type?: string
+          id?: string
+          jardim_id?: string
+          movimento?: string | null
+          padrao_detectado?: string | null
+          shared_with_therapist?: boolean
+          therapist_user_id?: string
+          updated_at?: string
+          visibility_to_client?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_jardim_entries_jardim_id_fkey"
+            columns: ["jardim_id"]
+            isOneToOne: false
+            referencedRelation: "co_jardins"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_jardins: {
+        Row: {
+          client_user_id: string
+          created_at: string
+          created_by: string
+          id: string
+          status: string
+          therapist_user_id: string
+          updated_at: string
+          visibility_scope: string
+        }
+        Insert: {
+          client_user_id: string
+          created_at?: string
+          created_by: string
+          id?: string
+          status?: string
+          therapist_user_id: string
+          updated_at?: string
+          visibility_scope?: string
+        }
+        Update: {
+          client_user_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          status?: string
+          therapist_user_id?: string
+          updated_at?: string
+          visibility_scope?: string
+        }
+        Relationships: []
+      }
+      co_journey_records: {
+        Row: {
+          client_id: string
+          conteudo: string
+          created_at: string
+          id: string
+          tipo: string
+          tool_id: string | null
+          visivel_para_terapeuta: boolean
+        }
+        Insert: {
+          client_id: string
+          conteudo: string
+          created_at?: string
+          id?: string
+          tipo: string
+          tool_id?: string | null
+          visivel_para_terapeuta?: boolean
+        }
+        Update: {
+          client_id?: string
+          conteudo?: string
+          created_at?: string
+          id?: string
+          tipo?: string
+          tool_id?: string | null
+          visivel_para_terapeuta?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_journey_records_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_journey_records_tool_id_fkey"
+            columns: ["tool_id"]
+            isOneToOne: false
+            referencedRelation: "sala_ferramentas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_laboratorio_casos: {
+        Row: {
+          analise_simbolica: string | null
+          caso_texto: string | null
+          cliente_id: string | null
+          created_at: string
+          duvida_terapeuta: string | null
+          fala_cliente: string | null
+          ferramenta_sugerida: string | null
+          id: string
+          ja_tentou: string | null
+          modo_entrada: string
+          perguntas_sugeridas: Json | null
+          riscos_eticos: string | null
+          simulacao_cliente: string | null
+          status: string
+          titulo: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          analise_simbolica?: string | null
+          caso_texto?: string | null
+          cliente_id?: string | null
+          created_at?: string
+          duvida_terapeuta?: string | null
+          fala_cliente?: string | null
+          ferramenta_sugerida?: string | null
+          id?: string
+          ja_tentou?: string | null
+          modo_entrada?: string
+          perguntas_sugeridas?: Json | null
+          riscos_eticos?: string | null
+          simulacao_cliente?: string | null
+          status?: string
+          titulo: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          analise_simbolica?: string | null
+          caso_texto?: string | null
+          cliente_id?: string | null
+          created_at?: string
+          duvida_terapeuta?: string | null
+          fala_cliente?: string | null
+          ferramenta_sugerida?: string | null
+          id?: string
+          ja_tentou?: string | null
+          modo_entrada?: string
+          perguntas_sugeridas?: Json | null
+          riscos_eticos?: string | null
+          simulacao_cliente?: string | null
+          status?: string
+          titulo?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      co_mapa_vivo: {
+        Row: {
+          client_user_id: string
+          created_at: string
+          eixo_confronto: string
+          eixo_movimento: string
+          id: string
+          presenca_emocional: string
+          regulacao: string
+          updated_at: string
+        }
+        Insert: {
+          client_user_id: string
+          created_at?: string
+          eixo_confronto?: string
+          eixo_movimento?: string
+          id?: string
+          presenca_emocional?: string
+          regulacao?: string
+          updated_at?: string
+        }
+        Update: {
+          client_user_id?: string
+          created_at?: string
+          eixo_confronto?: string
+          eixo_movimento?: string
+          id?: string
+          presenca_emocional?: string
+          regulacao?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      co_mentora_feedback: {
+        Row: {
+          cliente_id: string | null
+          created_at: string
+          feedback_tipo: string | null
+          ferramenta_escolhida: string | null
+          ferramenta_sugerida: string | null
+          id: string
+          observacao: string | null
+          session_id: string | null
+          sugestao_exibida: string
+          sugestao_utilizada: boolean | null
+          tempo_uso_segundos: number | null
+          user_id: string
+        }
+        Insert: {
+          cliente_id?: string | null
+          created_at?: string
+          feedback_tipo?: string | null
+          ferramenta_escolhida?: string | null
+          ferramenta_sugerida?: string | null
+          id?: string
+          observacao?: string | null
+          session_id?: string | null
+          sugestao_exibida: string
+          sugestao_utilizada?: boolean | null
+          tempo_uso_segundos?: number | null
+          user_id: string
+        }
+        Update: {
+          cliente_id?: string | null
+          created_at?: string
+          feedback_tipo?: string | null
+          ferramenta_escolhida?: string | null
+          ferramenta_sugerida?: string | null
+          id?: string
+          observacao?: string | null
+          session_id?: string | null
+          sugestao_exibida?: string
+          sugestao_utilizada?: boolean | null
+          tempo_uso_segundos?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      co_mentora_insights: {
+        Row: {
+          baseado_em: Json | null
+          created_at: string
+          descricao: string
+          id: string
+          lido: boolean | null
+          tipo: string
+          titulo: string
+          user_id: string
+        }
+        Insert: {
+          baseado_em?: Json | null
+          created_at?: string
+          descricao: string
+          id?: string
+          lido?: boolean | null
+          tipo?: string
+          titulo: string
+          user_id: string
+        }
+        Update: {
+          baseado_em?: Json | null
+          created_at?: string
+          descricao?: string
+          id?: string
+          lido?: boolean | null
+          tipo?: string
+          titulo?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      co_orientacao_sugestoes_ia: {
+        Row: {
+          aceito_json: Json | null
+          cliente_id: string
+          created_at: string
+          editado: boolean
+          id: string
+          ignorado: boolean
+          justificativa_clinica: string | null
+          orientacao_id: string | null
+          session_id: string | null
+          sugestao_json: Json
+          terapeuta_id: string
+          updated_at: string
+        }
+        Insert: {
+          aceito_json?: Json | null
+          cliente_id: string
+          created_at?: string
+          editado?: boolean
+          id?: string
+          ignorado?: boolean
+          justificativa_clinica?: string | null
+          orientacao_id?: string | null
+          session_id?: string | null
+          sugestao_json?: Json
+          terapeuta_id: string
+          updated_at?: string
+        }
+        Update: {
+          aceito_json?: Json | null
+          cliente_id?: string
+          created_at?: string
+          editado?: boolean
+          id?: string
+          ignorado?: boolean
+          justificativa_clinica?: string | null
+          orientacao_id?: string | null
+          session_id?: string | null
+          sugestao_json?: Json
+          terapeuta_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_orientacao_sugestoes_ia_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_orientacao_sugestoes_ia_orientacao_id_fkey"
+            columns: ["orientacao_id"]
+            isOneToOne: false
+            referencedRelation: "co_orientacoes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_orientacao_sugestoes_ia_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_orientacoes: {
+        Row: {
+          cliente_id: string
+          completada_em: string | null
+          conteudo_id: string | null
+          created_at: string
+          id: string
+          mensagem: string
+          resposta_cliente: string | null
+          session_id: string | null
+          status: string
+          terapeuta_id: string
+          tipo: string
+          titulo: string | null
+          updated_at: string
+        }
+        Insert: {
+          cliente_id: string
+          completada_em?: string | null
+          conteudo_id?: string | null
+          created_at?: string
+          id?: string
+          mensagem: string
+          resposta_cliente?: string | null
+          session_id?: string | null
+          status?: string
+          terapeuta_id: string
+          tipo?: string
+          titulo?: string | null
+          updated_at?: string
+        }
+        Update: {
+          cliente_id?: string
+          completada_em?: string | null
+          conteudo_id?: string | null
+          created_at?: string
+          id?: string
+          mensagem?: string
+          resposta_cliente?: string | null
+          session_id?: string | null
+          status?: string
+          terapeuta_id?: string
+          tipo?: string
+          titulo?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_orientacoes_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_orientacoes_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_passport_entries: {
+        Row: {
+          client_id: string
+          conquistado_em: string
+          descricao: string | null
+          id: string
+          selo: string
+        }
+        Insert: {
+          client_id: string
+          conquistado_em?: string
+          descricao?: string | null
+          id?: string
+          selo: string
+        }
+        Update: {
+          client_id?: string
+          conquistado_em?: string
+          descricao?: string | null
+          id?: string
+          selo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_passport_entries_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_praticas: {
+        Row: {
+          client_user_id: string
+          created_at: string
+          created_by: string
+          descricao: string | null
+          id: string
+          sessao_id: string | null
+          status: string
+          therapist_user_id: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          client_user_id: string
+          created_at?: string
+          created_by: string
+          descricao?: string | null
+          id?: string
+          sessao_id?: string | null
+          status?: string
+          therapist_user_id: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          client_user_id?: string
+          created_at?: string
+          created_by?: string
+          descricao?: string | null
+          id?: string
+          sessao_id?: string | null
+          status?: string
+          therapist_user_id?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_praticas_sessao_id_fkey"
+            columns: ["sessao_id"]
+            isOneToOne: false
+            referencedRelation: "co_sessoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_registros_simbolicos: {
+        Row: {
+          client_user_id: string
+          conteudo: string | null
+          created_at: string
+          created_by: string
+          id: string
+          jardim_id: string | null
+          sessao_id: string | null
+          shared_with_client: boolean
+          therapist_user_id: string
+          tipo: string
+          updated_at: string
+        }
+        Insert: {
+          client_user_id: string
+          conteudo?: string | null
+          created_at?: string
+          created_by: string
+          id?: string
+          jardim_id?: string | null
+          sessao_id?: string | null
+          shared_with_client?: boolean
+          therapist_user_id: string
+          tipo?: string
+          updated_at?: string
+        }
+        Update: {
+          client_user_id?: string
+          conteudo?: string | null
+          created_at?: string
+          created_by?: string
+          id?: string
+          jardim_id?: string | null
+          sessao_id?: string | null
+          shared_with_client?: boolean
+          therapist_user_id?: string
+          tipo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_registros_simbolicos_jardim_id_fkey"
+            columns: ["jardim_id"]
+            isOneToOne: false
+            referencedRelation: "co_jardins"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_registros_simbolicos_sessao_id_fkey"
+            columns: ["sessao_id"]
+            isOneToOne: false
+            referencedRelation: "co_sessoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_session_notes: {
+        Row: {
+          created_at: string
+          id: string
+          insight_principal: string | null
+          observacoes: string | null
+          session_id: string
+          tarefa_simbolica: string | null
+          tema: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          insight_principal?: string | null
+          observacoes?: string | null
+          session_id: string
+          tarefa_simbolica?: string | null
+          tema?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          insight_principal?: string | null
+          observacoes?: string | null
+          session_id?: string
+          tarefa_simbolica?: string | null
+          tema?: string | null
+        }
+        Relationships: []
+      }
+      co_sessoes: {
+        Row: {
+          client_user_id: string
+          created_at: string
+          created_by: string
+          id: string
+          jardim_ref_id: string | null
+          session_date: string | null
+          shared_with_client: boolean
+          status: string
+          summary_internal: string | null
+          therapist_user_id: string
+          updated_at: string
+        }
+        Insert: {
+          client_user_id: string
+          created_at?: string
+          created_by: string
+          id?: string
+          jardim_ref_id?: string | null
+          session_date?: string | null
+          shared_with_client?: boolean
+          status?: string
+          summary_internal?: string | null
+          therapist_user_id: string
+          updated_at?: string
+        }
+        Update: {
+          client_user_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          jardim_ref_id?: string | null
+          session_date?: string | null
+          shared_with_client?: boolean
+          status?: string
+          summary_internal?: string | null
+          therapist_user_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_sessoes_jardim_ref_id_fkey"
+            columns: ["jardim_ref_id"]
+            isOneToOne: false
+            referencedRelation: "co_jardins"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_sim_cases: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          descricao: string | null
+          distrito: string | null
+          ferramenta_sugerida: string | null
+          id: string
+          leitura_mentora: string | null
+          nivel: number
+          ordem: number
+          tipo: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          descricao?: string | null
+          distrito?: string | null
+          ferramenta_sugerida?: string | null
+          id?: string
+          leitura_mentora?: string | null
+          nivel?: number
+          ordem?: number
+          tipo?: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          descricao?: string | null
+          distrito?: string | null
+          ferramenta_sugerida?: string | null
+          id?: string
+          leitura_mentora?: string | null
+          nivel?: number
+          ordem?: number
+          tipo?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      co_sim_options: {
+        Row: {
+          created_at: string
+          explicacao_simbolica: string | null
+          feedback_texto: string | null
+          id: string
+          ordem: number
+          proximo_step_id: string | null
+          step_id: string
+          texto_opcao: string
+          tipo_resultado: string
+        }
+        Insert: {
+          created_at?: string
+          explicacao_simbolica?: string | null
+          feedback_texto?: string | null
+          id?: string
+          ordem?: number
+          proximo_step_id?: string | null
+          step_id: string
+          texto_opcao: string
+          tipo_resultado?: string
+        }
+        Update: {
+          created_at?: string
+          explicacao_simbolica?: string | null
+          feedback_texto?: string | null
+          id?: string
+          ordem?: number
+          proximo_step_id?: string | null
+          step_id?: string
+          texto_opcao?: string
+          tipo_resultado?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_sim_options_proximo_step_id_fkey"
+            columns: ["proximo_step_id"]
+            isOneToOne: false
+            referencedRelation: "co_sim_steps"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_sim_options_step_id_fkey"
+            columns: ["step_id"]
+            isOneToOne: false
+            referencedRelation: "co_sim_steps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_sim_progress: {
+        Row: {
+          case_id: string
+          created_at: string
+          escolha_id: string
+          id: string
+          step_id: string
+          user_id: string
+        }
+        Insert: {
+          case_id: string
+          created_at?: string
+          escolha_id: string
+          id?: string
+          step_id: string
+          user_id: string
+        }
+        Update: {
+          case_id?: string
+          created_at?: string
+          escolha_id?: string
+          id?: string
+          step_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_sim_progress_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "co_sim_cases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_sim_progress_escolha_id_fkey"
+            columns: ["escolha_id"]
+            isOneToOne: false
+            referencedRelation: "co_sim_options"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_sim_progress_step_id_fkey"
+            columns: ["step_id"]
+            isOneToOne: false
+            referencedRelation: "co_sim_steps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_sim_steps: {
+        Row: {
+          case_id: string
+          created_at: string
+          id: string
+          objetivo_oculto: string | null
+          ordem: number
+          pergunta: string
+          situacao_texto: string
+        }
+        Insert: {
+          case_id: string
+          created_at?: string
+          id?: string
+          objetivo_oculto?: string | null
+          ordem?: number
+          pergunta?: string
+          situacao_texto: string
+        }
+        Update: {
+          case_id?: string
+          created_at?: string
+          id?: string
+          objetivo_oculto?: string | null
+          ordem?: number
+          pergunta?: string
+          situacao_texto?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_sim_steps_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "co_sim_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_therapist_profile: {
+        Row: {
+          created_at: string
+          distritos_frequentes: string[] | null
+          estilo_conducao: string | null
+          ferramentas_evitadas: string[] | null
+          ferramentas_preferidas: string[] | null
+          id: string
+          linguagem: string | null
+          nivel_profundidade: string | null
+          padrao_decisao: string | null
+          pontos_cegos: string[] | null
+          pontos_fortes: string[] | null
+          tendencias_json: Json | null
+          total_consultas_mentora: number | null
+          total_sessoes: number | null
+          ultima_analise: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          distritos_frequentes?: string[] | null
+          estilo_conducao?: string | null
+          ferramentas_evitadas?: string[] | null
+          ferramentas_preferidas?: string[] | null
+          id?: string
+          linguagem?: string | null
+          nivel_profundidade?: string | null
+          padrao_decisao?: string | null
+          pontos_cegos?: string[] | null
+          pontos_fortes?: string[] | null
+          tendencias_json?: Json | null
+          total_consultas_mentora?: number | null
+          total_sessoes?: number | null
+          ultima_analise?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          distritos_frequentes?: string[] | null
+          estilo_conducao?: string | null
+          ferramentas_evitadas?: string[] | null
+          ferramentas_preferidas?: string[] | null
+          id?: string
+          linguagem?: string | null
+          nivel_profundidade?: string | null
+          padrao_decisao?: string | null
+          pontos_cegos?: string[] | null
+          pontos_fortes?: string[] | null
+          tendencias_json?: Json | null
+          total_consultas_mentora?: number | null
+          total_sessoes?: number | null
+          ultima_analise?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      co_tool_flows: {
+        Row: {
+          created_at: string
+          id: string
+          ordem: number
+          tipo: string
+          tool_destino_id: string
+          tool_origem_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ordem?: number
+          tipo?: string
+          tool_destino_id: string
+          tool_origem_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ordem?: number
+          tipo?: string
+          tool_destino_id?: string
+          tool_origem_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_tool_flows_tool_destino_id_fkey"
+            columns: ["tool_destino_id"]
+            isOneToOne: false
+            referencedRelation: "tools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_tool_flows_tool_origem_id_fkey"
+            columns: ["tool_origem_id"]
+            isOneToOne: false
+            referencedRelation: "tools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_tool_usage: {
+        Row: {
+          created_at: string
+          entrada_registrada: string | null
+          id: string
+          insights: string | null
+          ordem_uso: number
+          saida_registrada: string | null
+          session_id: string
+          tool_id: string
+        }
+        Insert: {
+          created_at?: string
+          entrada_registrada?: string | null
+          id?: string
+          insights?: string | null
+          ordem_uso?: number
+          saida_registrada?: string | null
+          session_id: string
+          tool_id: string
+        }
+        Update: {
+          created_at?: string
+          entrada_registrada?: string | null
+          id?: string
+          insights?: string | null
+          ordem_uso?: number
+          saida_registrada?: string | null
+          session_id?: string
+          tool_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_tool_usage_tool_id_fkey"
+            columns: ["tool_id"]
+            isOneToOne: false
+            referencedRelation: "sala_ferramentas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_training_attempts: {
+        Row: {
+          case_id: string
+          created_at: string | null
+          feedback_final: string | null
+          feedback_json: Json | null
+          id: string
+          resposta_distrito: string | null
+          resposta_estado: string | null
+          resposta_ferramenta: string | null
+          resposta_hipotese: string | null
+          resposta_movimento: string | null
+          resposta_o_que_acontece: string | null
+          resposta_parece_o_que: string | null
+          resposta_vetor: string | null
+          score_distrito: number | null
+          score_ferramenta: number | null
+          score_hipotese: number | null
+          score_total: number | null
+          status: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          case_id: string
+          created_at?: string | null
+          feedback_final?: string | null
+          feedback_json?: Json | null
+          id?: string
+          resposta_distrito?: string | null
+          resposta_estado?: string | null
+          resposta_ferramenta?: string | null
+          resposta_hipotese?: string | null
+          resposta_movimento?: string | null
+          resposta_o_que_acontece?: string | null
+          resposta_parece_o_que?: string | null
+          resposta_vetor?: string | null
+          score_distrito?: number | null
+          score_ferramenta?: number | null
+          score_hipotese?: number | null
+          score_total?: number | null
+          status?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          case_id?: string
+          created_at?: string | null
+          feedback_final?: string | null
+          feedback_json?: Json | null
+          id?: string
+          resposta_distrito?: string | null
+          resposta_estado?: string | null
+          resposta_ferramenta?: string | null
+          resposta_hipotese?: string | null
+          resposta_movimento?: string | null
+          resposta_o_que_acontece?: string | null
+          resposta_parece_o_que?: string | null
+          resposta_vetor?: string | null
+          score_distrito?: number | null
+          score_ferramenta?: number | null
+          score_hipotese?: number | null
+          score_total?: number | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_training_attempts_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "co_training_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_training_case_feedbacks: {
+        Row: {
+          case_id: string
+          feedback_texto: string
+          gatilho: string | null
+          id: string
+          tipo: string
+        }
+        Insert: {
+          case_id: string
+          feedback_texto: string
+          gatilho?: string | null
+          id?: string
+          tipo: string
+        }
+        Update: {
+          case_id?: string
+          feedback_texto?: string
+          gatilho?: string | null
+          id?: string
+          tipo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_training_case_feedbacks_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "co_training_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_training_case_possible_readings: {
+        Row: {
+          case_id: string
+          id: string
+          leitura: string
+          observacao: string | null
+          tipo: string
+        }
+        Insert: {
+          case_id: string
+          id?: string
+          leitura: string
+          observacao?: string | null
+          tipo: string
+        }
+        Update: {
+          case_id?: string
+          id?: string
+          leitura?: string
+          observacao?: string | null
+          tipo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_training_case_possible_readings_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "co_training_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_training_case_signals: {
+        Row: {
+          case_id: string
+          id: string
+          ordem: number | null
+          sinal: string
+        }
+        Insert: {
+          case_id: string
+          id?: string
+          ordem?: number | null
+          sinal: string
+        }
+        Update: {
+          case_id?: string
+          id?: string
+          ordem?: number | null
+          sinal?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_training_case_signals_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "co_training_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_training_cases: {
+        Row: {
+          ativo: boolean | null
+          caso_texto: string
+          created_at: string | null
+          distrito_esperado: string | null
+          distritos_alternativos: string[] | null
+          erro_comum: string | null
+          estado_esperado: string | null
+          ferramenta_principal: string | null
+          ferramentas_apoio: string[] | null
+          hipotese_esperada: string | null
+          id: string
+          movimento_esperado: string | null
+          nivel: string
+          ordem: number | null
+          tema: string | null
+          title: string
+          updated_at: string | null
+          vetor_esperado: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          caso_texto: string
+          created_at?: string | null
+          distrito_esperado?: string | null
+          distritos_alternativos?: string[] | null
+          erro_comum?: string | null
+          estado_esperado?: string | null
+          ferramenta_principal?: string | null
+          ferramentas_apoio?: string[] | null
+          hipotese_esperada?: string | null
+          id?: string
+          movimento_esperado?: string | null
+          nivel?: string
+          ordem?: number | null
+          tema?: string | null
+          title: string
+          updated_at?: string | null
+          vetor_esperado?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          caso_texto?: string
+          created_at?: string | null
+          distrito_esperado?: string | null
+          distritos_alternativos?: string[] | null
+          erro_comum?: string | null
+          estado_esperado?: string | null
+          ferramenta_principal?: string | null
+          ferramentas_apoio?: string[] | null
+          hipotese_esperada?: string | null
+          id?: string
+          movimento_esperado?: string | null
+          nivel?: string
+          ordem?: number | null
+          tema?: string | null
+          title?: string
+          updated_at?: string | null
+          vetor_esperado?: string | null
+        }
+        Relationships: []
+      }
+      co_training_progress: {
+        Row: {
+          activated_districts: Json | null
+          casos_concluidos: number | null
+          certification_potential: number | null
+          coerencia_media: number | null
+          id: string
+          last_training_at: string | null
+          nivel_atual: string | null
+          streak_days: number | null
+          taxa_acerto: number | null
+          total_casos: number | null
+          ultimo_case_id: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          activated_districts?: Json | null
+          casos_concluidos?: number | null
+          certification_potential?: number | null
+          coerencia_media?: number | null
+          id?: string
+          last_training_at?: string | null
+          nivel_atual?: string | null
+          streak_days?: number | null
+          taxa_acerto?: number | null
+          total_casos?: number | null
+          ultimo_case_id?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          activated_districts?: Json | null
+          casos_concluidos?: number | null
+          certification_potential?: number | null
+          coerencia_media?: number | null
+          id?: string
+          last_training_at?: string | null
+          nivel_atual?: string | null
+          streak_days?: number | null
+          taxa_acerto?: number | null
+          total_casos?: number | null
+          ultimo_case_id?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_training_progress_ultimo_case_id_fkey"
+            columns: ["ultimo_case_id"]
+            isOneToOne: false
+            referencedRelation: "co_training_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_travessia_encontros: {
+        Row: {
+          abertura_texto: string | null
+          conducao_terapeuta: string | null
+          created_at: string
+          ferramenta_sugerida: string | null
+          id: string
+          integracao_texto: string | null
+          numero_encontro: number
+          objetivo_encontro: string | null
+          pratica_texto: string | null
+          reflexoes: string[] | null
+          titulo: string
+          travessia_id: string
+          updated_at: string
+        }
+        Insert: {
+          abertura_texto?: string | null
+          conducao_terapeuta?: string | null
+          created_at?: string
+          ferramenta_sugerida?: string | null
+          id?: string
+          integracao_texto?: string | null
+          numero_encontro: number
+          objetivo_encontro?: string | null
+          pratica_texto?: string | null
+          reflexoes?: string[] | null
+          titulo: string
+          travessia_id: string
+          updated_at?: string
+        }
+        Update: {
+          abertura_texto?: string | null
+          conducao_terapeuta?: string | null
+          created_at?: string
+          ferramenta_sugerida?: string | null
+          id?: string
+          integracao_texto?: string | null
+          numero_encontro?: number
+          objetivo_encontro?: string | null
+          pratica_texto?: string | null
+          reflexoes?: string[] | null
+          titulo?: string
+          travessia_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_travessia_encontros_travessia_id_fkey"
+            columns: ["travessia_id"]
+            isOneToOne: false
+            referencedRelation: "co_travessias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_travessia_respostas: {
+        Row: {
+          created_at: string
+          encontro_id: string
+          id: string
+          resposta_integracao: string | null
+          resposta_texto: string | null
+          travessia_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          encontro_id: string
+          id?: string
+          resposta_integracao?: string | null
+          resposta_texto?: string | null
+          travessia_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          encontro_id?: string
+          id?: string
+          resposta_integracao?: string | null
+          resposta_texto?: string | null
+          travessia_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_travessia_respostas_encontro_id_fkey"
+            columns: ["encontro_id"]
+            isOneToOne: false
+            referencedRelation: "co_travessia_encontros"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "co_travessia_respostas_travessia_id_fkey"
+            columns: ["travessia_id"]
+            isOneToOne: false
+            referencedRelation: "co_travessias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_travessias: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          descricao: string | null
+          id: string
+          livro_base: string | null
+          nivel: Database["public"]["Enums"]["co_travessia_nivel"]
+          ordem: number
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          livro_base?: string | null
+          nivel?: Database["public"]["Enums"]["co_travessia_nivel"]
+          ordem?: number
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          livro_base?: string | null
+          nivel?: Database["public"]["Enums"]["co_travessia_nivel"]
+          ordem?: number
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      co_workspace_users: {
+        Row: {
+          created_at: string
+          id: string
+          papel: string
+          user_id: string
+          workspace_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          papel?: string
+          user_id: string
+          workspace_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          papel?: string
+          user_id?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "co_workspace_users_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "co_workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      co_workspaces: {
+        Row: {
+          created_at: string
+          id: string
+          nome: string
+          owner_user_id: string
+          slug: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          nome: string
+          owner_user_id: string
+          slug?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          nome?: string
+          owner_user_id?: string
+          slug?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      collective_bed_entries: {
+        Row: {
+          aprovado_por_admin: boolean
+          bed_id: string
+          created_at: string | null
+          entry_type: string
+          exibicao_anonima: boolean
+          id: string
+          origem: string
+          publicado_em: string | null
+          published_title: string | null
+          rejeitado: boolean
+          removed_at: string | null
+          season_id: string
+          source_entry_id: string | null
+          texto: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          aprovado_por_admin?: boolean
+          bed_id: string
+          created_at?: string | null
+          entry_type?: string
+          exibicao_anonima?: boolean
+          id?: string
+          origem?: string
+          publicado_em?: string | null
+          published_title?: string | null
+          rejeitado?: boolean
+          removed_at?: string | null
+          season_id: string
+          source_entry_id?: string | null
+          texto: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          aprovado_por_admin?: boolean
+          bed_id?: string
+          created_at?: string | null
+          entry_type?: string
+          exibicao_anonima?: boolean
+          id?: string
+          origem?: string
+          publicado_em?: string | null
+          published_title?: string | null
+          rejeitado?: boolean
+          removed_at?: string | null
+          season_id?: string
+          source_entry_id?: string | null
+          texto?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collective_bed_entries_bed_id_fkey"
+            columns: ["bed_id"]
+            isOneToOne: false
+            referencedRelation: "collective_beds"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collective_bed_entries_season_id_fkey"
+            columns: ["season_id"]
+            isOneToOne: false
+            referencedRelation: "oracular_seasons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      collective_beds: {
+        Row: {
+          aberto_em: string
+          created_at: string | null
+          encerrado_em: string | null
+          id: string
+          season_id: string
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          aberto_em?: string
+          created_at?: string | null
+          encerrado_em?: string | null
+          id?: string
+          season_id: string
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          aberto_em?: string
+          created_at?: string | null
+          encerrado_em?: string | null
+          id?: string
+          season_id?: string
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collective_beds_season_id_fkey"
+            columns: ["season_id"]
+            isOneToOne: false
+            referencedRelation: "oracular_seasons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_comments: {
+        Row: {
+          autor_id: string
+          conteudo: string
+          created_at: string | null
+          id: string
+          post_id: string
+        }
+        Insert: {
+          autor_id: string
+          conteudo: string
+          created_at?: string | null
+          id?: string
+          post_id: string
+        }
+        Update: {
+          autor_id?: string
+          conteudo?: string
+          created_at?: string | null
+          id?: string
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_comments_post_id_fkey"
             columns: ["post_id"]
             isOneToOne: false
-            referencedRelation: "posts"
+            referencedRelation: "community_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_event_participants: {
+        Row: {
+          created_at: string | null
+          event_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          event_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          event_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_event_participants_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "community_events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_events: {
+        Row: {
+          ativo: boolean | null
+          created_at: string | null
+          criador_id: string | null
+          data_evento: string
+          descricao: string | null
+          id: string
+          link: string | null
+          nome: string
+          participantes_count: number | null
+          tipo: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string | null
+          criador_id?: string | null
+          data_evento: string
+          descricao?: string | null
+          id?: string
+          link?: string | null
+          nome: string
+          participantes_count?: number | null
+          tipo?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string | null
+          criador_id?: string | null
+          data_evento?: string
+          descricao?: string | null
+          id?: string
+          link?: string | null
+          nome?: string
+          participantes_count?: number | null
+          tipo?: string | null
+        }
+        Relationships: []
+      }
+      community_forums: {
+        Row: {
+          ativo: boolean | null
+          created_at: string | null
+          descricao: string | null
+          icone: string | null
+          id: string
+          nome: string
+          ordem: number | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string | null
+          descricao?: string | null
+          icone?: string | null
+          id?: string
+          nome: string
+          ordem?: number | null
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string | null
+          descricao?: string | null
+          icone?: string | null
+          id?: string
+          nome?: string
+          ordem?: number | null
+        }
+        Relationships: []
+      }
+      community_group_members: {
+        Row: {
+          group_id: string
+          id: string
+          joined_at: string | null
+          role: string | null
+          user_id: string
+        }
+        Insert: {
+          group_id: string
+          id?: string
+          joined_at?: string | null
+          role?: string | null
+          user_id: string
+        }
+        Update: {
+          group_id?: string
+          id?: string
+          joined_at?: string | null
+          role?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "community_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_groups: {
+        Row: {
+          ativo: boolean | null
+          created_at: string | null
+          criador_id: string
+          descricao: string | null
+          id: string
+          membros_count: number | null
+          nome: string
+          privado: boolean | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string | null
+          criador_id: string
+          descricao?: string | null
+          id?: string
+          membros_count?: number | null
+          nome: string
+          privado?: boolean | null
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string | null
+          criador_id?: string
+          descricao?: string | null
+          id?: string
+          membros_count?: number | null
+          nome?: string
+          privado?: boolean | null
+        }
+        Relationships: []
+      }
+      community_likes: {
+        Row: {
+          created_at: string | null
+          id: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "community_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_posts: {
+        Row: {
+          autor_id: string
+          comentarios_count: number | null
+          conteudo: string
+          created_at: string | null
+          curtidas_count: number | null
+          id: string
+          imagem_url: string | null
+          publicado: boolean | null
+          updated_at: string | null
+          video_url: string | null
+        }
+        Insert: {
+          autor_id: string
+          comentarios_count?: number | null
+          conteudo: string
+          created_at?: string | null
+          curtidas_count?: number | null
+          id?: string
+          imagem_url?: string | null
+          publicado?: boolean | null
+          updated_at?: string | null
+          video_url?: string | null
+        }
+        Update: {
+          autor_id?: string
+          comentarios_count?: number | null
+          conteudo?: string
+          created_at?: string | null
+          curtidas_count?: number | null
+          id?: string
+          imagem_url?: string | null
+          publicado?: boolean | null
+          updated_at?: string | null
+          video_url?: string | null
+        }
+        Relationships: []
+      }
+      community_topic_replies: {
+        Row: {
+          autor_id: string
+          conteudo: string
+          created_at: string | null
+          id: string
+          topic_id: string
+        }
+        Insert: {
+          autor_id: string
+          conteudo: string
+          created_at?: string | null
+          id?: string
+          topic_id: string
+        }
+        Update: {
+          autor_id?: string
+          conteudo?: string
+          created_at?: string | null
+          id?: string
+          topic_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_topic_replies_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "community_topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_topics: {
+        Row: {
+          autor_id: string
+          conteudo: string
+          created_at: string | null
+          fixado: boolean | null
+          forum_id: string
+          id: string
+          respostas_count: number | null
+          titulo: string
+          ultima_atividade: string | null
+        }
+        Insert: {
+          autor_id: string
+          conteudo: string
+          created_at?: string | null
+          fixado?: boolean | null
+          forum_id: string
+          id?: string
+          respostas_count?: number | null
+          titulo: string
+          ultima_atividade?: string | null
+        }
+        Update: {
+          autor_id?: string
+          conteudo?: string
+          created_at?: string | null
+          fixado?: boolean | null
+          forum_id?: string
+          id?: string
+          respostas_count?: number | null
+          titulo?: string
+          ultima_atividade?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_topics_forum_id_fkey"
+            columns: ["forum_id"]
+            isOneToOne: false
+            referencedRelation: "community_forums"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conselho_partes_internas: {
+        Row: {
+          client_id: string
+          created_at: string
+          decisao_conselho: string | null
+          dialogos_json: Json
+          id: string
+          partes_json: Json
+          reflexao_final: string | null
+          sabedoria_integrada: string | null
+          tema_conselho: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          decisao_conselho?: string | null
+          dialogos_json?: Json
+          id?: string
+          partes_json?: Json
+          reflexao_final?: string | null
+          sabedoria_integrada?: string | null
+          tema_conselho?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          decisao_conselho?: string | null
+          dialogos_json?: Json
+          id?: string
+          partes_json?: Json
+          reflexao_final?: string | null
+          sabedoria_integrada?: string | null
+          tema_conselho?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conselho_partes_internas_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_blocks: {
+        Row: {
+          agente_id: string | null
+          ativo: boolean
+          block_type: Database["public"]["Enums"]["content_block_type"]
+          cloudflare_video_id: string | null
+          content: Json
+          context_id: string
+          context_type: Database["public"]["Enums"]["block_context_type"]
+          created_at: string
+          descricao: string | null
+          id: string
+          ordem: number
+          portal_minimo: Database["public"]["Enums"]["portal_type"]
+          titulo: string | null
+          updated_at: string
+        }
+        Insert: {
+          agente_id?: string | null
+          ativo?: boolean
+          block_type: Database["public"]["Enums"]["content_block_type"]
+          cloudflare_video_id?: string | null
+          content?: Json
+          context_id: string
+          context_type: Database["public"]["Enums"]["block_context_type"]
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          ordem?: number
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          titulo?: string | null
+          updated_at?: string
+        }
+        Update: {
+          agente_id?: string | null
+          ativo?: boolean
+          block_type?: Database["public"]["Enums"]["content_block_type"]
+          cloudflare_video_id?: string | null
+          content?: Json
+          context_id?: string
+          context_type?: Database["public"]["Enums"]["block_context_type"]
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          ordem?: number
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          titulo?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_blocks_agente_id_fkey"
+            columns: ["agente_id"]
+            isOneToOne: false
+            referencedRelation: "agentes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conteudo_aulas: {
+        Row: {
+          audio_url: string | null
+          created_at: string
+          descricao_curta: string
+          id: string
+          materiais_url: string | null
+          ordem: number
+          pdf_url: string | null
+          portal_minimo: Database["public"]["Enums"]["portal_type"]
+          publicado: boolean
+          texto_aula: string | null
+          titulo: string
+          travessia_id: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          audio_url?: string | null
+          created_at?: string
+          descricao_curta?: string
+          id?: string
+          materiais_url?: string | null
+          ordem?: number
+          pdf_url?: string | null
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          publicado?: boolean
+          texto_aula?: string | null
+          titulo: string
+          travessia_id: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          audio_url?: string | null
+          created_at?: string
+          descricao_curta?: string
+          id?: string
+          materiais_url?: string | null
+          ordem?: number
+          pdf_url?: string | null
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          publicado?: boolean
+          texto_aula?: string | null
+          titulo?: string
+          travessia_id?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conteudo_aulas_travessia_id_fkey"
+            columns: ["travessia_id"]
+            isOneToOne: false
+            referencedRelation: "conteudo_travessias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conteudo_travessias: {
+        Row: {
+          capa_url: string | null
+          created_at: string
+          descricao: string
+          descricao_pedagogica: string | null
+          id: string
+          ordem: number
+          portal_minimo: Database["public"]["Enums"]["portal_type"]
+          publicado: boolean
+          sala_id: string | null
+          subtitulo: string | null
+          texto_introducao: string | null
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          capa_url?: string | null
+          created_at?: string
+          descricao?: string
+          descricao_pedagogica?: string | null
+          id?: string
+          ordem?: number
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          publicado?: boolean
+          sala_id?: string | null
+          subtitulo?: string | null
+          texto_introducao?: string | null
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          capa_url?: string | null
+          created_at?: string
+          descricao?: string
+          descricao_pedagogica?: string | null
+          id?: string
+          ordem?: number
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          publicado?: boolean
+          sala_id?: string | null
+          subtitulo?: string | null
+          texto_introducao?: string | null
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conteudo_travessias_sala_id_fkey"
+            columns: ["sala_id"]
+            isOneToOne: false
+            referencedRelation: "salas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contos_clinicos: {
+        Row: {
+          ativo: boolean | null
+          audio_padrao_disponivel: boolean | null
+          audio_padrao_id: string | null
+          aviso_etico: string | null
+          created_at: string | null
+          eixo_simbolico: string | null
+          exige_cartografia: boolean | null
+          exige_certificacao: boolean | null
+          id: string
+          nivel_risco: string | null
+          o_que_observar: string
+          ordem: number | null
+          origem_cultural: string | null
+          permite_crise_aguda: boolean | null
+          permite_grupo: boolean | null
+          porta_psiquica: string | null
+          quando_usar: string
+          restricoes_combinacao: string[] | null
+          riscos_uso_inadequado: string
+          slug: string
+          texto_conto: string
+          tipo_uso: string | null
+          titulo: string
+          updated_at: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          audio_padrao_disponivel?: boolean | null
+          audio_padrao_id?: string | null
+          aviso_etico?: string | null
+          created_at?: string | null
+          eixo_simbolico?: string | null
+          exige_cartografia?: boolean | null
+          exige_certificacao?: boolean | null
+          id?: string
+          nivel_risco?: string | null
+          o_que_observar: string
+          ordem?: number | null
+          origem_cultural?: string | null
+          permite_crise_aguda?: boolean | null
+          permite_grupo?: boolean | null
+          porta_psiquica?: string | null
+          quando_usar: string
+          restricoes_combinacao?: string[] | null
+          riscos_uso_inadequado: string
+          slug: string
+          texto_conto: string
+          tipo_uso?: string | null
+          titulo: string
+          updated_at?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          audio_padrao_disponivel?: boolean | null
+          audio_padrao_id?: string | null
+          aviso_etico?: string | null
+          created_at?: string | null
+          eixo_simbolico?: string | null
+          exige_cartografia?: boolean | null
+          exige_certificacao?: boolean | null
+          id?: string
+          nivel_risco?: string | null
+          o_que_observar?: string
+          ordem?: number | null
+          origem_cultural?: string | null
+          permite_crise_aguda?: boolean | null
+          permite_grupo?: boolean | null
+          porta_psiquica?: string | null
+          quando_usar?: string
+          restricoes_combinacao?: string[] | null
+          riscos_uso_inadequado?: string
+          slug?: string
+          texto_conto?: string
+          tipo_uso?: string | null
+          titulo?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      corpo_inconsciente: {
+        Row: {
+          cliente_id: string
+          created_at: string
+          diario_corpo_mente: Json | null
+          id: string
+          mapeamento_tensoes: Json | null
+          therapist_id: string
+          tipo: string
+          updated_at: string
+        }
+        Insert: {
+          cliente_id: string
+          created_at?: string
+          diario_corpo_mente?: Json | null
+          id?: string
+          mapeamento_tensoes?: Json | null
+          therapist_id: string
+          tipo?: string
+          updated_at?: string
+        }
+        Update: {
+          cliente_id?: string
+          created_at?: string
+          diario_corpo_mente?: Json | null
+          id?: string
+          mapeamento_tensoes?: Json | null
+          therapist_id?: string
+          tipo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      course_enrollments: {
+        Row: {
+          ativo: boolean
+          course_id: string
+          created_at: string
+          data_fim: string | null
+          data_inicio: string
+          id: string
+          payment_id: string | null
+          payment_provider: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ativo?: boolean
+          course_id: string
+          created_at?: string
+          data_fim?: string | null
+          data_inicio?: string
+          id?: string
+          payment_id?: string | null
+          payment_provider?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ativo?: boolean
+          course_id?: string
+          created_at?: string
+          data_fim?: string | null
+          data_inicio?: string
+          id?: string
+          payment_id?: string | null
+          payment_provider?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_enrollments_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_exercise_responses: {
+        Row: {
+          created_at: string
+          id: string
+          lesson_id: string
+          resposta: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          lesson_id: string
+          resposta: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          lesson_id?: string
+          resposta?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_exercise_responses_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "course_lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_lesson_progress: {
+        Row: {
+          completed: boolean
+          completed_at: string | null
+          created_at: string
+          id: string
+          lesson_id: string
+          progress_percent: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          lesson_id: string
+          progress_percent?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          lesson_id?: string
+          progress_percent?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_lesson_progress_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "course_lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_lessons: {
+        Row: {
+          audio_url: string | null
+          capa_url: string | null
+          content_type: Database["public"]["Enums"]["content_type"]
+          created_at: string
+          descricao_curta: string | null
+          duracao_minutos: number | null
+          id: string
+          is_preview: boolean
+          jornada: string | null
+          materiais_url: string | null
+          module_id: string
+          ordem: number
+          pdf_url: string | null
+          portal: string | null
+          publicado: boolean
+          ritual_slides: Json | null
+          texto_aula: string | null
+          titulo: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          audio_url?: string | null
+          capa_url?: string | null
+          content_type?: Database["public"]["Enums"]["content_type"]
+          created_at?: string
+          descricao_curta?: string | null
+          duracao_minutos?: number | null
+          id?: string
+          is_preview?: boolean
+          jornada?: string | null
+          materiais_url?: string | null
+          module_id: string
+          ordem?: number
+          pdf_url?: string | null
+          portal?: string | null
+          publicado?: boolean
+          ritual_slides?: Json | null
+          texto_aula?: string | null
+          titulo: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          audio_url?: string | null
+          capa_url?: string | null
+          content_type?: Database["public"]["Enums"]["content_type"]
+          created_at?: string
+          descricao_curta?: string | null
+          duracao_minutos?: number | null
+          id?: string
+          is_preview?: boolean
+          jornada?: string | null
+          materiais_url?: string | null
+          module_id?: string
+          ordem?: number
+          pdf_url?: string | null
+          portal?: string | null
+          publicado?: boolean
+          ritual_slides?: Json | null
+          texto_aula?: string | null
+          titulo?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_lessons_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "course_modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_module_forum_posts: {
+        Row: {
+          conteudo: string
+          created_at: string
+          id: string
+          is_instructor_reply: boolean | null
+          module_id: string
+          parent_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          conteudo: string
+          created_at?: string
+          id?: string
+          is_instructor_reply?: boolean | null
+          module_id: string
+          parent_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          conteudo?: string
+          created_at?: string
+          id?: string
+          is_instructor_reply?: boolean | null
+          module_id?: string
+          parent_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_module_forum_posts_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "course_modules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "course_module_forum_posts_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "course_module_forum_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_modules: {
+        Row: {
+          cards_leitura: Json | null
+          check_maturidade: Json | null
+          course_id: string
+          created_at: string
+          descricao: string | null
+          dias_apos_matricula: number | null
+          disponivel_em: string | null
+          estudos_caso: Json | null
+          ferramenta_pratica: Json | null
+          formato_pedagogico: boolean | null
+          id: string
+          metodo_formativo: Json | null
+          ordem: number
+          publicado: boolean
+          roteiro_aula: string | null
+          subtitulo: string | null
+          titulo: string
+          updated_at: string
+          video_principal_duracao: number | null
+          video_principal_titulo: string | null
+          video_principal_url: string | null
+        }
+        Insert: {
+          cards_leitura?: Json | null
+          check_maturidade?: Json | null
+          course_id: string
+          created_at?: string
+          descricao?: string | null
+          dias_apos_matricula?: number | null
+          disponivel_em?: string | null
+          estudos_caso?: Json | null
+          ferramenta_pratica?: Json | null
+          formato_pedagogico?: boolean | null
+          id?: string
+          metodo_formativo?: Json | null
+          ordem?: number
+          publicado?: boolean
+          roteiro_aula?: string | null
+          subtitulo?: string | null
+          titulo: string
+          updated_at?: string
+          video_principal_duracao?: number | null
+          video_principal_titulo?: string | null
+          video_principal_url?: string | null
+        }
+        Update: {
+          cards_leitura?: Json | null
+          check_maturidade?: Json | null
+          course_id?: string
+          created_at?: string
+          descricao?: string | null
+          dias_apos_matricula?: number | null
+          disponivel_em?: string | null
+          estudos_caso?: Json | null
+          ferramenta_pratica?: Json | null
+          formato_pedagogico?: boolean | null
+          id?: string
+          metodo_formativo?: Json | null
+          ordem?: number
+          publicado?: boolean
+          roteiro_aula?: string | null
+          subtitulo?: string | null
+          titulo?: string
+          updated_at?: string
+          video_principal_duracao?: number | null
+          video_principal_titulo?: string | null
+          video_principal_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_modules_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_work_submissions: {
+        Row: {
+          course_id: string
+          created_at: string
+          descricao: string | null
+          feedback: string | null
+          file_url: string | null
+          id: string
+          nota: number | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          titulo: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          course_id: string
+          created_at?: string
+          descricao?: string | null
+          feedback?: string | null
+          file_url?: string | null
+          id?: string
+          nota?: number | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          titulo: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          course_id?: string
+          created_at?: string
+          descricao?: string | null
+          feedback?: string | null
+          file_url?: string | null
+          id?: string
+          nota?: number | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          titulo?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_work_submissions_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
             referencedColumns: ["id"]
           },
         ]
       }
       courses: {
         Row: {
-          author_id: string | null
-          cover_url: string | null
+          capa_url: string | null
           created_at: string
-          description: string | null
+          descricao: string
+          descricao_publica: string | null
+          destaque: boolean
+          duracao_estimada: string | null
           id: string
-          nivel_acesso: Database["public"]["Enums"]["nivel_acesso_modulo"]
+          nivel: string | null
           ordem: number
-          slug: string
-          status: Database["public"]["Enums"]["status_publicacao"]
-          tipo_modulo: Database["public"]["Enums"]["tipo_modulo"]
-          title: string
+          portal_minimo: Database["public"]["Enums"]["portal_type"]
+          preco: number | null
+          preco_promocional: number | null
+          pricing_model: Database["public"]["Enums"]["pricing_model"]
+          publicado: boolean
+          requer_matricula: boolean
+          requisitos: string | null
+          sala_id: string | null
+          stripe_price_id: string | null
+          stripe_product_id: string | null
+          subtitulo: string | null
+          tags: string[] | null
+          tipo_curso: string | null
+          titulo: string
           updated_at: string
+          video_preview_url: string | null
         }
         Insert: {
-          author_id?: string | null
-          cover_url?: string | null
+          capa_url?: string | null
           created_at?: string
-          description?: string | null
+          descricao?: string
+          descricao_publica?: string | null
+          destaque?: boolean
+          duracao_estimada?: string | null
           id?: string
-          nivel_acesso?: Database["public"]["Enums"]["nivel_acesso_modulo"]
+          nivel?: string | null
           ordem?: number
-          slug: string
-          status?: Database["public"]["Enums"]["status_publicacao"]
-          tipo_modulo?: Database["public"]["Enums"]["tipo_modulo"]
-          title: string
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          preco?: number | null
+          preco_promocional?: number | null
+          pricing_model?: Database["public"]["Enums"]["pricing_model"]
+          publicado?: boolean
+          requer_matricula?: boolean
+          requisitos?: string | null
+          sala_id?: string | null
+          stripe_price_id?: string | null
+          stripe_product_id?: string | null
+          subtitulo?: string | null
+          tags?: string[] | null
+          tipo_curso?: string | null
+          titulo: string
           updated_at?: string
+          video_preview_url?: string | null
         }
         Update: {
-          author_id?: string | null
-          cover_url?: string | null
+          capa_url?: string | null
           created_at?: string
-          description?: string | null
+          descricao?: string
+          descricao_publica?: string | null
+          destaque?: boolean
+          duracao_estimada?: string | null
           id?: string
-          nivel_acesso?: Database["public"]["Enums"]["nivel_acesso_modulo"]
+          nivel?: string | null
           ordem?: number
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          preco?: number | null
+          preco_promocional?: number | null
+          pricing_model?: Database["public"]["Enums"]["pricing_model"]
+          publicado?: boolean
+          requer_matricula?: boolean
+          requisitos?: string | null
+          sala_id?: string | null
+          stripe_price_id?: string | null
+          stripe_product_id?: string | null
+          subtitulo?: string | null
+          tags?: string[] | null
+          tipo_curso?: string | null
+          titulo?: string
+          updated_at?: string
+          video_preview_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "courses_sala_id_fkey"
+            columns: ["sala_id"]
+            isOneToOne: false
+            referencedRelation: "salas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      custom_oracle_cards: {
+        Row: {
+          aplicacao: string | null
+          created_at: string | null
+          custom_oracle_id: string
+          id: string
+          mensagem: string | null
+          nome: string
+          ordem: number | null
+          pergunta: string | null
+          slug: string
+        }
+        Insert: {
+          aplicacao?: string | null
+          created_at?: string | null
+          custom_oracle_id: string
+          id?: string
+          mensagem?: string | null
+          nome: string
+          ordem?: number | null
+          pergunta?: string | null
+          slug: string
+        }
+        Update: {
+          aplicacao?: string | null
+          created_at?: string | null
+          custom_oracle_id?: string
+          id?: string
+          mensagem?: string | null
+          nome?: string
+          ordem?: number | null
+          pergunta?: string | null
           slug?: string
-          status?: Database["public"]["Enums"]["status_publicacao"]
-          tipo_modulo?: Database["public"]["Enums"]["tipo_modulo"]
-          title?: string
+        }
+        Relationships: []
+      }
+      custom_oracles: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          descricao: string | null
+          id: string
+          nome: string
+          ordem: number | null
+          slug: string
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          descricao?: string | null
+          id?: string
+          nome: string
+          ordem?: number | null
+          slug: string
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          descricao?: string | null
+          id?: string
+          nome?: string
+          ordem?: number | null
+          slug?: string
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      cycle_books: {
+        Row: {
+          book_id: string
+          created_at: string | null
+          cycle_id: string
+          id: string
+          is_core: boolean | null
+          layer: string | null
+          layer_order: number | null
+          quadrant: string | null
+          ring_index: number | null
+        }
+        Insert: {
+          book_id: string
+          created_at?: string | null
+          cycle_id: string
+          id?: string
+          is_core?: boolean | null
+          layer?: string | null
+          layer_order?: number | null
+          quadrant?: string | null
+          ring_index?: number | null
+        }
+        Update: {
+          book_id?: string
+          created_at?: string | null
+          cycle_id?: string
+          id?: string
+          is_core?: boolean | null
+          layer?: string | null
+          layer_order?: number | null
+          quadrant?: string | null
+          ring_index?: number | null
+        }
+        Relationships: []
+      }
+      cycles: {
+        Row: {
+          created_at: string | null
+          id: string
+          label: string
+          status: string
+          updated_at: string | null
+          year: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          label: string
+          status?: string
+          updated_at?: string | null
+          year?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          label?: string
+          status?: string
+          updated_at?: string | null
+          year?: number | null
+        }
+        Relationships: []
+      }
+      decodificacao_onirica: {
+        Row: {
+          arquetipos_sugeridos: string[] | null
+          cliente_id: string | null
+          created_at: string | null
+          forca_psiquica: string | null
+          id: string
+          imagem_central: string | null
+          mensagem_viva: string | null
+          movimento_interrompido: string | null
+          notas_terapeuta: string | null
+          session_case_id: string | null
+          sonho_bruto: string
+          terapeuta_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          arquetipos_sugeridos?: string[] | null
+          cliente_id?: string | null
+          created_at?: string | null
+          forca_psiquica?: string | null
+          id?: string
+          imagem_central?: string | null
+          mensagem_viva?: string | null
+          movimento_interrompido?: string | null
+          notas_terapeuta?: string | null
+          session_case_id?: string | null
+          sonho_bruto: string
+          terapeuta_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          arquetipos_sugeridos?: string[] | null
+          cliente_id?: string | null
+          created_at?: string | null
+          forca_psiquica?: string | null
+          id?: string
+          imagem_central?: string | null
+          mensagem_viva?: string | null
+          movimento_interrompido?: string | null
+          notas_terapeuta?: string | null
+          session_case_id?: string | null
+          sonho_bruto?: string
+          terapeuta_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      diagnostico_ego: {
+        Row: {
+          cliente_id: string
+          contagem_deflacao: number | null
+          contagem_inflacao: number | null
+          created_at: string
+          id: string
+          pergunta_integracao_resposta: string | null
+          respostas_deflacao: boolean[] | null
+          respostas_inflacao: boolean[] | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          cliente_id: string
+          contagem_deflacao?: number | null
+          contagem_inflacao?: number | null
+          created_at?: string
+          id?: string
+          pergunta_integracao_resposta?: string | null
+          respostas_deflacao?: boolean[] | null
+          respostas_inflacao?: boolean[] | null
+          therapist_id: string
           updated_at?: string
+        }
+        Update: {
+          cliente_id?: string
+          contagem_deflacao?: number | null
+          contagem_inflacao?: number | null
+          created_at?: string
+          id?: string
+          pergunta_integracao_resposta?: string | null
+          respostas_deflacao?: boolean[] | null
+          respostas_inflacao?: boolean[] | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      district_state_changes: {
+        Row: {
+          changed_by_user_id: string
+          client_id: string
+          created_at: string
+          district_id: string
+          from_state: string
+          id: string
+          motivo: string | null
+          reason: string
+          to_state: string
+        }
+        Insert: {
+          changed_by_user_id: string
+          client_id: string
+          created_at?: string
+          district_id: string
+          from_state: string
+          id?: string
+          motivo?: string | null
+          reason: string
+          to_state: string
+        }
+        Update: {
+          changed_by_user_id?: string
+          client_id?: string
+          created_at?: string
+          district_id?: string
+          from_state?: string
+          id?: string
+          motivo?: string | null
+          reason?: string
+          to_state?: string
         }
         Relationships: [
           {
-            foreignKeyName: "courses_author_id_fkey"
-            columns: ["author_id"]
+            foreignKeyName: "district_state_changes_district_id_fkey"
+            columns: ["district_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "districts"
             referencedColumns: ["id"]
           },
         ]
       }
-      enrollments: {
+      districts: {
         Row: {
-          course_id: string
+          cor: string | null
           created_at: string
-          expires_at: string | null
+          descricao: string | null
+          icone: string | null
           id: string
-          status: Database["public"]["Enums"]["cliente_status"]
-          updated_at: string
+          nome: string
+          numero: number
+          posicao_relogio: string | null
+        }
+        Insert: {
+          cor?: string | null
+          created_at?: string
+          descricao?: string | null
+          icone?: string | null
+          id?: string
+          nome: string
+          numero: number
+          posicao_relogio?: string | null
+        }
+        Update: {
+          cor?: string | null
+          created_at?: string
+          descricao?: string | null
+          icone?: string | null
+          id?: string
+          nome?: string
+          numero?: number
+          posicao_relogio?: string | null
+        }
+        Relationships: []
+      }
+      dreams: {
+        Row: {
+          central_image: string | null
+          client_id: string
+          created_at: string
+          date: string
+          dream_text: string | null
+          id: string
+          interrupted_movement: string | null
+          psychic_force: string | null
+          session_id: string | null
+          symbolic_message: string | null
+        }
+        Insert: {
+          central_image?: string | null
+          client_id: string
+          created_at?: string
+          date?: string
+          dream_text?: string | null
+          id?: string
+          interrupted_movement?: string | null
+          psychic_force?: string | null
+          session_id?: string | null
+          symbolic_message?: string | null
+        }
+        Update: {
+          central_image?: string | null
+          client_id?: string
+          created_at?: string
+          date?: string
+          dream_text?: string | null
+          id?: string
+          interrupted_movement?: string | null
+          psychic_force?: string | null
+          session_id?: string | null
+          symbolic_message?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dreams_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dreams_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_logs: {
+        Row: {
+          data_envio: string
+          error_message: string | null
+          id: string
+          success: boolean | null
+          tipo_email: string
           user_id: string
         }
         Insert: {
-          course_id: string
-          created_at?: string
-          expires_at?: string | null
+          data_envio?: string
+          error_message?: string | null
           id?: string
-          status?: Database["public"]["Enums"]["cliente_status"]
-          updated_at?: string
+          success?: boolean | null
+          tipo_email: string
           user_id: string
         }
         Update: {
-          course_id?: string
-          created_at?: string
-          expires_at?: string | null
+          data_envio?: string
+          error_message?: string | null
           id?: string
-          status?: Database["public"]["Enums"]["cliente_status"]
-          updated_at?: string
+          success?: boolean | null
+          tipo_email?: string
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "enrollments_course_id_fkey"
-            columns: ["course_id"]
-            isOneToOne: false
-            referencedRelation: "courses"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "enrollments_user_id_fkey"
+            foreignKeyName: "email_logs_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
@@ -220,261 +8713,4545 @@ export type Database = {
           },
         ]
       }
-      jardim_gestos: {
+      eneagrama_feminino_afirmacoes: {
+        Row: {
+          arquetipo_id: string
+          ativo: boolean
+          created_at: string
+          id: string
+          ordem: number
+          peso: number
+          texto_afirmacao: string
+          updated_at: string
+        }
+        Insert: {
+          arquetipo_id: string
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          ordem?: number
+          peso?: number
+          texto_afirmacao: string
+          updated_at?: string
+        }
+        Update: {
+          arquetipo_id?: string
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          ordem?: number
+          peso?: number
+          texto_afirmacao?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "eneagrama_feminino_afirmacoes_arquetipo_id_fkey"
+            columns: ["arquetipo_id"]
+            isOneToOne: false
+            referencedRelation: "eneagrama_feminino_arquetipos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      eneagrama_feminino_arquetipos: {
+        Row: {
+          ativo: boolean
+          caminho_expansao: string | null
+          cautelas_eticas: string | null
+          chave: string
+          convites_integracao: string[] | null
+          cor_primaria: string | null
+          cor_secundaria: string | null
+          created_at: string
+          dinamica_relacional: string | null
+          dom_central: string | null
+          espelhos_simbolicos: string[] | null
+          essencia_simbolica: string
+          expressao_sombra: string | null
+          ferida_central: string | null
+          icone: string | null
+          id: string
+          linguagem_evitar: string | null
+          linguagem_que_abre: string | null
+          nome: string
+          nome_en: string | null
+          notas_leitura: string | null
+          numero: number
+          ordem: number
+          pergunta_reflexiva: string | null
+          perguntas_abertura: string[] | null
+          pratica_simbolica: string | null
+          prompts_reenquadramento: string[] | null
+          resistencias_tipicas: string | null
+          ritual_encerramento: string | null
+          sugestoes_reenquadramento: string[] | null
+          trabalho_sombra: string | null
+          transferencias_comuns: string | null
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          caminho_expansao?: string | null
+          cautelas_eticas?: string | null
+          chave: string
+          convites_integracao?: string[] | null
+          cor_primaria?: string | null
+          cor_secundaria?: string | null
+          created_at?: string
+          dinamica_relacional?: string | null
+          dom_central?: string | null
+          espelhos_simbolicos?: string[] | null
+          essencia_simbolica: string
+          expressao_sombra?: string | null
+          ferida_central?: string | null
+          icone?: string | null
+          id?: string
+          linguagem_evitar?: string | null
+          linguagem_que_abre?: string | null
+          nome: string
+          nome_en?: string | null
+          notas_leitura?: string | null
+          numero: number
+          ordem?: number
+          pergunta_reflexiva?: string | null
+          perguntas_abertura?: string[] | null
+          pratica_simbolica?: string | null
+          prompts_reenquadramento?: string[] | null
+          resistencias_tipicas?: string | null
+          ritual_encerramento?: string | null
+          sugestoes_reenquadramento?: string[] | null
+          trabalho_sombra?: string | null
+          transferencias_comuns?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          caminho_expansao?: string | null
+          cautelas_eticas?: string | null
+          chave?: string
+          convites_integracao?: string[] | null
+          cor_primaria?: string | null
+          cor_secundaria?: string | null
+          created_at?: string
+          dinamica_relacional?: string | null
+          dom_central?: string | null
+          espelhos_simbolicos?: string[] | null
+          essencia_simbolica?: string
+          expressao_sombra?: string | null
+          ferida_central?: string | null
+          icone?: string | null
+          id?: string
+          linguagem_evitar?: string | null
+          linguagem_que_abre?: string | null
+          nome?: string
+          nome_en?: string | null
+          notas_leitura?: string | null
+          numero?: number
+          ordem?: number
+          pergunta_reflexiva?: string | null
+          perguntas_abertura?: string[] | null
+          pratica_simbolica?: string | null
+          prompts_reenquadramento?: string[] | null
+          resistencias_tipicas?: string | null
+          ritual_encerramento?: string | null
+          sugestoes_reenquadramento?: string[] | null
+          trabalho_sombra?: string | null
+          transferencias_comuns?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      eneagrama_feminino_orientacoes: {
+        Row: {
+          arquetipo_id: string | null
+          ativo: boolean
+          created_at: string
+          id: string
+          ordem: number | null
+          texto: string
+          tipo: string
+          titulo: string | null
+          updated_at: string
+        }
+        Insert: {
+          arquetipo_id?: string | null
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          ordem?: number | null
+          texto: string
+          tipo: string
+          titulo?: string | null
+          updated_at?: string
+        }
+        Update: {
+          arquetipo_id?: string | null
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          ordem?: number | null
+          texto?: string
+          tipo?: string
+          titulo?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "eneagrama_feminino_orientacoes_arquetipo_id_fkey"
+            columns: ["arquetipo_id"]
+            isOneToOne: false
+            referencedRelation: "eneagrama_feminino_arquetipos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      eneagrama_feminino_registros: {
+        Row: {
+          arquetipo_exilado: number | null
+          arquetipo_primario: number
+          arquetipo_secundario: number | null
+          arquetipo_sombra: number | null
+          campo_reflexao_cliente: string | null
+          campo_tensao: string | null
+          cliente_id: string | null
+          created_at: string
+          id: string
+          modo_aplicacao: string | null
+          narrativa_editada: boolean | null
+          narrativa_interpretacao: string | null
+          nome_simbolico: string | null
+          notas: string | null
+          notas_profissionais: string | null
+          reflexao_final: string | null
+          respostas_json: Json | null
+          session_case_id: string | null
+          terapeuta_id: string | null
+          updated_at: string
+          user_id: string
+          vetor_integracao: string | null
+        }
+        Insert: {
+          arquetipo_exilado?: number | null
+          arquetipo_primario: number
+          arquetipo_secundario?: number | null
+          arquetipo_sombra?: number | null
+          campo_reflexao_cliente?: string | null
+          campo_tensao?: string | null
+          cliente_id?: string | null
+          created_at?: string
+          id?: string
+          modo_aplicacao?: string | null
+          narrativa_editada?: boolean | null
+          narrativa_interpretacao?: string | null
+          nome_simbolico?: string | null
+          notas?: string | null
+          notas_profissionais?: string | null
+          reflexao_final?: string | null
+          respostas_json?: Json | null
+          session_case_id?: string | null
+          terapeuta_id?: string | null
+          updated_at?: string
+          user_id: string
+          vetor_integracao?: string | null
+        }
+        Update: {
+          arquetipo_exilado?: number | null
+          arquetipo_primario?: number
+          arquetipo_secundario?: number | null
+          arquetipo_sombra?: number | null
+          campo_reflexao_cliente?: string | null
+          campo_tensao?: string | null
+          cliente_id?: string | null
+          created_at?: string
+          id?: string
+          modo_aplicacao?: string | null
+          narrativa_editada?: boolean | null
+          narrativa_interpretacao?: string | null
+          nome_simbolico?: string | null
+          notas?: string | null
+          notas_profissionais?: string | null
+          reflexao_final?: string | null
+          respostas_json?: Json | null
+          session_case_id?: string | null
+          terapeuta_id?: string | null
+          updated_at?: string
+          user_id?: string
+          vetor_integracao?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "eneagrama_feminino_registros_session_case_id_fkey"
+            columns: ["session_case_id"]
+            isOneToOne: false
+            referencedRelation: "session_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      eneagrama_registros: {
+        Row: {
+          armadilhas: string | null
+          asa: number | null
+          caso_id: string | null
+          cliente_id: string | null
+          created_at: string
+          defesas: string | null
+          id: string
+          instinto: string | null
+          pratica_sugerida: string | null
+          terapeuta_id: string | null
+          tipo_principal: number
+          updated_at: string
+          user_id: string
+          virtude: string | null
+        }
+        Insert: {
+          armadilhas?: string | null
+          asa?: number | null
+          caso_id?: string | null
+          cliente_id?: string | null
+          created_at?: string
+          defesas?: string | null
+          id?: string
+          instinto?: string | null
+          pratica_sugerida?: string | null
+          terapeuta_id?: string | null
+          tipo_principal: number
+          updated_at?: string
+          user_id: string
+          virtude?: string | null
+        }
+        Update: {
+          armadilhas?: string | null
+          asa?: number | null
+          caso_id?: string | null
+          cliente_id?: string | null
+          created_at?: string
+          defesas?: string | null
+          id?: string
+          instinto?: string | null
+          pratica_sugerida?: string | null
+          terapeuta_id?: string | null
+          tipo_principal?: number
+          updated_at?: string
+          user_id?: string
+          virtude?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_eneagrama_caso"
+            columns: ["caso_id"]
+            isOneToOne: false
+            referencedRelation: "casos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      escrita_nao_censurada: {
+        Row: {
+          cliente_id: string
+          conteudo_escrita: string | null
+          created_at: string
+          id: string
+          prompt_utilizado: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          cliente_id: string
+          conteudo_escrita?: string | null
+          created_at?: string
+          id?: string
+          prompt_utilizado?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          cliente_id?: string
+          conteudo_escrita?: string | null
+          created_at?: string
+          id?: string
+          prompt_utilizado?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "escrita_nao_censurada_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      estudio_projetos: {
+        Row: {
+          book_id: string | null
+          created_at: string
+          estacao_simbolica: string | null
+          estrutura_gerada: Json | null
+          id: string
+          infografico_url: string | null
+          jornada: string | null
+          livro_externo_autor: string | null
+          livro_externo_nome: string | null
+          livro_externo_texto: string | null
+          logo_aluna_url: string | null
+          mapa_mental_url: string | null
+          modo: string
+          nome_grupo: string | null
+          nome_mentora: string | null
+          num_encontros: number | null
+          owner_id: string
+          paleta_secundaria: string | null
+          playbook_url: string | null
+          publico_alvo: string | null
+          status: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          book_id?: string | null
+          created_at?: string
+          estacao_simbolica?: string | null
+          estrutura_gerada?: Json | null
+          id?: string
+          infografico_url?: string | null
+          jornada?: string | null
+          livro_externo_autor?: string | null
+          livro_externo_nome?: string | null
+          livro_externo_texto?: string | null
+          logo_aluna_url?: string | null
+          mapa_mental_url?: string | null
+          modo?: string
+          nome_grupo?: string | null
+          nome_mentora?: string | null
+          num_encontros?: number | null
+          owner_id: string
+          paleta_secundaria?: string | null
+          playbook_url?: string | null
+          publico_alvo?: string | null
+          status?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Update: {
+          book_id?: string | null
+          created_at?: string
+          estacao_simbolica?: string | null
+          estrutura_gerada?: Json | null
+          id?: string
+          infografico_url?: string | null
+          jornada?: string | null
+          livro_externo_autor?: string | null
+          livro_externo_nome?: string | null
+          livro_externo_texto?: string | null
+          logo_aluna_url?: string | null
+          mapa_mental_url?: string | null
+          modo?: string
+          nome_grupo?: string | null
+          nome_mentora?: string | null
+          num_encontros?: number | null
+          owner_id?: string
+          paleta_secundaria?: string | null
+          playbook_url?: string | null
+          publico_alvo?: string | null
+          status?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "estudio_projetos_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      estudos_caso: {
+        Row: {
+          ativo: boolean | null
+          created_at: string | null
+          feedback_especialista: string
+          id: string
+          mapa_cidadela_json: Json | null
+          nivel: string
+          ordem: number | null
+          perguntas_analise: string[] | null
+          prontuario_ficticio: string
+          titulo: string
+          updated_at: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string | null
+          feedback_especialista: string
+          id?: string
+          mapa_cidadela_json?: Json | null
+          nivel?: string
+          ordem?: number | null
+          perguntas_analise?: string[] | null
+          prontuario_ficticio: string
+          titulo: string
+          updated_at?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string | null
+          feedback_especialista?: string
+          id?: string
+          mapa_cidadela_json?: Json | null
+          nivel?: string
+          ordem?: number | null
+          perguntas_analise?: string[] | null
+          prontuario_ficticio?: string
+          titulo?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      estudos_caso_respostas: {
+        Row: {
+          created_at: string | null
+          estudo_caso_id: string
+          id: string
+          resposta: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          estudo_caso_id: string
+          id?: string
+          resposta: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          estudo_caso_id?: string
+          id?: string
+          resposta?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "estudos_caso_respostas_estudo_caso_id_fkey"
+            columns: ["estudo_caso_id"]
+            isOneToOne: false
+            referencedRelation: "estudos_caso"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      exercise_responses: {
         Row: {
           created_at: string
-          description: string | null
+          exercise_id: string
           id: string
-          status: Database["public"]["Enums"]["gesto_status"]
-          tipo: Database["public"]["Enums"]["jardim_gesto_tipo"]
-          title: string
+          response: string
           updated_at: string
           user_id: string
         }
         Insert: {
           created_at?: string
-          description?: string | null
+          exercise_id: string
           id?: string
-          status?: Database["public"]["Enums"]["gesto_status"]
-          tipo: Database["public"]["Enums"]["jardim_gesto_tipo"]
-          title: string
+          response: string
           updated_at?: string
           user_id: string
         }
         Update: {
           created_at?: string
-          description?: string | null
+          exercise_id?: string
           id?: string
-          status?: Database["public"]["Enums"]["gesto_status"]
-          tipo?: Database["public"]["Enums"]["jardim_gesto_tipo"]
-          title?: string
+          response?: string
           updated_at?: string
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "jardim_gestos_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "exercise_responses_exercise_id_fkey"
+            columns: ["exercise_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "exercises"
             referencedColumns: ["id"]
           },
         ]
       }
-      lesson_progress: {
+      exercises: {
         Row: {
-          completed: boolean
-          completed_at: string | null
           created_at: string
           id: string
-          last_accessed_at: string | null
           lesson_id: string
-          updated_at: string
-          user_id: string
+          order_number: number
+          question: string
+          type: string
         }
         Insert: {
-          completed?: boolean
-          completed_at?: string | null
           created_at?: string
           id?: string
-          last_accessed_at?: string | null
           lesson_id: string
-          updated_at?: string
-          user_id: string
+          order_number?: number
+          question: string
+          type: string
         }
         Update: {
-          completed?: boolean
-          completed_at?: string | null
           created_at?: string
           id?: string
-          last_accessed_at?: string | null
           lesson_id?: string
-          updated_at?: string
-          user_id?: string
+          order_number?: number
+          question?: string
+          type?: string
         }
         Relationships: [
           {
-            foreignKeyName: "lesson_progress_lesson_id_fkey"
+            foreignKeyName: "exercises_lesson_id_fkey"
             columns: ["lesson_id"]
             isOneToOne: false
             referencedRelation: "lessons"
             referencedColumns: ["id"]
           },
+        ]
+      }
+      ferramenta_registros: {
+        Row: {
+          cliente_id: string | null
+          created_at: string
+          dados: Json
+          data_registro: string
+          ferramenta_id: string
+          id: string
+          notas: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cliente_id?: string | null
+          created_at?: string
+          dados?: Json
+          data_registro?: string
+          ferramenta_id: string
+          id?: string
+          notas?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cliente_id?: string | null
+          created_at?: string
+          dados?: Json
+          data_registro?: string
+          ferramenta_id?: string
+          id?: string
+          notas?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
           {
-            foreignKeyName: "lesson_progress_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "ferramenta_registros_cliente_id_fkey"
+            columns: ["cliente_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ferramenta_registros_ferramenta_id_fkey"
+            columns: ["ferramenta_id"]
+            isOneToOne: false
+            referencedRelation: "sala_ferramentas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      formacao_modulos: {
+        Row: {
+          created_at: string
+          descricao: string | null
+          formacao_id: string
+          id: string
+          ordem: number
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          descricao?: string | null
+          formacao_id: string
+          id?: string
+          ordem?: number
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          descricao?: string | null
+          formacao_id?: string
+          id?: string
+          ordem?: number
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "formacao_modulos_formacao_id_fkey"
+            columns: ["formacao_id"]
+            isOneToOne: false
+            referencedRelation: "formacoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      formacoes: {
+        Row: {
+          created_at: string
+          descricao: string | null
+          id: string
+          ordem: number
+          status: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          ordem?: number
+          status?: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          ordem?: number
+          status?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      formation_map_nodes: {
+        Row: {
+          ativo: boolean | null
+          color: string | null
+          created_at: string | null
+          description_locked: string | null
+          description_unlocked: string | null
+          icon: string | null
+          id: string
+          label: string
+          node_type: string
+          ordem: number | null
+          position_angle: number | null
+          position_ring: number | null
+          reference_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          color?: string | null
+          created_at?: string | null
+          description_locked?: string | null
+          description_unlocked?: string | null
+          icon?: string | null
+          id?: string
+          label: string
+          node_type: string
+          ordem?: number | null
+          position_angle?: number | null
+          position_ring?: number | null
+          reference_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          color?: string | null
+          created_at?: string | null
+          description_locked?: string | null
+          description_unlocked?: string | null
+          icon?: string | null
+          id?: string
+          label?: string
+          node_type?: string
+          ordem?: number | null
+          position_angle?: number | null
+          position_ring?: number | null
+          reference_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      founding_archetypes: {
+        Row: {
+          ativo: boolean | null
+          caminho_evolucao: string | null
+          cor_principal: string | null
+          created_at: string | null
+          descricao: string | null
+          desejo_profundo: string | null
+          distrito_principal_id: string | null
+          elemento: string | null
+          essencia: string | null
+          estrategia_sobrevivencia: string | null
+          ferida_central: string | null
+          icone: string | null
+          id: string
+          nome: string
+          ordem: number | null
+          slug: string
+          sombra: string | null
+          titulo_simbolico: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          caminho_evolucao?: string | null
+          cor_principal?: string | null
+          created_at?: string | null
+          descricao?: string | null
+          desejo_profundo?: string | null
+          distrito_principal_id?: string | null
+          elemento?: string | null
+          essencia?: string | null
+          estrategia_sobrevivencia?: string | null
+          ferida_central?: string | null
+          icone?: string | null
+          id?: string
+          nome: string
+          ordem?: number | null
+          slug: string
+          sombra?: string | null
+          titulo_simbolico?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          caminho_evolucao?: string | null
+          cor_principal?: string | null
+          created_at?: string | null
+          descricao?: string | null
+          desejo_profundo?: string | null
+          distrito_principal_id?: string | null
+          elemento?: string | null
+          essencia?: string | null
+          estrategia_sobrevivencia?: string | null
+          ferida_central?: string | null
+          icone?: string | null
+          id?: string
+          nome?: string
+          ordem?: number | null
+          slug?: string
+          sombra?: string | null
+          titulo_simbolico?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "founding_archetypes_distrito_principal_id_fkey"
+            columns: ["distrito_principal_id"]
+            isOneToOne: false
+            referencedRelation: "city_districts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      gestos_integracao: {
+        Row: {
+          cliente_id: string
+          created_at: string
+          gesto_texto: string
+          id: string
+          jardim_registro_id: string | null
+          owner_id: string
+          sessao_id: string | null
+          status: Database["public"]["Enums"]["gesto_status"]
+          updated_at: string
+        }
+        Insert: {
+          cliente_id: string
+          created_at?: string
+          gesto_texto: string
+          id?: string
+          jardim_registro_id?: string | null
+          owner_id: string
+          sessao_id?: string | null
+          status?: Database["public"]["Enums"]["gesto_status"]
+          updated_at?: string
+        }
+        Update: {
+          cliente_id?: string
+          created_at?: string
+          gesto_texto?: string
+          id?: string
+          jardim_registro_id?: string | null
+          owner_id?: string
+          sessao_id?: string | null
+          status?: Database["public"]["Enums"]["gesto_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gestos_integracao_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "gestos_integracao_sessao_id_fkey"
+            columns: ["sessao_id"]
+            isOneToOne: false
+            referencedRelation: "sessoes_casa_maquinas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group_encounters: {
+        Row: {
+          archetype_worked: string | null
+          created_at: string
+          date: string
+          group_id: string
+          id: string
+          notes: string | null
+          theme: string | null
+        }
+        Insert: {
+          archetype_worked?: string | null
+          created_at?: string
+          date?: string
+          group_id: string
+          id?: string
+          notes?: string | null
+          theme?: string | null
+        }
+        Update: {
+          archetype_worked?: string | null
+          created_at?: string
+          date?: string
+          group_id?: string
+          id?: string
+          notes?: string | null
+          theme?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_encounters_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "therapy_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group_field_snapshots: {
+        Row: {
+          circulo_id: string | null
+          created_at: string
+          direcao: string
+          estado_campo: string
+          frase_simbolica: string | null
+          group_id: string | null
+          id: string
+          mode: string
+          nivel_intervencao: string
+          padrao: string | null
+          pode_aprofundar: boolean
+          recomendacao: string | null
+          risco: string
+          tensao: string | null
+          therapist_id: string
+        }
+        Insert: {
+          circulo_id?: string | null
+          created_at?: string
+          direcao: string
+          estado_campo: string
+          frase_simbolica?: string | null
+          group_id?: string | null
+          id?: string
+          mode?: string
+          nivel_intervencao?: string
+          padrao?: string | null
+          pode_aprofundar?: boolean
+          recomendacao?: string | null
+          risco?: string
+          tensao?: string | null
+          therapist_id: string
+        }
+        Update: {
+          circulo_id?: string | null
+          created_at?: string
+          direcao?: string
+          estado_campo?: string
+          frase_simbolica?: string | null
+          group_id?: string | null
+          id?: string
+          mode?: string
+          nivel_intervencao?: string
+          padrao?: string | null
+          pode_aprofundar?: boolean
+          recomendacao?: string | null
+          risco?: string
+          tensao?: string | null
+          therapist_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_field_snapshots_circulo_id_fkey"
+            columns: ["circulo_id"]
+            isOneToOne: false
+            referencedRelation: "circulos_sagrados"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "group_field_snapshots_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "therapeutic_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group_members: {
+        Row: {
+          client_id: string
+          group_id: string
+          id: string
+          joined_at: string
+        }
+        Insert: {
+          client_id: string
+          group_id: string
+          id?: string
+          joined_at?: string
+        }
+        Update: {
+          client_id?: string
+          group_id?: string
+          id?: string
+          joined_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_members_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "therapy_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group_participants: {
+        Row: {
+          ativo: boolean
+          cliente_id: string
+          group_id: string
+          id: string
+          joined_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          cliente_id: string
+          group_id: string
+          id?: string
+          joined_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          cliente_id?: string
+          group_id?: string
+          id?: string
+          joined_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_participants_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "group_participants_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "therapeutic_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group_sessions: {
+        Row: {
+          created_at: string
+          group_id: string
+          id: string
+          notes: string | null
+          status: string
+          therapist_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          group_id: string
+          id?: string
+          notes?: string | null
+          status?: string
+          therapist_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          group_id?: string
+          id?: string
+          notes?: string | null
+          status?: string
+          therapist_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_sessions_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "therapeutic_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      heroina_arquetipo_registros: {
+        Row: {
+          arquetipo_id: string
+          created_at: string
+          id: string
+          polaridade_percebida: string | null
+          registrado_em: string
+          user_id: string
+        }
+        Insert: {
+          arquetipo_id: string
+          created_at?: string
+          id?: string
+          polaridade_percebida?: string | null
+          registrado_em?: string
+          user_id: string
+        }
+        Update: {
+          arquetipo_id?: string
+          created_at?: string
+          id?: string
+          polaridade_percebida?: string | null
+          registrado_em?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "heroina_arquetipo_registros_arquetipo_id_fkey"
+            columns: ["arquetipo_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_arquetipos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      heroina_cenario_registros: {
+        Row: {
+          anotacao_livre: string | null
+          created_at: string
+          id: string
+          metafora_id: string
+          registrado_em: string
+          user_id: string
+        }
+        Insert: {
+          anotacao_livre?: string | null
+          created_at?: string
+          id?: string
+          metafora_id: string
+          registrado_em?: string
+          user_id: string
+        }
+        Update: {
+          anotacao_livre?: string | null
+          created_at?: string
+          id?: string
+          metafora_id?: string
+          registrado_em?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "heroina_cenario_registros_metafora_id_fkey"
+            columns: ["metafora_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_metaforas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      heroina_fase_ativa: {
+        Row: {
+          ativa: boolean
+          created_at: string
+          fase_id: string
+          id: string
+          registrado_em: string
+          user_id: string
+        }
+        Insert: {
+          ativa?: boolean
+          created_at?: string
+          fase_id: string
+          id?: string
+          registrado_em?: string
+          user_id: string
+        }
+        Update: {
+          ativa?: boolean
+          created_at?: string
+          fase_id?: string
+          id?: string
+          registrado_em?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "heroina_fase_ativa_fase_id_fkey"
+            columns: ["fase_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_fases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      heroina_insights: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          id: string
+          texto: string
+          tipo: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          texto: string
+          tipo: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          texto?: string
+          tipo?: string
+        }
+        Relationships: []
+      }
+      heroina_jornada: {
+        Row: {
+          consentimento_terapeuta: boolean | null
+          created_at: string | null
+          fase_atual: string
+          id: string
+          mensagem_simbolica: string | null
+          porta_ativa: string | null
+          therapist_id: string | null
+          torre_ativa: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          consentimento_terapeuta?: boolean | null
+          created_at?: string | null
+          fase_atual?: string
+          id?: string
+          mensagem_simbolica?: string | null
+          porta_ativa?: string | null
+          therapist_id?: string | null
+          torre_ativa?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          consentimento_terapeuta?: boolean | null
+          created_at?: string | null
+          fase_atual?: string
+          id?: string
+          mensagem_simbolica?: string | null
+          porta_ativa?: string | null
+          therapist_id?: string | null
+          torre_ativa?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      heroina_registros: {
+        Row: {
+          arquetipo_ativo: string | null
+          created_at: string | null
+          emocao_dominante: string | null
+          fase: string | null
+          id: string
+          pergunta: string | null
+          resposta: string | null
+          tipo: string
+          user_id: string
+        }
+        Insert: {
+          arquetipo_ativo?: string | null
+          created_at?: string | null
+          emocao_dominante?: string | null
+          fase?: string | null
+          id?: string
+          pergunta?: string | null
+          resposta?: string | null
+          tipo?: string
+          user_id: string
+        }
+        Update: {
+          arquetipo_ativo?: string | null
+          created_at?: string | null
+          emocao_dominante?: string | null
+          fase?: string | null
+          id?: string
+          pergunta?: string | null
+          resposta?: string | null
+          tipo?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      heroina_ritual_registros: {
+        Row: {
+          completado_em: string | null
+          created_at: string | null
+          id: string
+          reflexao: string | null
+          ritual_id: string
+          user_id: string
+        }
+        Insert: {
+          completado_em?: string | null
+          created_at?: string | null
+          id?: string
+          reflexao?: string | null
+          ritual_id: string
+          user_id: string
+        }
+        Update: {
+          completado_em?: string | null
+          created_at?: string | null
+          id?: string
+          reflexao?: string | null
+          ritual_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "heroina_ritual_registros_ritual_id_fkey"
+            columns: ["ritual_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_rituais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      imaginacao_ativa: {
+        Row: {
+          cliente_id: string
+          created_at: string
+          descricao_figura: string | null
+          dialogo_registros: Json | null
+          id: string
+          negociacao_registro: string | null
+          ponto_partida_detalhes: string | null
+          ponto_partida_tipo: string | null
+          registro_pos_sessao: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          cliente_id: string
+          created_at?: string
+          descricao_figura?: string | null
+          dialogo_registros?: Json | null
+          id?: string
+          negociacao_registro?: string | null
+          ponto_partida_detalhes?: string | null
+          ponto_partida_tipo?: string | null
+          registro_pos_sessao?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          cliente_id?: string
+          created_at?: string
+          descricao_figura?: string | null
+          dialogo_registros?: Json | null
+          id?: string
+          negociacao_registro?: string | null
+          ponto_partida_detalhes?: string | null
+          ponto_partida_tipo?: string | null
+          registro_pos_sessao?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "imaginacao_ativa_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      intervention_favorites: {
+        Row: {
+          created_at: string
+          id: string
+          intervention_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          intervention_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          intervention_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "intervention_favorites_intervention_id_fkey"
+            columns: ["intervention_id"]
+            isOneToOne: false
+            referencedRelation: "interventions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      interventions: {
+        Row: {
+          archetype_key: string | null
+          arquetipos_relacionados: string[] | null
+          ativa: boolean
+          content: string
+          contraindications: string | null
+          created_at: string
+          descricao_breve: string | null
+          district_id: string | null
+          id: string
+          level: Database["public"]["Enums"]["intervention_level"]
+          materiais: string[] | null
+          objetivo: string | null
+          passo_a_passo: string | null
+          perguntas_chave: string[] | null
+          tags: string[] | null
+          title: string
+          tower_key: string | null
+          type: Database["public"]["Enums"]["intervention_type"]
+          updated_at: string
+          usage_count: number | null
+        }
+        Insert: {
+          archetype_key?: string | null
+          arquetipos_relacionados?: string[] | null
+          ativa?: boolean
+          content: string
+          contraindications?: string | null
+          created_at?: string
+          descricao_breve?: string | null
+          district_id?: string | null
+          id?: string
+          level?: Database["public"]["Enums"]["intervention_level"]
+          materiais?: string[] | null
+          objetivo?: string | null
+          passo_a_passo?: string | null
+          perguntas_chave?: string[] | null
+          tags?: string[] | null
+          title: string
+          tower_key?: string | null
+          type: Database["public"]["Enums"]["intervention_type"]
+          updated_at?: string
+          usage_count?: number | null
+        }
+        Update: {
+          archetype_key?: string | null
+          arquetipos_relacionados?: string[] | null
+          ativa?: boolean
+          content?: string
+          contraindications?: string | null
+          created_at?: string
+          descricao_breve?: string | null
+          district_id?: string | null
+          id?: string
+          level?: Database["public"]["Enums"]["intervention_level"]
+          materiais?: string[] | null
+          objetivo?: string | null
+          passo_a_passo?: string | null
+          perguntas_chave?: string[] | null
+          tags?: string[] | null
+          title?: string
+          tower_key?: string | null
+          type?: Database["public"]["Enums"]["intervention_type"]
+          updated_at?: string
+          usage_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interventions_district_id_fkey"
+            columns: ["district_id"]
+            isOneToOne: false
+            referencedRelation: "districts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventario_personas: {
+        Row: {
+          analise_discrepancia: string | null
+          cliente_id: string
+          contextos_personas: Json
+          created_at: string
+          custo_energetico: string | null
+          id: string
+          pergunta_incomoda_resposta: string | null
+          sombra_revelada: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          analise_discrepancia?: string | null
+          cliente_id: string
+          contextos_personas?: Json
+          created_at?: string
+          custo_energetico?: string | null
+          id?: string
+          pergunta_incomoda_resposta?: string | null
+          sombra_revelada?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          analise_discrepancia?: string | null
+          cliente_id?: string
+          contextos_personas?: Json
+          created_at?: string
+          custo_energetico?: string | null
+          id?: string
+          pergunta_incomoda_resposta?: string | null
+          sombra_revelada?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventario_personas_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jardim_do_oficio: {
+        Row: {
+          aprendizado_tecnico: string | null
+          cliente_id: string | null
+          contexto_origem: string | null
+          created_at: string
+          enviar_para_supervisao: boolean
+          espelho_risco_projecao: string | null
+          espelho_supervisao: string | null
+          espelho_toca_minha: string | null
+          id: string
+          pergunta_supervisao: string | null
+          reflexao_profissional: string
+          sessao_id: string | null
+          status_supervisao: Database["public"]["Enums"]["status_supervisao"]
+          tensao_etica: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          aprendizado_tecnico?: string | null
+          cliente_id?: string | null
+          contexto_origem?: string | null
+          created_at?: string
+          enviar_para_supervisao?: boolean
+          espelho_risco_projecao?: string | null
+          espelho_supervisao?: string | null
+          espelho_toca_minha?: string | null
+          id?: string
+          pergunta_supervisao?: string | null
+          reflexao_profissional: string
+          sessao_id?: string | null
+          status_supervisao?: Database["public"]["Enums"]["status_supervisao"]
+          tensao_etica?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          aprendizado_tecnico?: string | null
+          cliente_id?: string | null
+          contexto_origem?: string | null
+          created_at?: string
+          enviar_para_supervisao?: boolean
+          espelho_risco_projecao?: string | null
+          espelho_supervisao?: string | null
+          espelho_toca_minha?: string | null
+          id?: string
+          pergunta_supervisao?: string | null
+          reflexao_profissional?: string
+          sessao_id?: string | null
+          status_supervisao?: Database["public"]["Enums"]["status_supervisao"]
+          tensao_etica?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jardim_do_oficio_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jardim_do_oficio_sessao_id_fkey"
+            columns: ["sessao_id"]
+            isOneToOne: false
+            referencedRelation: "sessoes_casa_maquinas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jardim_grupo_registros: {
+        Row: {
+          campo_fechado: boolean | null
+          clima_descricao: string | null
+          clima_movimento: string | null
+          created_at: string
+          cuidado_proximo_encontro: string | null
+          data_registro: string
+          escuta_campo: string | null
+          escuta_coletiva: string | null
+          fase_jornada_grupo: string | null
+          frase_semente_grupo: string | null
+          group_id: string
+          id: string
+          imagens_emergentes: string | null
+          movimentos_repetidos: string | null
+          notas_privadas: string | null
+          resistencias_grupais: string | null
+          resposta_campo: string | null
+          ritual_atual: string | null
+          ritual_fechamento: string | null
+          ritual_realizado: string | null
+          session_id: string | null
+          simbolos_coletivos: string | null
+          tema_simbolico: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          campo_fechado?: boolean | null
+          clima_descricao?: string | null
+          clima_movimento?: string | null
+          created_at?: string
+          cuidado_proximo_encontro?: string | null
+          data_registro?: string
+          escuta_campo?: string | null
+          escuta_coletiva?: string | null
+          fase_jornada_grupo?: string | null
+          frase_semente_grupo?: string | null
+          group_id: string
+          id?: string
+          imagens_emergentes?: string | null
+          movimentos_repetidos?: string | null
+          notas_privadas?: string | null
+          resistencias_grupais?: string | null
+          resposta_campo?: string | null
+          ritual_atual?: string | null
+          ritual_fechamento?: string | null
+          ritual_realizado?: string | null
+          session_id?: string | null
+          simbolos_coletivos?: string | null
+          tema_simbolico?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          campo_fechado?: boolean | null
+          clima_descricao?: string | null
+          clima_movimento?: string | null
+          created_at?: string
+          cuidado_proximo_encontro?: string | null
+          data_registro?: string
+          escuta_campo?: string | null
+          escuta_coletiva?: string | null
+          fase_jornada_grupo?: string | null
+          frase_semente_grupo?: string | null
+          group_id?: string
+          id?: string
+          imagens_emergentes?: string | null
+          movimentos_repetidos?: string | null
+          notas_privadas?: string | null
+          resistencias_grupais?: string | null
+          resposta_campo?: string | null
+          ritual_atual?: string | null
+          ritual_fechamento?: string | null
+          ritual_realizado?: string | null
+          session_id?: string | null
+          simbolos_coletivos?: string | null
+          tema_simbolico?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jardim_grupo_registros_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "therapeutic_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jardim_grupo_registros_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "group_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jardim_heroina: {
+        Row: {
+          ativado_em: string | null
+          case_id: string
+          chegada_corpo: string | null
+          chegada_vivo: string | null
+          client_id: string
+          created_at: string
+          fechado_em: string | null
+          fechamento_deixo: string | null
+          fechamento_levo: string | null
+          gesto_descricao: string | null
+          gesto_prazo: string | null
+          gesto_prazo_texto: string | null
+          gesto_tipo: Database["public"]["Enums"]["jardim_gesto_tipo"] | null
+          id: string
+          integracao_observar: string | null
+          observacao_percebi: string | null
+          observacao_sustentou: string | null
+          status: Database["public"]["Enums"]["jardim_heroina_status"]
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          ativado_em?: string | null
+          case_id: string
+          chegada_corpo?: string | null
+          chegada_vivo?: string | null
+          client_id: string
+          created_at?: string
+          fechado_em?: string | null
+          fechamento_deixo?: string | null
+          fechamento_levo?: string | null
+          gesto_descricao?: string | null
+          gesto_prazo?: string | null
+          gesto_prazo_texto?: string | null
+          gesto_tipo?: Database["public"]["Enums"]["jardim_gesto_tipo"] | null
+          id?: string
+          integracao_observar?: string | null
+          observacao_percebi?: string | null
+          observacao_sustentou?: string | null
+          status?: Database["public"]["Enums"]["jardim_heroina_status"]
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          ativado_em?: string | null
+          case_id?: string
+          chegada_corpo?: string | null
+          chegada_vivo?: string | null
+          client_id?: string
+          created_at?: string
+          fechado_em?: string | null
+          fechamento_deixo?: string | null
+          fechamento_levo?: string | null
+          gesto_descricao?: string | null
+          gesto_prazo?: string | null
+          gesto_prazo_texto?: string | null
+          gesto_tipo?: Database["public"]["Enums"]["jardim_gesto_tipo"] | null
+          id?: string
+          integracao_observar?: string | null
+          observacao_percebi?: string | null
+          observacao_sustentou?: string | null
+          status?: Database["public"]["Enums"]["jardim_heroina_status"]
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jardim_heroina_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "session_cases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jardim_heroina_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jardim_heroina_registros: {
+        Row: {
+          arquetipo_snapshot: string | null
+          aterramento_corpo_sentiu: string | null
+          aterramento_ficou_vivo: string | null
+          aterramento_imagem_central: string | null
+          created_at: string
+          data_registro: string
+          fase_jornada_snapshot: string | null
+          frase_semente: string | null
+          gesto_origem: string | null
+          gesto_revisao_status: string | null
+          id: string
+          mapa_vivo_id: string | null
+          mapa_vivo_origem_id: string | null
+          memorias_emergentes: string | null
+          notas_privadas: string | null
+          ritual_movimento: string | null
+          ritual_resistencia: string | null
+          ritual_vivendo: string | null
+          session_case_id: string
+          sinais_sincronicidades: string | null
+          sonhos_imagens: string | null
+          therapist_id: string
+          tipo_registro: string
+          updated_at: string
+        }
+        Insert: {
+          arquetipo_snapshot?: string | null
+          aterramento_corpo_sentiu?: string | null
+          aterramento_ficou_vivo?: string | null
+          aterramento_imagem_central?: string | null
+          created_at?: string
+          data_registro?: string
+          fase_jornada_snapshot?: string | null
+          frase_semente?: string | null
+          gesto_origem?: string | null
+          gesto_revisao_status?: string | null
+          id?: string
+          mapa_vivo_id?: string | null
+          mapa_vivo_origem_id?: string | null
+          memorias_emergentes?: string | null
+          notas_privadas?: string | null
+          ritual_movimento?: string | null
+          ritual_resistencia?: string | null
+          ritual_vivendo?: string | null
+          session_case_id: string
+          sinais_sincronicidades?: string | null
+          sonhos_imagens?: string | null
+          therapist_id: string
+          tipo_registro?: string
+          updated_at?: string
+        }
+        Update: {
+          arquetipo_snapshot?: string | null
+          aterramento_corpo_sentiu?: string | null
+          aterramento_ficou_vivo?: string | null
+          aterramento_imagem_central?: string | null
+          created_at?: string
+          data_registro?: string
+          fase_jornada_snapshot?: string | null
+          frase_semente?: string | null
+          gesto_origem?: string | null
+          gesto_revisao_status?: string | null
+          id?: string
+          mapa_vivo_id?: string | null
+          mapa_vivo_origem_id?: string | null
+          memorias_emergentes?: string | null
+          notas_privadas?: string | null
+          ritual_movimento?: string | null
+          ritual_resistencia?: string | null
+          ritual_vivendo?: string | null
+          session_case_id?: string
+          sinais_sincronicidades?: string | null
+          sonhos_imagens?: string | null
+          therapist_id?: string
+          tipo_registro?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jardim_heroina_registros_mapa_vivo_id_fkey"
+            columns: ["mapa_vivo_id"]
+            isOneToOne: false
+            referencedRelation: "mapa_vivo_heroina"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jardim_heroina_registros_mapa_vivo_origem_id_fkey"
+            columns: ["mapa_vivo_origem_id"]
+            isOneToOne: false
+            referencedRelation: "mapa_vivo_heroina"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jardim_heroina_registros_session_case_id_fkey"
+            columns: ["session_case_id"]
+            isOneToOne: false
+            referencedRelation: "session_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jardim_psique_registros: {
+        Row: {
+          arquivado: boolean
+          conteudo: Json
+          created_at: string
+          data_aplicacao: string
+          emocao_predominante: string | null
+          ferramenta_chave: string
+          ferramenta_nome: string
+          fonte: string | null
+          id: string
+          integrado: boolean
+          reflexao_pessoal: string | null
+          resultado_simbolico: Json | null
+          tags: string[] | null
+          tipo_registro: string | null
+          titulo: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          arquivado?: boolean
+          conteudo?: Json
+          created_at?: string
+          data_aplicacao?: string
+          emocao_predominante?: string | null
+          ferramenta_chave: string
+          ferramenta_nome: string
+          fonte?: string | null
+          id?: string
+          integrado?: boolean
+          reflexao_pessoal?: string | null
+          resultado_simbolico?: Json | null
+          tags?: string[] | null
+          tipo_registro?: string | null
+          titulo?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          arquivado?: boolean
+          conteudo?: Json
+          created_at?: string
+          data_aplicacao?: string
+          emocao_predominante?: string | null
+          ferramenta_chave?: string
+          ferramenta_nome?: string
+          fonte?: string | null
+          id?: string
+          integrado?: boolean
+          reflexao_pessoal?: string | null
+          resultado_simbolico?: Json | null
+          tags?: string[] | null
+          tipo_registro?: string | null
+          titulo?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      jornada_heroina_fases: {
+        Row: {
+          arquetipos_sugeridos: string[] | null
+          ativo: boolean | null
+          chave: string
+          cor_primaria: string | null
+          created_at: string | null
+          descricao: string
+          foco_terapeutico: string | null
+          icone: string | null
+          id: string
+          linguagem_contencao: string | null
+          microcopy: string | null
+          nome: string
+          nome_en: string | null
+          numero: number
+          ordem: number | null
+          pergunta_central: string | null
+          perguntas_reflexao: string[] | null
+          praticas_simbolicas: string[] | null
+          risco_especifico: string | null
+          sinal_integracao: string | null
+          subtitulo: string | null
+          tarefa_simbolica: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          arquetipos_sugeridos?: string[] | null
+          ativo?: boolean | null
+          chave: string
+          cor_primaria?: string | null
+          created_at?: string | null
+          descricao: string
+          foco_terapeutico?: string | null
+          icone?: string | null
+          id?: string
+          linguagem_contencao?: string | null
+          microcopy?: string | null
+          nome: string
+          nome_en?: string | null
+          numero: number
+          ordem?: number | null
+          pergunta_central?: string | null
+          perguntas_reflexao?: string[] | null
+          praticas_simbolicas?: string[] | null
+          risco_especifico?: string | null
+          sinal_integracao?: string | null
+          subtitulo?: string | null
+          tarefa_simbolica?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          arquetipos_sugeridos?: string[] | null
+          ativo?: boolean | null
+          chave?: string
+          cor_primaria?: string | null
+          created_at?: string | null
+          descricao?: string
+          foco_terapeutico?: string | null
+          icone?: string | null
+          id?: string
+          linguagem_contencao?: string | null
+          microcopy?: string | null
+          nome?: string
+          nome_en?: string | null
+          numero?: number
+          ordem?: number | null
+          pergunta_central?: string | null
+          perguntas_reflexao?: string[] | null
+          praticas_simbolicas?: string[] | null
+          risco_especifico?: string | null
+          sinal_integracao?: string | null
+          subtitulo?: string | null
+          tarefa_simbolica?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      jornada_heroina_notas_profissionais: {
+        Row: {
+          created_at: string | null
+          fase_numero: number
+          id: string
+          intervencoes_sugeridas: string | null
+          observacoes: string | null
+          padroes_observados: string | null
+          proximos_passos: string | null
+          registro_id: string
+          terapeuta_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          fase_numero: number
+          id?: string
+          intervencoes_sugeridas?: string | null
+          observacoes?: string | null
+          padroes_observados?: string | null
+          proximos_passos?: string | null
+          registro_id: string
+          terapeuta_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          fase_numero?: number
+          id?: string
+          intervencoes_sugeridas?: string | null
+          observacoes?: string | null
+          padroes_observados?: string | null
+          proximos_passos?: string | null
+          registro_id?: string
+          terapeuta_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jornada_heroina_notas_profissionais_registro_id_fkey"
+            columns: ["registro_id"]
+            isOneToOne: false
+            referencedRelation: "jornada_heroina_registros"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jornada_heroina_registros: {
+        Row: {
+          cliente_id: string | null
+          created_at: string | null
+          fase_atual: number | null
+          id: string
+          intencao_inicial: string | null
+          modo: string
+          nome_simbolico: string | null
+          notas_progresso: Json | null
+          reflexao_final: string | null
+          session_case_id: string | null
+          status: string | null
+          terapeuta_id: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          cliente_id?: string | null
+          created_at?: string | null
+          fase_atual?: number | null
+          id?: string
+          intencao_inicial?: string | null
+          modo?: string
+          nome_simbolico?: string | null
+          notas_progresso?: Json | null
+          reflexao_final?: string | null
+          session_case_id?: string | null
+          status?: string | null
+          terapeuta_id?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          cliente_id?: string | null
+          created_at?: string | null
+          fase_atual?: number | null
+          id?: string
+          intencao_inicial?: string | null
+          modo?: string
+          nome_simbolico?: string | null
+          notas_progresso?: Json | null
+          reflexao_final?: string | null
+          session_case_id?: string | null
+          status?: string | null
+          terapeuta_id?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jornada_heroina_registros_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jornada_heroina_registros_session_case_id_fkey"
+            columns: ["session_case_id"]
+            isOneToOne: false
+            referencedRelation: "session_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jornada_heroina_respostas: {
+        Row: {
+          arquetipo_escolhido: string | null
+          created_at: string | null
+          data_conclusao: string | null
+          data_entrada: string | null
+          fase_numero: number
+          id: string
+          notas_pessoais: string | null
+          registro_id: string
+          respostas_reflexao: Json | null
+          simbolo_pessoal: string | null
+          tom_emocional: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          arquetipo_escolhido?: string | null
+          created_at?: string | null
+          data_conclusao?: string | null
+          data_entrada?: string | null
+          fase_numero: number
+          id?: string
+          notas_pessoais?: string | null
+          registro_id: string
+          respostas_reflexao?: Json | null
+          simbolo_pessoal?: string | null
+          tom_emocional?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          arquetipo_escolhido?: string | null
+          created_at?: string | null
+          data_conclusao?: string | null
+          data_entrada?: string | null
+          fase_numero?: number
+          id?: string
+          notas_pessoais?: string | null
+          registro_id?: string
+          respostas_reflexao?: Json | null
+          simbolo_pessoal?: string | null
+          tom_emocional?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jornada_heroina_respostas_registro_id_fkey"
+            columns: ["registro_id"]
+            isOneToOne: false
+            referencedRelation: "jornada_heroina_registros"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jornada_individuacao: {
+        Row: {
+          arquetipos_emergentes: string[] | null
+          client_id: string
+          created_at: string
+          data_registro: string
+          distritos_ativos: string[] | null
+          etapa_jornada: string
+          id: string
+          reflexao_cliente: string
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          arquetipos_emergentes?: string[] | null
+          client_id: string
+          created_at?: string
+          data_registro?: string
+          distritos_ativos?: string[] | null
+          etapa_jornada: string
+          id?: string
+          reflexao_cliente?: string
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          arquetipos_emergentes?: string[] | null
+          client_id?: string
+          created_at?: string
+          data_registro?: string
+          distritos_ativos?: string[] | null
+          etapa_jornada?: string
+          id?: string
+          reflexao_cliente?: string
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jornada_individuacao_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jornadas: {
+        Row: {
+          ativa: boolean
+          cor_acento: string | null
+          created_at: string
+          descricao: string | null
+          icone: string | null
+          id: string
+          nome: string
+          ordem: number
+          updated_at: string
+        }
+        Insert: {
+          ativa?: boolean
+          cor_acento?: string | null
+          created_at?: string
+          descricao?: string | null
+          icone?: string | null
+          id?: string
+          nome: string
+          ordem?: number
+          updated_at?: string
+        }
+        Update: {
+          ativa?: boolean
+          cor_acento?: string | null
+          created_at?: string
+          descricao?: string | null
+          icone?: string | null
+          id?: string
+          nome?: string
+          ordem?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      journey_districts: {
+        Row: {
+          district_id: string
+          id: string
+          journey_id: string
+          last_session_at: string | null
+          notes: string | null
+          sessions_count: number | null
+          state: string
+        }
+        Insert: {
+          district_id: string
+          id?: string
+          journey_id: string
+          last_session_at?: string | null
+          notes?: string | null
+          sessions_count?: number | null
+          state?: string
+        }
+        Update: {
+          district_id?: string
+          id?: string
+          journey_id?: string
+          last_session_at?: string | null
+          notes?: string | null
+          sessions_count?: number | null
+          state?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journey_districts_district_id_fkey"
+            columns: ["district_id"]
+            isOneToOne: false
+            referencedRelation: "districts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journey_districts_journey_id_fkey"
+            columns: ["journey_id"]
+            isOneToOne: false
+            referencedRelation: "journeys"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      journey_events: {
+        Row: {
+          client_id: string
+          created_at: string
+          data_evento: string
+          descricao: string | null
+          id: string
+          metadata_json: Json | null
+          session_id: string | null
+          therapist_id: string
+          tipo: string
+          titulo: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          data_evento?: string
+          descricao?: string | null
+          id?: string
+          metadata_json?: Json | null
+          session_id?: string | null
+          therapist_id: string
+          tipo: string
+          titulo: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          data_evento?: string
+          descricao?: string | null
+          id?: string
+          metadata_json?: Json | null
+          session_id?: string | null
+          therapist_id?: string
+          tipo?: string
+          titulo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journey_events_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journey_events_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      journey_media: {
+        Row: {
+          created_at: string
+          gallery_items: Json | null
+          header_image_url: string | null
+          id: string
+          infographic_kind: string | null
+          infographic_url: string | null
+          journey_id: string
+          published: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          gallery_items?: Json | null
+          header_image_url?: string | null
+          id?: string
+          infographic_kind?: string | null
+          infographic_url?: string | null
+          journey_id: string
+          published?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          gallery_items?: Json | null
+          header_image_url?: string | null
+          id?: string
+          infographic_kind?: string | null
+          infographic_url?: string | null
+          journey_id?: string
+          published?: boolean
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journey_media_journey_id_fkey"
+            columns: ["journey_id"]
+            isOneToOne: false
+            referencedRelation: "clube_jornadas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      journey_reflections: {
+        Row: {
+          client_id: string
+          conteudo: string
+          created_at: string
+          id: string
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          conteudo?: string
+          created_at?: string
+          id?: string
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          conteudo?: string
+          created_at?: string
+          id?: string
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journey_reflections_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      journeys: {
+        Row: {
+          client_id: string
+          created_at: string
+          current_district_id: string | null
+          id: string
+          process_state: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          current_district_id?: string | null
+          id?: string
+          process_state?: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          current_district_id?: string | null
+          id?: string
+          process_state?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journeys_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journeys_current_district_id_fkey"
+            columns: ["current_district_id"]
+            isOneToOne: false
+            referencedRelation: "districts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lab_8020_progress: {
+        Row: {
+          aplicacao_comportamento: string | null
+          aplicacao_gesto: string | null
+          aplicacao_onde: string | null
+          book_id: string | null
+          cart_analise_ia: Json | null
+          cart_arquetipos: string[] | null
+          cart_distrito: string | null
+          cart_labirinto: string | null
+          cart_observacoes: string | null
+          cart_porta: string | null
+          cart_status: string | null
+          cart_torre: string | null
+          concluido: boolean
+          concluido_em: string | null
+          created_at: string
+          esp_analise_ia: Json | null
+          esp_categorias_selecionadas: string[] | null
+          esp_manifestacao: string | null
+          esp_nao_fazer: string | null
+          esp_onde_ve: string | null
+          esp_risco: string | null
+          esp_status: string | null
+          forja_ajustes_rota: string | null
+          forja_estrategia: string | null
+          forja_fechamento: string | null
+          forja_intervencao: string | null
+          forja_objetivo: string | null
+          forja_perguntas: string | null
+          forja_plano_ia: Json | null
+          forja_respostas_cliente: string | null
+          forja_riscos: string | null
+          forja_status: string | null
+          id: string
+          insight_livre: string | null
+          notas_profissionais: string | null
+          registro_reflexivo: string | null
+          resposta_1: string | null
+          resposta_2: string | null
+          season_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          aplicacao_comportamento?: string | null
+          aplicacao_gesto?: string | null
+          aplicacao_onde?: string | null
+          book_id?: string | null
+          cart_analise_ia?: Json | null
+          cart_arquetipos?: string[] | null
+          cart_distrito?: string | null
+          cart_labirinto?: string | null
+          cart_observacoes?: string | null
+          cart_porta?: string | null
+          cart_status?: string | null
+          cart_torre?: string | null
+          concluido?: boolean
+          concluido_em?: string | null
+          created_at?: string
+          esp_analise_ia?: Json | null
+          esp_categorias_selecionadas?: string[] | null
+          esp_manifestacao?: string | null
+          esp_nao_fazer?: string | null
+          esp_onde_ve?: string | null
+          esp_risco?: string | null
+          esp_status?: string | null
+          forja_ajustes_rota?: string | null
+          forja_estrategia?: string | null
+          forja_fechamento?: string | null
+          forja_intervencao?: string | null
+          forja_objetivo?: string | null
+          forja_perguntas?: string | null
+          forja_plano_ia?: Json | null
+          forja_respostas_cliente?: string | null
+          forja_riscos?: string | null
+          forja_status?: string | null
+          id?: string
+          insight_livre?: string | null
+          notas_profissionais?: string | null
+          registro_reflexivo?: string | null
+          resposta_1?: string | null
+          resposta_2?: string | null
+          season_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          aplicacao_comportamento?: string | null
+          aplicacao_gesto?: string | null
+          aplicacao_onde?: string | null
+          book_id?: string | null
+          cart_analise_ia?: Json | null
+          cart_arquetipos?: string[] | null
+          cart_distrito?: string | null
+          cart_labirinto?: string | null
+          cart_observacoes?: string | null
+          cart_porta?: string | null
+          cart_status?: string | null
+          cart_torre?: string | null
+          concluido?: boolean
+          concluido_em?: string | null
+          created_at?: string
+          esp_analise_ia?: Json | null
+          esp_categorias_selecionadas?: string[] | null
+          esp_manifestacao?: string | null
+          esp_nao_fazer?: string | null
+          esp_onde_ve?: string | null
+          esp_risco?: string | null
+          esp_status?: string | null
+          forja_ajustes_rota?: string | null
+          forja_estrategia?: string | null
+          forja_fechamento?: string | null
+          forja_intervencao?: string | null
+          forja_objetivo?: string | null
+          forja_perguntas?: string | null
+          forja_plano_ia?: Json | null
+          forja_respostas_cliente?: string | null
+          forja_riscos?: string | null
+          forja_status?: string | null
+          id?: string
+          insight_livre?: string | null
+          notas_profissionais?: string | null
+          registro_reflexivo?: string | null
+          resposta_1?: string | null
+          resposta_2?: string | null
+          season_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lab_8020_progress_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lab_8020_progress_season_id_fkey"
+            columns: ["season_id"]
+            isOneToOne: false
+            referencedRelation: "oracular_seasons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      labirinto_39_portas: {
+        Row: {
+          client_id: string
+          created_at: string
+          grupo_mais_acessivel: string | null
+          grupo_menos_acessivel: string | null
+          id: string
+          portas_json: Json
+          reflexao_abertas: string | null
+          reflexao_fechadas: string | null
+          reflexao_grupo_acessivel: string | null
+          reflexao_grupo_inacessivel: string | null
+          reflexao_trancadas: string | null
+          therapist_id: string
+          total_abertas: number
+          total_fechadas: number
+          total_trancadas: number
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          grupo_mais_acessivel?: string | null
+          grupo_menos_acessivel?: string | null
+          id?: string
+          portas_json?: Json
+          reflexao_abertas?: string | null
+          reflexao_fechadas?: string | null
+          reflexao_grupo_acessivel?: string | null
+          reflexao_grupo_inacessivel?: string | null
+          reflexao_trancadas?: string | null
+          therapist_id: string
+          total_abertas?: number
+          total_fechadas?: number
+          total_trancadas?: number
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          grupo_mais_acessivel?: string | null
+          grupo_menos_acessivel?: string | null
+          id?: string
+          portas_json?: Json
+          reflexao_abertas?: string | null
+          reflexao_fechadas?: string | null
+          reflexao_grupo_acessivel?: string | null
+          reflexao_grupo_inacessivel?: string | null
+          reflexao_trancadas?: string | null
+          therapist_id?: string
+          total_abertas?: number
+          total_fechadas?: number
+          total_trancadas?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "labirinto_39_portas_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      labirinto_anotacoes: {
+        Row: {
+          anotacao: string
+          cliente_id: string | null
+          created_at: string
+          id: string
+          porta_id: string
+          tipo: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          anotacao: string
+          cliente_id?: string | null
+          created_at?: string
+          id?: string
+          porta_id: string
+          tipo?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          anotacao?: string
+          cliente_id?: string | null
+          created_at?: string
+          id?: string
+          porta_id?: string
+          tipo?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "labirinto_anotacoes_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labirinto_anotacoes_porta_id_fkey"
+            columns: ["porta_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_portas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      labirinto_arquetipos: {
+        Row: {
+          ativo: boolean
+          cor_acento: string | null
+          created_at: string
+          descricao_luz: string
+          descricao_sombra: string
+          icone: string | null
+          id: string
+          imagem_url: string | null
+          nome: string
+          ordem: number
+          territorio: string | null
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          cor_acento?: string | null
+          created_at?: string
+          descricao_luz: string
+          descricao_sombra: string
+          icone?: string | null
+          id?: string
+          imagem_url?: string | null
+          nome: string
+          ordem?: number
+          territorio?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          cor_acento?: string | null
+          created_at?: string
+          descricao_luz?: string
+          descricao_sombra?: string
+          icone?: string | null
+          id?: string
+          imagem_url?: string | null
+          nome?: string
+          ordem?: number
+          territorio?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      labirinto_fases: {
+        Row: {
+          ativo: boolean
+          codigo_interno: string | null
+          cor_acento: string | null
+          created_at: string
+          descricao: string
+          exercicio_instrucao: string | null
+          exercicio_titulo: string | null
+          icone: string | null
+          id: string
+          imagem_url: string | null
+          nome: string
+          nucleo: string | null
+          observacoes_admin: string | null
+          ordem: number
+          pergunta_chave: string | null
+          ritual_texto: string | null
+          subtitulo: string | null
+          tema_central: string | null
+          texto_simbolico: string | null
+          updated_at: string
+          versao_conteudo: string | null
+        }
+        Insert: {
+          ativo?: boolean
+          codigo_interno?: string | null
+          cor_acento?: string | null
+          created_at?: string
+          descricao: string
+          exercicio_instrucao?: string | null
+          exercicio_titulo?: string | null
+          icone?: string | null
+          id?: string
+          imagem_url?: string | null
+          nome: string
+          nucleo?: string | null
+          observacoes_admin?: string | null
+          ordem?: number
+          pergunta_chave?: string | null
+          ritual_texto?: string | null
+          subtitulo?: string | null
+          tema_central?: string | null
+          texto_simbolico?: string | null
+          updated_at?: string
+          versao_conteudo?: string | null
+        }
+        Update: {
+          ativo?: boolean
+          codigo_interno?: string | null
+          cor_acento?: string | null
+          created_at?: string
+          descricao?: string
+          exercicio_instrucao?: string | null
+          exercicio_titulo?: string | null
+          icone?: string | null
+          id?: string
+          imagem_url?: string | null
+          nome?: string
+          nucleo?: string | null
+          observacoes_admin?: string | null
+          ordem?: number
+          pergunta_chave?: string | null
+          ritual_texto?: string | null
+          subtitulo?: string | null
+          tema_central?: string | null
+          texto_simbolico?: string | null
+          updated_at?: string
+          versao_conteudo?: string | null
+        }
+        Relationships: []
+      }
+      labirinto_leituras: {
+        Row: {
+          cliente_id: string | null
+          contexto: string | null
+          created_at: string
+          id: string
+          metodo_ativacao: string
+          porta_id: string
+          reflexoes: string | null
+          user_id: string
+        }
+        Insert: {
+          cliente_id?: string | null
+          contexto?: string | null
+          created_at?: string
+          id?: string
+          metodo_ativacao?: string
+          porta_id: string
+          reflexoes?: string | null
+          user_id: string
+        }
+        Update: {
+          cliente_id?: string | null
+          contexto?: string | null
+          created_at?: string
+          id?: string
+          metodo_ativacao?: string
+          porta_id?: string
+          reflexoes?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "labirinto_leituras_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labirinto_leituras_porta_id_fkey"
+            columns: ["porta_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_portas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      labirinto_metaforas: {
+        Row: {
+          ativo: boolean
+          cor_acento: string | null
+          created_at: string
+          icone: string | null
+          id: string
+          imagem_url: string | null
+          nome: string
+          ordem: number
+          pergunta_reflexao: string | null
+          texto_evocativo: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          cor_acento?: string | null
+          created_at?: string
+          icone?: string | null
+          id?: string
+          imagem_url?: string | null
+          nome: string
+          ordem?: number
+          pergunta_reflexao?: string | null
+          texto_evocativo: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          cor_acento?: string | null
+          created_at?: string
+          icone?: string | null
+          id?: string
+          imagem_url?: string | null
+          nome?: string
+          ordem?: number
+          pergunta_reflexao?: string | null
+          texto_evocativo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      labirinto_portas: {
+        Row: {
+          ai_generated_image_url: string | null
+          ativa: boolean
+          audio_titulo: string | null
+          audio_url: string | null
+          campo_pede: string | null
+          caso_espelho_como_sustentar: string | null
+          caso_espelho_erro_comum: string | null
+          caso_espelho_erros_facilitadora: string | null
+          caso_espelho_frase_chegada: string | null
+          caso_espelho_postura_correta: string | null
+          caso_espelho_situacao: string | null
+          caso_espelho_titulo: string | null
+          cena_narrativa: string | null
+          chave_frase_ancora: string | null
+          chave_o_que_nao_fazer: string | null
+          chave_quando_parar: string | null
+          chave_sinal_maturidade: string | null
+          created_at: string
+          eixo_psiquico: string | null
+          forca_ativa: string | null
+          id: string
+          imagem_url: string | null
+          nao_fazer_aqui: string | null
+          nome: string
+          numero: number
+          ordem: number
+          pergunta_chave: string | null
+          portal_caso_espelho: Database["public"]["Enums"]["portal_type"]
+          portal_chave_facilitadora: Database["public"]["Enums"]["portal_type"]
+          portal_minimo: Database["public"]["Enums"]["portal_type"]
+          postura_facilitadora: string | null
+          risco_clinico: string | null
+          subtitulo: string | null
+          symbolic_focus: string | null
+          tipo_campo: string | null
+          updated_at: string
+        }
+        Insert: {
+          ai_generated_image_url?: string | null
+          ativa?: boolean
+          audio_titulo?: string | null
+          audio_url?: string | null
+          campo_pede?: string | null
+          caso_espelho_como_sustentar?: string | null
+          caso_espelho_erro_comum?: string | null
+          caso_espelho_erros_facilitadora?: string | null
+          caso_espelho_frase_chegada?: string | null
+          caso_espelho_postura_correta?: string | null
+          caso_espelho_situacao?: string | null
+          caso_espelho_titulo?: string | null
+          cena_narrativa?: string | null
+          chave_frase_ancora?: string | null
+          chave_o_que_nao_fazer?: string | null
+          chave_quando_parar?: string | null
+          chave_sinal_maturidade?: string | null
+          created_at?: string
+          eixo_psiquico?: string | null
+          forca_ativa?: string | null
+          id?: string
+          imagem_url?: string | null
+          nao_fazer_aqui?: string | null
+          nome: string
+          numero: number
+          ordem?: number
+          pergunta_chave?: string | null
+          portal_caso_espelho?: Database["public"]["Enums"]["portal_type"]
+          portal_chave_facilitadora?: Database["public"]["Enums"]["portal_type"]
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          postura_facilitadora?: string | null
+          risco_clinico?: string | null
+          subtitulo?: string | null
+          symbolic_focus?: string | null
+          tipo_campo?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ai_generated_image_url?: string | null
+          ativa?: boolean
+          audio_titulo?: string | null
+          audio_url?: string | null
+          campo_pede?: string | null
+          caso_espelho_como_sustentar?: string | null
+          caso_espelho_erro_comum?: string | null
+          caso_espelho_erros_facilitadora?: string | null
+          caso_espelho_frase_chegada?: string | null
+          caso_espelho_postura_correta?: string | null
+          caso_espelho_situacao?: string | null
+          caso_espelho_titulo?: string | null
+          cena_narrativa?: string | null
+          chave_frase_ancora?: string | null
+          chave_o_que_nao_fazer?: string | null
+          chave_quando_parar?: string | null
+          chave_sinal_maturidade?: string | null
+          created_at?: string
+          eixo_psiquico?: string | null
+          forca_ativa?: string | null
+          id?: string
+          imagem_url?: string | null
+          nao_fazer_aqui?: string | null
+          nome?: string
+          numero?: number
+          ordem?: number
+          pergunta_chave?: string | null
+          portal_caso_espelho?: Database["public"]["Enums"]["portal_type"]
+          portal_chave_facilitadora?: Database["public"]["Enums"]["portal_type"]
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          postura_facilitadora?: string | null
+          risco_clinico?: string | null
+          subtitulo?: string | null
+          symbolic_focus?: string | null
+          tipo_campo?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      labirinto_registros: {
+        Row: {
+          arquetipo_id: string | null
+          concluido: boolean
+          concluido_em: string | null
+          created_at: string
+          fase_id: string | null
+          hipotese_terapeutica: string | null
+          id: string
+          metafora_id: string | null
+          modo_uso: Database["public"]["Enums"]["labirinto_modo_uso"]
+          nome_cliente: string | null
+          notas_terapeuta: string | null
+          observacoes_clinicas: string | null
+          reflexao_arquetipo: string | null
+          reflexao_fase: string | null
+          reflexao_final: string | null
+          reflexao_metafora: string | null
+          reflexao_ritual: string | null
+          ritual_id: string | null
+          session_case_id: string | null
+          terapeuta_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          arquetipo_id?: string | null
+          concluido?: boolean
+          concluido_em?: string | null
+          created_at?: string
+          fase_id?: string | null
+          hipotese_terapeutica?: string | null
+          id?: string
+          metafora_id?: string | null
+          modo_uso?: Database["public"]["Enums"]["labirinto_modo_uso"]
+          nome_cliente?: string | null
+          notas_terapeuta?: string | null
+          observacoes_clinicas?: string | null
+          reflexao_arquetipo?: string | null
+          reflexao_fase?: string | null
+          reflexao_final?: string | null
+          reflexao_metafora?: string | null
+          reflexao_ritual?: string | null
+          ritual_id?: string | null
+          session_case_id?: string | null
+          terapeuta_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          arquetipo_id?: string | null
+          concluido?: boolean
+          concluido_em?: string | null
+          created_at?: string
+          fase_id?: string | null
+          hipotese_terapeutica?: string | null
+          id?: string
+          metafora_id?: string | null
+          modo_uso?: Database["public"]["Enums"]["labirinto_modo_uso"]
+          nome_cliente?: string | null
+          notas_terapeuta?: string | null
+          observacoes_clinicas?: string | null
+          reflexao_arquetipo?: string | null
+          reflexao_fase?: string | null
+          reflexao_final?: string | null
+          reflexao_metafora?: string | null
+          reflexao_ritual?: string | null
+          ritual_id?: string | null
+          session_case_id?: string | null
+          terapeuta_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "labirinto_registros_arquetipo_id_fkey"
+            columns: ["arquetipo_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_arquetipos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labirinto_registros_fase_id_fkey"
+            columns: ["fase_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_fases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labirinto_registros_metafora_id_fkey"
+            columns: ["metafora_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_metaforas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labirinto_registros_ritual_id_fkey"
+            columns: ["ritual_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_rituais"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labirinto_registros_session_case_id_fkey"
+            columns: ["session_case_id"]
+            isOneToOne: false
+            referencedRelation: "session_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      labirinto_rituais: {
+        Row: {
+          ativo: boolean
+          cor_acento: string | null
+          created_at: string
+          descricao: string
+          duracao: string | null
+          icone: string | null
+          id: string
+          instrucoes: string | null
+          nome: string
+          ordem: number
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          cor_acento?: string | null
+          created_at?: string
+          descricao: string
+          duracao?: string | null
+          icone?: string | null
+          id?: string
+          instrucoes?: string | null
+          nome: string
+          ordem?: number
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          cor_acento?: string | null
+          created_at?: string
+          descricao?: string
+          duracao?: string | null
+          icone?: string | null
+          id?: string
+          instrucoes?: string | null
+          nome?: string
+          ordem?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      labirinto_roteiro_templates: {
+        Row: {
+          ativo: boolean
+          camada_id: string
+          created_at: string
+          id: string
+          ordem: number
+          secao: string
+          texto_base: string
+          tipo_camada: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          camada_id: string
+          created_at?: string
+          id?: string
+          ordem?: number
+          secao: string
+          texto_base: string
+          tipo_camada: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          camada_id?: string
+          created_at?: string
+          id?: string
+          ordem?: number
+          secao?: string
+          texto_base?: string
+          tipo_camada?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      labirinto_roteiros_gerados: {
+        Row: {
+          abertura: string | null
+          arquetipo_id: string | null
+          created_at: string
+          editado: boolean
+          exploracao: string | null
+          fase_id: string | null
+          fechamento: string | null
+          gerado_por: string
+          id: string
+          intervencao: string | null
+          metafora_id: string | null
+          notas_terapeuta: string | null
+          ritual_id: string | null
+          session_case_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          abertura?: string | null
+          arquetipo_id?: string | null
+          created_at?: string
+          editado?: boolean
+          exploracao?: string | null
+          fase_id?: string | null
+          fechamento?: string | null
+          gerado_por?: string
+          id?: string
+          intervencao?: string | null
+          metafora_id?: string | null
+          notas_terapeuta?: string | null
+          ritual_id?: string | null
+          session_case_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          abertura?: string | null
+          arquetipo_id?: string | null
+          created_at?: string
+          editado?: boolean
+          exploracao?: string | null
+          fase_id?: string | null
+          fechamento?: string | null
+          gerado_por?: string
+          id?: string
+          intervencao?: string | null
+          metafora_id?: string | null
+          notas_terapeuta?: string | null
+          ritual_id?: string | null
+          session_case_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "labirinto_roteiros_gerados_arquetipo_id_fkey"
+            columns: ["arquetipo_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_arquetipos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labirinto_roteiros_gerados_fase_id_fkey"
+            columns: ["fase_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_fases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labirinto_roteiros_gerados_metafora_id_fkey"
+            columns: ["metafora_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_metaforas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labirinto_roteiros_gerados_ritual_id_fkey"
+            columns: ["ritual_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_rituais"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labirinto_roteiros_gerados_session_case_id_fkey"
+            columns: ["session_case_id"]
+            isOneToOne: false
+            referencedRelation: "session_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      labyrinth_records: {
+        Row: {
+          archetypal_image: string | null
+          client_id: string
+          created_at: string
+          crossing: string | null
+          emotional_field: string | null
+          facilitator_support: string | null
+          fact: string | null
+          id: string
+          session_id: string | null
+        }
+        Insert: {
+          archetypal_image?: string | null
+          client_id: string
+          created_at?: string
+          crossing?: string | null
+          emotional_field?: string | null
+          facilitator_support?: string | null
+          fact?: string | null
+          id?: string
+          session_id?: string | null
+        }
+        Update: {
+          archetypal_image?: string | null
+          client_id?: string
+          created_at?: string
+          crossing?: string | null
+          emotional_field?: string | null
+          facilitator_support?: string | null
+          fact?: string | null
+          id?: string
+          session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "labyrinth_records_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labyrinth_records_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
             referencedColumns: ["id"]
           },
         ]
       }
       lessons: {
         Row: {
-          content: string | null
-          content_type: Database["public"]["Enums"]["content_type"]
+          content: string
           created_at: string
-          duration_seconds: number | null
+          description: string
           id: string
-          media_url: string | null
-          module_id: string
-          ordem: number
-          slug: string | null
-          status: Database["public"]["Enums"]["status_publicacao"]
+          order_number: number
           title: string
+          travessia_id: string
           updated_at: string
+          video_url: string | null
         }
         Insert: {
-          content?: string | null
-          content_type?: Database["public"]["Enums"]["content_type"]
+          content: string
           created_at?: string
-          duration_seconds?: number | null
+          description: string
           id?: string
-          media_url?: string | null
-          module_id: string
-          ordem?: number
-          slug?: string | null
-          status?: Database["public"]["Enums"]["status_publicacao"]
+          order_number: number
           title: string
+          travessia_id: string
           updated_at?: string
+          video_url?: string | null
         }
         Update: {
-          content?: string | null
-          content_type?: Database["public"]["Enums"]["content_type"]
+          content?: string
           created_at?: string
-          duration_seconds?: number | null
+          description?: string
           id?: string
-          media_url?: string | null
-          module_id?: string
-          ordem?: number
-          slug?: string | null
-          status?: Database["public"]["Enums"]["status_publicacao"]
+          order_number?: number
           title?: string
+          travessia_id?: string
           updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
+      lessons_album: {
+        Row: {
+          audio_script: string | null
+          audio_url: string | null
+          book_id: string
+          clinical_alert: string | null
+          clinical_notes: string | null
+          closing_text: string | null
+          created_at: string | null
+          description: string | null
+          guided_reading: string | null
+          id: string
+          misuse_list: string | null
+          phase: string
+          podcast_url: string | null
+          questions: Json | null
+          title: string
+          updated_at: string | null
+          week_number: number
+        }
+        Insert: {
+          audio_script?: string | null
+          audio_url?: string | null
+          book_id: string
+          clinical_alert?: string | null
+          clinical_notes?: string | null
+          closing_text?: string | null
+          created_at?: string | null
+          description?: string | null
+          guided_reading?: string | null
+          id?: string
+          misuse_list?: string | null
+          phase: string
+          podcast_url?: string | null
+          questions?: Json | null
+          title: string
+          updated_at?: string | null
+          week_number: number
+        }
+        Update: {
+          audio_script?: string | null
+          audio_url?: string | null
+          book_id?: string
+          clinical_alert?: string | null
+          clinical_notes?: string | null
+          closing_text?: string | null
+          created_at?: string | null
+          description?: string | null
+          guided_reading?: string | null
+          id?: string
+          misuse_list?: string | null
+          phase?: string
+          podcast_url?: string | null
+          questions?: Json | null
+          title?: string
+          updated_at?: string | null
+          week_number?: number
         }
         Relationships: [
           {
-            foreignKeyName: "lessons_module_id_fkey"
-            columns: ["module_id"]
+            foreignKeyName: "lessons_album_book_id_fkey"
+            columns: ["book_id"]
             isOneToOne: false
-            referencedRelation: "modules"
+            referencedRelation: "books"
             referencedColumns: ["id"]
           },
         ]
       }
-      mentorias: {
+      library_items: {
         Row: {
-          content: string | null
+          content: string
+          created_at: string
+          created_by: string | null
+          id: string
+          observacoes_leitura: string | null
+          origem_cultural: string | null
+          portal_level_required: Database["public"]["Enums"]["portal_type"]
+          tags: string[] | null
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          observacoes_leitura?: string | null
+          origem_cultural?: string | null
+          portal_level_required?: Database["public"]["Enums"]["portal_type"]
+          tags?: string[] | null
+          title: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          observacoes_leitura?: string | null
+          origem_cultural?: string | null
+          portal_level_required?: Database["public"]["Enums"]["portal_type"]
+          tags?: string[] | null
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      mapa_heroina: {
+        Row: {
+          cliente_nome: string | null
+          created_at: string
+          data_registro: string
+          evolucao_texto: string | null
+          id: string
+          porta_id: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cliente_nome?: string | null
+          created_at?: string
+          data_registro?: string
+          evolucao_texto?: string | null
+          id?: string
+          porta_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cliente_nome?: string | null
+          created_at?: string
+          data_registro?: string
+          evolucao_texto?: string | null
+          id?: string
+          porta_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mapa_heroina_porta_id_fkey"
+            columns: ["porta_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_fases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mapa_sombra: {
+        Row: {
+          admiracoes: Json
+          cliente_id: string
           created_at: string
           id: string
-          scheduled_for: string | null
-          tipo: Database["public"]["Enums"]["mentoria_tipo"]
+          irritacoes: Json
+          sintese_sombra_dourada: string | null
+          sintese_sombra_negativa: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          admiracoes?: Json
+          cliente_id: string
+          created_at?: string
+          id?: string
+          irritacoes?: Json
+          sintese_sombra_dourada?: string | null
+          sintese_sombra_negativa?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          admiracoes?: Json
+          cliente_id?: string
+          created_at?: string
+          id?: string
+          irritacoes?: Json
+          sintese_sombra_dourada?: string | null
+          sintese_sombra_negativa?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      mapa_vivo_heroina: {
+        Row: {
+          arquetipo_emergente: string | null
+          arquetipo_predominante: string | null
+          arquetipo_tensao: string | null
+          client_id: string
+          created_at: string
+          dinamica_arquetipal: string | null
+          fase_descricao: string | null
+          fase_jornada: string | null
+          gesto_integracao: string | null
+          gesto_jardim_registro_id: string | null
+          gesto_justificativa: string | null
+          gesto_sem_indicacao: boolean | null
+          id: string
+          metafora_central: string | null
+          mito_pessoal: string | null
+          movimento_descricao: string | null
+          movimento_heroina: string | null
+          ritual_descricao: string | null
+          ritual_observacoes: string | null
+          ritual_realizado: boolean | null
+          ritual_tipo: string | null
+          session_case_id: string
+          simbolo_recorrente: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          arquetipo_emergente?: string | null
+          arquetipo_predominante?: string | null
+          arquetipo_tensao?: string | null
+          client_id: string
+          created_at?: string
+          dinamica_arquetipal?: string | null
+          fase_descricao?: string | null
+          fase_jornada?: string | null
+          gesto_integracao?: string | null
+          gesto_jardim_registro_id?: string | null
+          gesto_justificativa?: string | null
+          gesto_sem_indicacao?: boolean | null
+          id?: string
+          metafora_central?: string | null
+          mito_pessoal?: string | null
+          movimento_descricao?: string | null
+          movimento_heroina?: string | null
+          ritual_descricao?: string | null
+          ritual_observacoes?: string | null
+          ritual_realizado?: boolean | null
+          ritual_tipo?: string | null
+          session_case_id: string
+          simbolo_recorrente?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          arquetipo_emergente?: string | null
+          arquetipo_predominante?: string | null
+          arquetipo_tensao?: string | null
+          client_id?: string
+          created_at?: string
+          dinamica_arquetipal?: string | null
+          fase_descricao?: string | null
+          fase_jornada?: string | null
+          gesto_integracao?: string | null
+          gesto_jardim_registro_id?: string | null
+          gesto_justificativa?: string | null
+          gesto_sem_indicacao?: boolean | null
+          id?: string
+          metafora_central?: string | null
+          mito_pessoal?: string | null
+          movimento_descricao?: string | null
+          movimento_heroina?: string | null
+          ritual_descricao?: string | null
+          ritual_observacoes?: string | null
+          ritual_realizado?: boolean | null
+          ritual_tipo?: string | null
+          session_case_id?: string
+          simbolo_recorrente?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mapa_vivo_heroina_gesto_jardim_registro_id_fkey"
+            columns: ["gesto_jardim_registro_id"]
+            isOneToOne: false
+            referencedRelation: "jardim_heroina_registros"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mapa_vivo_historico: {
+        Row: {
+          created_at: string
+          fase_anterior: string | null
+          fase_nova: string | null
+          id: string
+          mapa_id: string
+          movimento: string | null
+          observacao: string | null
+          session_case_id: string
+          therapist_id: string
+        }
+        Insert: {
+          created_at?: string
+          fase_anterior?: string | null
+          fase_nova?: string | null
+          id?: string
+          mapa_id: string
+          movimento?: string | null
+          observacao?: string | null
+          session_case_id: string
+          therapist_id: string
+        }
+        Update: {
+          created_at?: string
+          fase_anterior?: string | null
+          fase_nova?: string | null
+          id?: string
+          mapa_id?: string
+          movimento?: string | null
+          observacao?: string | null
+          session_case_id?: string
+          therapist_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mapa_vivo_historico_mapa_id_fkey"
+            columns: ["mapa_id"]
+            isOneToOne: false
+            referencedRelation: "mapa_vivo_heroina"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mapeamento_complexos: {
+        Row: {
+          cliente_id: string
+          created_at: string
+          id: string
+          nome_complexo: string | null
+          padroes_identificados: string | null
+          personagem_ativado: string | null
+          registros_gatilhos: Json
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          cliente_id: string
+          created_at?: string
+          id?: string
+          nome_complexo?: string | null
+          padroes_identificados?: string | null
+          personagem_ativado?: string | null
+          registros_gatilhos?: Json
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          cliente_id?: string
+          created_at?: string
+          id?: string
+          nome_complexo?: string | null
+          padroes_identificados?: string | null
+          personagem_ativado?: string | null
+          registros_gatilhos?: Json
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      matriculas: {
+        Row: {
+          ativa: boolean
+          created_at: string
+          curso_id: string
+          data_fim: string | null
+          data_inicio: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ativa?: boolean
+          created_at?: string
+          curso_id?: string
+          data_fim?: string | null
+          data_inicio?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ativa?: boolean
+          created_at?: string
+          curso_id?: string
+          data_fim?: string | null
+          data_inicio?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      matriculas_pendentes: {
+        Row: {
+          created_at: string
+          curso_id: string
+          email: string
+          id: string
+          portal_destino: Database["public"]["Enums"]["portal_type"]
+          processado: boolean
+          produto_rockty: string | null
+          transaction_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          curso_id?: string
+          email: string
+          id?: string
+          portal_destino?: Database["public"]["Enums"]["portal_type"]
+          processado?: boolean
+          produto_rockty?: string | null
+          transaction_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          curso_id?: string
+          email?: string
+          id?: string
+          portal_destino?: Database["public"]["Enums"]["portal_type"]
+          processado?: boolean
+          produto_rockty?: string | null
+          transaction_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      message_campaigns: {
+        Row: {
+          body: string
+          channel: string
+          created_at: string
+          created_by: string | null
+          cta_label: string | null
+          cta_url: string | null
+          id: string
+          name: string
+          segment_json: Json
+          sent_at: string | null
+          status: string
+          subject: string | null
+          title: string
+          total_failed: number | null
+          total_sent: number | null
+        }
+        Insert: {
+          body: string
+          channel: string
+          created_at?: string
+          created_by?: string | null
+          cta_label?: string | null
+          cta_url?: string | null
+          id?: string
+          name: string
+          segment_json?: Json
+          sent_at?: string | null
+          status?: string
+          subject?: string | null
+          title: string
+          total_failed?: number | null
+          total_sent?: number | null
+        }
+        Update: {
+          body?: string
+          channel?: string
+          created_at?: string
+          created_by?: string | null
+          cta_label?: string | null
+          cta_url?: string | null
+          id?: string
+          name?: string
+          segment_json?: Json
+          sent_at?: string | null
+          status?: string
+          subject?: string | null
+          title?: string
+          total_failed?: number | null
+          total_sent?: number | null
+        }
+        Relationships: []
+      }
+      message_logs: {
+        Row: {
+          campaign_id: string | null
+          channel: string
+          error_message: string | null
+          id: string
+          sent_at: string
+          success: boolean
+          template_id: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          campaign_id?: string | null
+          channel: string
+          error_message?: string | null
+          id?: string
+          sent_at?: string
+          success?: boolean
+          template_id?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          campaign_id?: string | null
+          channel?: string
+          error_message?: string | null
+          id?: string
+          sent_at?: string
+          success?: boolean
+          template_id?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      message_templates: {
+        Row: {
+          body: string
+          channel: string
+          cta_label: string | null
+          cta_url: string | null
+          id: string
+          is_enabled: boolean
+          subject: string | null
+          title: string
+          type: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          body: string
+          channel: string
+          cta_label?: string | null
+          cta_url?: string | null
+          id?: string
+          is_enabled?: boolean
+          subject?: string | null
+          title: string
+          type: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          body?: string
+          channel?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          id?: string
+          is_enabled?: boolean
+          subject?: string | null
+          title?: string
+          type?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      mind_map_nodes: {
+        Row: {
+          color: string | null
+          created_at: string
+          id: string
+          map_id: string
+          notes: string | null
+          order_index: number
+          parent_id: string | null
+          position_x: number
+          position_y: number
+          tags: string[] | null
           title: string
           updated_at: string
         }
         Insert: {
-          content?: string | null
+          color?: string | null
           created_at?: string
           id?: string
-          scheduled_for?: string | null
-          tipo?: Database["public"]["Enums"]["mentoria_tipo"]
-          title: string
+          map_id: string
+          notes?: string | null
+          order_index?: number
+          parent_id?: string | null
+          position_x?: number
+          position_y?: number
+          tags?: string[] | null
+          title?: string
           updated_at?: string
         }
         Update: {
-          content?: string | null
+          color?: string | null
           created_at?: string
           id?: string
-          scheduled_for?: string | null
-          tipo?: Database["public"]["Enums"]["mentoria_tipo"]
+          map_id?: string
+          notes?: string | null
+          order_index?: number
+          parent_id?: string | null
+          position_x?: number
+          position_y?: number
+          tags?: string[] | null
           title?: string
           updated_at?: string
         }
         Relationships: []
       }
-      modules: {
+      mind_maps: {
         Row: {
-          course_id: string
           created_at: string
           description: string | null
           id: string
-          ordem: number
-          status: Database["public"]["Enums"]["status_publicacao"]
+          owner_id: string
           title: string
           updated_at: string
         }
         Insert: {
-          course_id: string
           created_at?: string
           description?: string | null
           id?: string
-          ordem?: number
-          status?: Database["public"]["Enums"]["status_publicacao"]
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          course_id?: string
-          created_at?: string
-          description?: string | null
-          id?: string
-          ordem?: number
-          status?: Database["public"]["Enums"]["status_publicacao"]
+          owner_id: string
           title?: string
           updated_at?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "modules_course_id_fkey"
-            columns: ["course_id"]
-            isOneToOne: false
-            referencedRelation: "courses"
-            referencedColumns: ["id"]
-          },
-        ]
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          owner_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
-      oracle_cards: {
+      missoes: {
+        Row: {
+          aula_id: string | null
+          compartilhamento_opcional: boolean
+          created_at: string
+          created_by: string | null
+          criterios_conclusao: string | null
+          descricao: string | null
+          id: string
+          ordem: number
+          portal_id: string | null
+          status: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          aula_id?: string | null
+          compartilhamento_opcional?: boolean
+          created_at?: string
+          created_by?: string | null
+          criterios_conclusao?: string | null
+          descricao?: string | null
+          id?: string
+          ordem?: number
+          portal_id?: string | null
+          status?: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          aula_id?: string | null
+          compartilhamento_opcional?: boolean
+          created_at?: string
+          created_by?: string | null
+          criterios_conclusao?: string | null
+          descricao?: string | null
+          id?: string
+          ordem?: number
+          portal_id?: string | null
+          status?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      modulos_formativos: {
         Row: {
           created_at: string
-          deck_id: string
+          descricao_curta: string | null
+          destaque_vitrine: boolean
           id: string
-          image_url: string | null
-          keyword: string | null
-          level: Database["public"]["Enums"]["oracle_card_level"]
-          meaning_reversed: string | null
-          meaning_upright: string | null
-          name: string
-          number: number | null
-          status: Database["public"]["Enums"]["oracle_content_status"]
+          imagem_capa: string | null
+          nivel_acesso: Database["public"]["Enums"]["nivel_acesso_modulo"]
+          nome_modulo: string
+          ordem_exibicao: number
+          rota_destino: string | null
+          status_publicacao: Database["public"]["Enums"]["status_publicacao"]
+          tipo_modulo: Database["public"]["Enums"]["tipo_modulo"]
           updated_at: string
         }
         Insert: {
           created_at?: string
-          deck_id: string
+          descricao_curta?: string | null
+          destaque_vitrine?: boolean
           id?: string
-          image_url?: string | null
-          keyword?: string | null
-          level?: Database["public"]["Enums"]["oracle_card_level"]
-          meaning_reversed?: string | null
-          meaning_upright?: string | null
-          name: string
-          number?: number | null
-          status?: Database["public"]["Enums"]["oracle_content_status"]
+          imagem_capa?: string | null
+          nivel_acesso?: Database["public"]["Enums"]["nivel_acesso_modulo"]
+          nome_modulo: string
+          ordem_exibicao?: number
+          rota_destino?: string | null
+          status_publicacao?: Database["public"]["Enums"]["status_publicacao"]
+          tipo_modulo?: Database["public"]["Enums"]["tipo_modulo"]
           updated_at?: string
         }
         Update: {
           created_at?: string
-          deck_id?: string
+          descricao_curta?: string | null
+          destaque_vitrine?: boolean
           id?: string
-          image_url?: string | null
-          keyword?: string | null
-          level?: Database["public"]["Enums"]["oracle_card_level"]
-          meaning_reversed?: string | null
-          meaning_upright?: string | null
-          name?: string
-          number?: number | null
-          status?: Database["public"]["Enums"]["oracle_content_status"]
+          imagem_capa?: string | null
+          nivel_acesso?: Database["public"]["Enums"]["nivel_acesso_modulo"]
+          nome_modulo?: string
+          ordem_exibicao?: number
+          rota_destino?: string | null
+          status_publicacao?: Database["public"]["Enums"]["status_publicacao"]
+          tipo_modulo?: Database["public"]["Enums"]["tipo_modulo"]
           updated_at?: string
+        }
+        Relationships: []
+      }
+      narrative_maps: {
+        Row: {
+          case_id: string
+          client_id: string
+          created_at: string
+          id: string
+          layer1_context: string | null
+          layer1_fact_event: string | null
+          layer1_trigger: string | null
+          layer2_emotion_main: string | null
+          layer2_emotion_secondary: string | null
+          layer2_intensity: number | null
+          layer3_central_element: string | null
+          layer3_climate: string | null
+          layer3_scene: string | null
+          layer4_archetype_conflict: string | null
+          layer4_archetype_main: string | null
+          layer4_protects: string | null
+          layer5_cost: string | null
+          layer5_prohibition: string | null
+          layer5_strategy: string | null
+          layer6_current_repeat: string | null
+          layer6_first_memory: string | null
+          layer6_pattern: string | null
+          layer7_ego_resistance: string | null
+          layer7_invitation: string | null
+          layer7_small_gesture: string | null
+          summary_archetype: string | null
+          summary_core: string | null
+          summary_invitation: string | null
+          summary_repetition: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          case_id: string
+          client_id: string
+          created_at?: string
+          id?: string
+          layer1_context?: string | null
+          layer1_fact_event?: string | null
+          layer1_trigger?: string | null
+          layer2_emotion_main?: string | null
+          layer2_emotion_secondary?: string | null
+          layer2_intensity?: number | null
+          layer3_central_element?: string | null
+          layer3_climate?: string | null
+          layer3_scene?: string | null
+          layer4_archetype_conflict?: string | null
+          layer4_archetype_main?: string | null
+          layer4_protects?: string | null
+          layer5_cost?: string | null
+          layer5_prohibition?: string | null
+          layer5_strategy?: string | null
+          layer6_current_repeat?: string | null
+          layer6_first_memory?: string | null
+          layer6_pattern?: string | null
+          layer7_ego_resistance?: string | null
+          layer7_invitation?: string | null
+          layer7_small_gesture?: string | null
+          summary_archetype?: string | null
+          summary_core?: string | null
+          summary_invitation?: string | null
+          summary_repetition?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          case_id?: string
+          client_id?: string
+          created_at?: string
+          id?: string
+          layer1_context?: string | null
+          layer1_fact_event?: string | null
+          layer1_trigger?: string | null
+          layer2_emotion_main?: string | null
+          layer2_emotion_secondary?: string | null
+          layer2_intensity?: number | null
+          layer3_central_element?: string | null
+          layer3_climate?: string | null
+          layer3_scene?: string | null
+          layer4_archetype_conflict?: string | null
+          layer4_archetype_main?: string | null
+          layer4_protects?: string | null
+          layer5_cost?: string | null
+          layer5_prohibition?: string | null
+          layer5_strategy?: string | null
+          layer6_current_repeat?: string | null
+          layer6_first_memory?: string | null
+          layer6_pattern?: string | null
+          layer7_ego_resistance?: string | null
+          layer7_invitation?: string | null
+          layer7_small_gesture?: string | null
+          summary_archetype?: string | null
+          summary_core?: string | null
+          summary_invitation?: string | null
+          summary_repetition?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      narroterapia_estudos: {
+        Row: {
+          audio_id: string
+          estudado_em: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          audio_id: string
+          estudado_em?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          audio_id?: string
+          estudado_em?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      narroterapia_reacoes_simbolicas: {
+        Row: {
+          audio_id: string | null
+          conto_clinico_id: string | null
+          created_at: string | null
+          id: string
+          observacoes: string | null
+          tipo_uso: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          audio_id?: string | null
+          conto_clinico_id?: string | null
+          created_at?: string | null
+          id?: string
+          observacoes?: string | null
+          tipo_uso?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          audio_id?: string | null
+          conto_clinico_id?: string | null
+          created_at?: string | null
+          id?: string
+          observacoes?: string | null
+          tipo_uso?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notification_logs: {
+        Row: {
+          id: string
+          reference_date: string
+          sent_at: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          reference_date: string
+          sent_at?: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          reference_date?: string
+          sent_at?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notification_preferences: {
+        Row: {
+          atividade_comunidade: boolean
+          created_at: string
+          email: boolean
+          expiracao_assinatura: boolean
+          id: string
+          in_app: boolean
+          mensagens_suporte: boolean
+          novo_conteudo: boolean
+          push: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          atividade_comunidade?: boolean
+          created_at?: string
+          email?: boolean
+          expiracao_assinatura?: boolean
+          id?: string
+          in_app?: boolean
+          mensagens_suporte?: boolean
+          novo_conteudo?: boolean
+          push?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          atividade_comunidade?: boolean
+          created_at?: string
+          email?: boolean
+          expiracao_assinatura?: boolean
+          id?: string
+          in_app?: boolean
+          mensagens_suporte?: boolean
+          novo_conteudo?: boolean
+          push?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string
+          created_at: string
+          cta_label: string | null
+          cta_url: string | null
+          id: string
+          is_read: boolean
+          read_at: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          id?: string
+          is_read?: boolean
+          read_at?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          id?: string
+          is_read?: boolean
+          read_at?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      oracle_cards: {
+        Row: {
+          aplicacao_terapeutica: string | null
+          archetype_id: string
+          ativa: boolean | null
+          cor_principal: string | null
+          created_at: string | null
+          deck_id: string | null
+          descricao_curta: string | null
+          district_id: string | null
+          elemento: string | null
+          familia: string
+          icone: string | null
+          id: string
+          main_image_url: string | null
+          mensagem_simbolica: string | null
+          nome: string
+          numero: number
+          ordem: number | null
+          pergunta_oracular: string | null
+          slug: string
+          subtitulo: string | null
+          tool_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          aplicacao_terapeutica?: string | null
+          archetype_id: string
+          ativa?: boolean | null
+          cor_principal?: string | null
+          created_at?: string | null
+          deck_id?: string | null
+          descricao_curta?: string | null
+          district_id?: string | null
+          elemento?: string | null
+          familia: string
+          icone?: string | null
+          id?: string
+          main_image_url?: string | null
+          mensagem_simbolica?: string | null
+          nome: string
+          numero: number
+          ordem?: number | null
+          pergunta_oracular?: string | null
+          slug: string
+          subtitulo?: string | null
+          tool_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          aplicacao_terapeutica?: string | null
+          archetype_id?: string
+          ativa?: boolean | null
+          cor_principal?: string | null
+          created_at?: string | null
+          deck_id?: string | null
+          descricao_curta?: string | null
+          district_id?: string | null
+          elemento?: string | null
+          familia?: string
+          icone?: string | null
+          id?: string
+          main_image_url?: string | null
+          mensagem_simbolica?: string | null
+          nome?: string
+          numero?: number
+          ordem?: number | null
+          pergunta_oracular?: string | null
+          slug?: string
+          subtitulo?: string | null
+          tool_id?: string | null
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -486,260 +13263,4923 @@ export type Database = {
           },
         ]
       }
-      oracle_decks: {
+      oracle_categories: {
         Row: {
-          cover_url: string | null
           created_at: string
           description: string | null
+          icon: string | null
           id: string
           name: string
-          slug: string
-          status: Database["public"]["Enums"]["oracle_content_status"]
+          oracle_id: string
+          ordem: number | null
           updated_at: string
         }
         Insert: {
-          cover_url?: string | null
           created_at?: string
           description?: string | null
+          icon?: string | null
           id?: string
           name: string
-          slug: string
-          status?: Database["public"]["Enums"]["oracle_content_status"]
+          oracle_id: string
+          ordem?: number | null
           updated_at?: string
         }
         Update: {
-          cover_url?: string | null
           created_at?: string
           description?: string | null
+          icon?: string | null
           id?: string
           name?: string
-          slug?: string
-          status?: Database["public"]["Enums"]["oracle_content_status"]
+          oracle_id?: string
+          ordem?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oracle_categories_oracle_id_fkey"
+            columns: ["oracle_id"]
+            isOneToOne: false
+            referencedRelation: "oracle_decks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oracle_clients: {
+        Row: {
+          created_at: string
+          display_name: string
+          id: string
+          notes_private: string | null
+          therapist_user_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          display_name: string
+          id?: string
+          notes_private?: string | null
+          therapist_user_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string
+          id?: string
+          notes_private?: string | null
+          therapist_user_id?: string
           updated_at?: string
         }
         Relationships: []
       }
-      oracle_readings: {
+      oracle_decks: {
         Row: {
+          cover_image_url: string | null
           created_at: string
-          deck_id: string | null
-          drawn_cards: Json
+          created_by: string | null
+          description: string | null
+          disclaimer_text: string | null
+          enable_journal: boolean | null
+          enable_professional_mode: boolean | null
           id: string
-          interpretation: string | null
-          notes: string | null
-          question: string | null
-          spread_id: string | null
+          is_sensitive_mode_available: boolean | null
+          lock_message_body: string | null
+          lock_message_title: string | null
+          minimum_portal: Database["public"]["Enums"]["portal_type"] | null
+          name: string
+          onboarding_json: Json | null
+          ordem: number | null
+          show_locked_teaser: boolean | null
+          slug: string
+          status: Database["public"]["Enums"]["oracle_content_status"] | null
+          subtitle: string | null
+          theme_json: Json | null
           updated_at: string
-          user_id: string
+          upgrade_cta_route: string | null
+          upgrade_cta_text: string | null
+          voice_settings_json: Json | null
         }
         Insert: {
+          cover_image_url?: string | null
           created_at?: string
-          deck_id?: string | null
-          drawn_cards: Json
+          created_by?: string | null
+          description?: string | null
+          disclaimer_text?: string | null
+          enable_journal?: boolean | null
+          enable_professional_mode?: boolean | null
           id?: string
-          interpretation?: string | null
-          notes?: string | null
-          question?: string | null
-          spread_id?: string | null
+          is_sensitive_mode_available?: boolean | null
+          lock_message_body?: string | null
+          lock_message_title?: string | null
+          minimum_portal?: Database["public"]["Enums"]["portal_type"] | null
+          name: string
+          onboarding_json?: Json | null
+          ordem?: number | null
+          show_locked_teaser?: boolean | null
+          slug: string
+          status?: Database["public"]["Enums"]["oracle_content_status"] | null
+          subtitle?: string | null
+          theme_json?: Json | null
           updated_at?: string
-          user_id: string
+          upgrade_cta_route?: string | null
+          upgrade_cta_text?: string | null
+          voice_settings_json?: Json | null
         }
         Update: {
+          cover_image_url?: string | null
           created_at?: string
-          deck_id?: string | null
-          drawn_cards?: Json
+          created_by?: string | null
+          description?: string | null
+          disclaimer_text?: string | null
+          enable_journal?: boolean | null
+          enable_professional_mode?: boolean | null
           id?: string
-          interpretation?: string | null
-          notes?: string | null
-          question?: string | null
-          spread_id?: string | null
+          is_sensitive_mode_available?: boolean | null
+          lock_message_body?: string | null
+          lock_message_title?: string | null
+          minimum_portal?: Database["public"]["Enums"]["portal_type"] | null
+          name?: string
+          onboarding_json?: Json | null
+          ordem?: number | null
+          show_locked_teaser?: boolean | null
+          slug?: string
+          status?: Database["public"]["Enums"]["oracle_content_status"] | null
+          subtitle?: string | null
+          theme_json?: Json | null
+          updated_at?: string
+          upgrade_cta_route?: string | null
+          upgrade_cta_text?: string | null
+          voice_settings_json?: Json | null
+        }
+        Relationships: []
+      }
+      oracle_draws: {
+        Row: {
+          client_id: string | null
+          created_at: string
+          drawn_cards_json: Json
+          id: string
+          is_professional_session: boolean | null
+          oracle_id: string
+          spread_id: string
+          updated_at: string
+          user_id: string
+          user_notes: string | null
+        }
+        Insert: {
+          client_id?: string | null
+          created_at?: string
+          drawn_cards_json?: Json
+          id?: string
+          is_professional_session?: boolean | null
+          oracle_id: string
+          spread_id: string
+          updated_at?: string
+          user_id: string
+          user_notes?: string | null
+        }
+        Update: {
+          client_id?: string | null
+          created_at?: string
+          drawn_cards_json?: Json
+          id?: string
+          is_professional_session?: boolean | null
+          oracle_id?: string
+          spread_id?: string
           updated_at?: string
           user_id?: string
+          user_notes?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "oracle_readings_deck_id_fkey"
-            columns: ["deck_id"]
+            foreignKeyName: "oracle_draws_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "oracle_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "oracle_draws_oracle_id_fkey"
+            columns: ["oracle_id"]
             isOneToOne: false
             referencedRelation: "oracle_decks"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "oracle_readings_spread_id_fkey"
+            foreignKeyName: "oracle_draws_spread_id_fkey"
             columns: ["spread_id"]
             isOneToOne: false
             referencedRelation: "oracle_spreads"
             referencedColumns: ["id"]
           },
+        ]
+      }
+      oracle_spread_positions: {
+        Row: {
+          created_at: string | null
+          descricao: string | null
+          id: string
+          nome: string
+          pergunta: string | null
+          posicao: number
+          spread_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          descricao?: string | null
+          id?: string
+          nome: string
+          pergunta?: string | null
+          posicao: number
+          spread_id: string
+        }
+        Update: {
+          created_at?: string | null
+          descricao?: string | null
+          id?: string
+          nome?: string
+          pergunta?: string | null
+          posicao?: number
+          spread_id?: string
+        }
+        Relationships: [
           {
-            foreignKeyName: "oracle_readings_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "oracle_spread_positions_spread_id_fkey"
+            columns: ["spread_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "oracle_spreads"
             referencedColumns: ["id"]
           },
         ]
       }
       oracle_spreads: {
         Row: {
-          card_count: number
+          closing_text: string | null
           created_at: string
           description: string | null
           id: string
-          layout: Database["public"]["Enums"]["oracle_spread_layout"]
+          layout_type:
+            | Database["public"]["Enums"]["oracle_spread_layout"]
+            | null
           name: string
-          positions: Json | null
-          status: Database["public"]["Enums"]["oracle_content_status"]
+          number_of_cards: number
+          opening_text: string | null
+          oracle_id: string
+          ordem: number | null
+          positions_json: Json | null
+          rules_json: Json | null
+          status: Database["public"]["Enums"]["oracle_content_status"] | null
           updated_at: string
         }
         Insert: {
-          card_count?: number
+          closing_text?: string | null
           created_at?: string
           description?: string | null
           id?: string
-          layout?: Database["public"]["Enums"]["oracle_spread_layout"]
+          layout_type?:
+            | Database["public"]["Enums"]["oracle_spread_layout"]
+            | null
           name: string
-          positions?: Json | null
-          status?: Database["public"]["Enums"]["oracle_content_status"]
+          number_of_cards?: number
+          opening_text?: string | null
+          oracle_id: string
+          ordem?: number | null
+          positions_json?: Json | null
+          rules_json?: Json | null
+          status?: Database["public"]["Enums"]["oracle_content_status"] | null
           updated_at?: string
         }
         Update: {
-          card_count?: number
+          closing_text?: string | null
           created_at?: string
           description?: string | null
           id?: string
-          layout?: Database["public"]["Enums"]["oracle_spread_layout"]
+          layout_type?:
+            | Database["public"]["Enums"]["oracle_spread_layout"]
+            | null
           name?: string
-          positions?: Json | null
-          status?: Database["public"]["Enums"]["oracle_content_status"]
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      posts: {
-        Row: {
-          author_id: string
-          content: string
-          course_id: string | null
-          created_at: string
-          id: string
-          module_id: string | null
-          status: Database["public"]["Enums"]["post_status"]
-          title: string | null
-          updated_at: string
-        }
-        Insert: {
-          author_id: string
-          content: string
-          course_id?: string | null
-          created_at?: string
-          id?: string
-          module_id?: string | null
-          status?: Database["public"]["Enums"]["post_status"]
-          title?: string | null
-          updated_at?: string
-        }
-        Update: {
-          author_id?: string
-          content?: string
-          course_id?: string | null
-          created_at?: string
-          id?: string
-          module_id?: string | null
-          status?: Database["public"]["Enums"]["post_status"]
-          title?: string | null
+          number_of_cards?: number
+          opening_text?: string | null
+          oracle_id?: string
+          ordem?: number | null
+          positions_json?: Json | null
+          rules_json?: Json | null
+          status?: Database["public"]["Enums"]["oracle_content_status"] | null
           updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: "posts_author_id_fkey"
-            columns: ["author_id"]
+            foreignKeyName: "oracle_spreads_oracle_id_fkey"
+            columns: ["oracle_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "posts_course_id_fkey"
-            columns: ["course_id"]
-            isOneToOne: false
-            referencedRelation: "courses"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "posts_module_id_fkey"
-            columns: ["module_id"]
-            isOneToOne: false
-            referencedRelation: "modules"
+            referencedRelation: "oracle_decks"
             referencedColumns: ["id"]
           },
         ]
       }
-      profiles: {
+      oracle_symbolic_focuses: {
         Row: {
-          avatar_url: string | null
-          bio: string | null
+          ativo: boolean | null
           created_at: string
-          display_name: string | null
-          email: string
+          descricao: string | null
           id: string
-          portal_type: Database["public"]["Enums"]["portal_type"] | null
+          nome: string
+          ordem: number | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          nome: string
+          ordem?: number | null
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          nome?: string
+          ordem?: number | null
+        }
+        Relationships: []
+      }
+      oracle_usage_stats: {
+        Row: {
+          client_id: string
+          count: number
+          id: string
+          last_used_at: string
+          oracle_card_id: string
+        }
+        Insert: {
+          client_id: string
+          count?: number
+          id?: string
+          last_used_at?: string
+          oracle_card_id: string
+        }
+        Update: {
+          client_id?: string
+          count?: number
+          id?: string
+          last_used_at?: string
+          oracle_card_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oracle_usage_stats_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oracular_seasons: {
+        Row: {
+          aplicacao_profissional: string | null
+          created_at: string
+          foco_travessia: string | null
+          id: string
+          nome_estacao: string
+          ordem: number
+          periodo: string | null
+          simbolo: string | null
+          status: string | null
+          updated_at: string
+          visivel: boolean | null
+        }
+        Insert: {
+          aplicacao_profissional?: string | null
+          created_at?: string
+          foco_travessia?: string | null
+          id?: string
+          nome_estacao: string
+          ordem?: number
+          periodo?: string | null
+          simbolo?: string | null
+          status?: string | null
+          updated_at?: string
+          visivel?: boolean | null
+        }
+        Update: {
+          aplicacao_profissional?: string | null
+          created_at?: string
+          foco_travessia?: string | null
+          id?: string
+          nome_estacao?: string
+          ordem?: number
+          periodo?: string | null
+          simbolo?: string | null
+          status?: string | null
+          updated_at?: string
+          visivel?: boolean | null
+        }
+        Relationships: []
+      }
+      oraculo_aplicacoes: {
+        Row: {
+          caso_id: string | null
+          contexto: string | null
+          created_at: string
+          devolutiva: string | null
+          id: string
+          pergunta_id: string
+          resposta: string | null
+          sessao_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          caso_id?: string | null
+          contexto?: string | null
+          created_at?: string
+          devolutiva?: string | null
+          id?: string
+          pergunta_id: string
+          resposta?: string | null
+          sessao_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          caso_id?: string | null
+          contexto?: string | null
+          created_at?: string
+          devolutiva?: string | null
+          id?: string
+          pergunta_id?: string
+          resposta?: string | null
+          sessao_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_aplicacoes_pergunta_id_fkey"
+            columns: ["pergunta_id"]
+            isOneToOne: false
+            referencedRelation: "oraculo_perguntas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_favoritos: {
+        Row: {
+          created_at: string
+          id: string
+          pergunta_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          pergunta_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          pergunta_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_favoritos_pergunta_id_fkey"
+            columns: ["pergunta_id"]
+            isOneToOne: false
+            referencedRelation: "oraculo_perguntas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_perguntas: {
+        Row: {
+          created_at: string
+          id: string
+          nivel_intensidade: number | null
+          pergunta: string
+          portal_minimo: Database["public"]["Enums"]["portal_type"]
+          status: Database["public"]["Enums"]["agente_status"]
+          tags: string[] | null
+          tema: string
           updated_at: string
         }
         Insert: {
-          avatar_url?: string | null
-          bio?: string | null
           created_at?: string
-          display_name?: string | null
-          email: string
-          id: string
-          portal_type?: Database["public"]["Enums"]["portal_type"] | null
+          id?: string
+          nivel_intensidade?: number | null
+          pergunta: string
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          status?: Database["public"]["Enums"]["agente_status"]
+          tags?: string[] | null
+          tema: string
           updated_at?: string
         }
         Update: {
-          avatar_url?: string | null
-          bio?: string | null
           created_at?: string
-          display_name?: string | null
-          email?: string
           id?: string
-          portal_type?: Database["public"]["Enums"]["portal_type"] | null
+          nivel_intensidade?: number | null
+          pergunta?: string
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          status?: Database["public"]["Enums"]["agente_status"]
+          tags?: string[] | null
+          tema?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      oraculo_portais: {
+        Row: {
+          ciclo: string | null
+          cover_image_url: string | null
+          created_at: string
+          descricao_curta: string | null
+          icon_name: string | null
+          id: string
+          inspirado_em: string | null
+          is_locked: boolean
+          livro_base: string | null
+          nivel_acesso: string | null
+          nome: string
+          objetivo_formativo: string | null
+          ordem: number
+          portal_categoria: string | null
+          slug: string
+          status: string
+          subtitulo: string | null
+          tempo_estimado: string | null
+          updated_at: string
+        }
+        Insert: {
+          ciclo?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          descricao_curta?: string | null
+          icon_name?: string | null
+          id?: string
+          inspirado_em?: string | null
+          is_locked?: boolean
+          livro_base?: string | null
+          nivel_acesso?: string | null
+          nome: string
+          objetivo_formativo?: string | null
+          ordem: number
+          portal_categoria?: string | null
+          slug: string
+          status?: string
+          subtitulo?: string | null
+          tempo_estimado?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ciclo?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          descricao_curta?: string | null
+          icon_name?: string | null
+          id?: string
+          inspirado_em?: string | null
+          is_locked?: boolean
+          livro_base?: string | null
+          nivel_acesso?: string | null
+          nome?: string
+          objetivo_formativo?: string | null
+          ordem?: number
+          portal_categoria?: string | null
+          slug?: string
+          status?: string
+          subtitulo?: string | null
+          tempo_estimado?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      oraculo_portal_aplicacoes: {
+        Row: {
+          created_at: string
+          id: string
+          portal_id: string
+          updated_at: string
+          uso_aula: string | null
+          uso_grupo: string | null
+          uso_sessao: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          portal_id: string
+          updated_at?: string
+          uso_aula?: string | null
+          uso_grupo?: string | null
+          uso_sessao?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          portal_id?: string
+          updated_at?: string
+          uso_aula?: string | null
+          uso_grupo?: string | null
+          uso_sessao?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_aplicacoes_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: true
+            referencedRelation: "oraculo_portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_audios: {
+        Row: {
+          audio_url: string | null
+          created_at: string
+          duracao: string | null
+          id: string
+          is_locked: boolean
+          is_published: boolean
+          ordem: number
+          portal_id: string
+          roteiro: string | null
+          tipo: string
+          titulo: string
+          transcricao: string | null
+          updated_at: string
+        }
+        Insert: {
+          audio_url?: string | null
+          created_at?: string
+          duracao?: string | null
+          id?: string
+          is_locked?: boolean
+          is_published?: boolean
+          ordem?: number
+          portal_id: string
+          roteiro?: string | null
+          tipo?: string
+          titulo: string
+          transcricao?: string | null
+          updated_at?: string
+        }
+        Update: {
+          audio_url?: string | null
+          created_at?: string
+          duracao?: string | null
+          id?: string
+          is_locked?: boolean
+          is_published?: boolean
+          ordem?: number
+          portal_id?: string
+          roteiro?: string | null
+          tipo?: string
+          titulo?: string
+          transcricao?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_audios_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: false
+            referencedRelation: "oraculo_portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_essencia: {
+        Row: {
+          created_at: string
+          habilidade: string | null
+          id: string
+          leitura_etica: string | null
+          nucleo_80_20: string | null
+          o_que_nao_fazer: string | null
+          onde_estamos: string | null
+          portal_id: string
+          tensao_central: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          habilidade?: string | null
+          id?: string
+          leitura_etica?: string | null
+          nucleo_80_20?: string | null
+          o_que_nao_fazer?: string | null
+          onde_estamos?: string | null
+          portal_id: string
+          tensao_central?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          habilidade?: string | null
+          id?: string
+          leitura_etica?: string | null
+          nucleo_80_20?: string | null
+          o_que_nao_fazer?: string | null
+          onde_estamos?: string | null
+          portal_id?: string
+          tensao_central?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_essencia_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: true
+            referencedRelation: "oraculo_portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_ferramenta_campos: {
+        Row: {
+          created_at: string
+          ferramenta_id: string
+          field_key: string
+          field_type: string
+          help_text: string | null
+          id: string
+          label: string
+          options: Json
+          ordem: number
+          placeholder: string | null
+          required: boolean
+        }
+        Insert: {
+          created_at?: string
+          ferramenta_id: string
+          field_key: string
+          field_type: string
+          help_text?: string | null
+          id?: string
+          label: string
+          options?: Json
+          ordem: number
+          placeholder?: string | null
+          required?: boolean
+        }
+        Update: {
+          created_at?: string
+          ferramenta_id?: string
+          field_key?: string
+          field_type?: string
+          help_text?: string | null
+          id?: string
+          label?: string
+          options?: Json
+          ordem?: number
+          placeholder?: string | null
+          required?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_ferramenta_campos_ferramenta_id_fkey"
+            columns: ["ferramenta_id"]
+            isOneToOne: false
+            referencedRelation: "oraculo_portal_ferramentas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_ferramentas: {
+        Row: {
+          created_at: string
+          descricao: string | null
+          id: string
+          instrucoes: string | null
+          nome: string
+          portal_id: string
+          updated_at: string
+          uso_contexto: string | null
+        }
+        Insert: {
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          instrucoes?: string | null
+          nome: string
+          portal_id: string
+          updated_at?: string
+          uso_contexto?: string | null
+        }
+        Update: {
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          instrucoes?: string | null
+          nome?: string
+          portal_id?: string
+          updated_at?: string
+          uso_contexto?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_ferramentas_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: true
+            referencedRelation: "oraculo_portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_forja_erros: {
+        Row: {
+          created_at: string
+          erro: string
+          forja_id: string
+          id: string
+          impacto: string | null
+          ordem: number
+        }
+        Insert: {
+          created_at?: string
+          erro: string
+          forja_id: string
+          id?: string
+          impacto?: string | null
+          ordem: number
+        }
+        Update: {
+          created_at?: string
+          erro?: string
+          forja_id?: string
+          id?: string
+          impacto?: string | null
+          ordem?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_forja_erros_forja_id_fkey"
+            columns: ["forja_id"]
+            isOneToOne: false
+            referencedRelation: "oraculo_portal_forjas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_forja_passos: {
+        Row: {
+          created_at: string
+          descricao: string
+          forja_id: string
+          id: string
+          ordem: number
+          titulo: string | null
+        }
+        Insert: {
+          created_at?: string
+          descricao: string
+          forja_id: string
+          id?: string
+          ordem: number
+          titulo?: string | null
+        }
+        Update: {
+          created_at?: string
+          descricao?: string
+          forja_id?: string
+          id?: string
+          ordem?: number
+          titulo?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_forja_passos_forja_id_fkey"
+            columns: ["forja_id"]
+            isOneToOne: false
+            referencedRelation: "oraculo_portal_forjas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_forjas: {
+        Row: {
+          ajuste_fino: string | null
+          cenario: string | null
+          conto_sugerido: string | null
+          created_at: string
+          id: string
+          portal_ativo: string | null
+          portal_id: string
+          updated_at: string
+        }
+        Insert: {
+          ajuste_fino?: string | null
+          cenario?: string | null
+          conto_sugerido?: string | null
+          created_at?: string
+          id?: string
+          portal_ativo?: string | null
+          portal_id: string
+          updated_at?: string
+        }
+        Update: {
+          ajuste_fino?: string | null
+          cenario?: string | null
+          conto_sugerido?: string | null
+          created_at?: string
+          id?: string
+          portal_ativo?: string | null
+          portal_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_forjas_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: true
+            referencedRelation: "oraculo_portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_jardins: {
+        Row: {
+          created_at: string
+          id: string
+          jardim_oficio: string | null
+          jardim_psique: string | null
+          laboratorio_integracao: string | null
+          portal_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          jardim_oficio?: string | null
+          jardim_psique?: string | null
+          laboratorio_integracao?: string | null
+          portal_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          jardim_oficio?: string | null
+          jardim_psique?: string | null
+          laboratorio_integracao?: string | null
+          portal_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_jardins_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: true
+            referencedRelation: "oraculo_portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_laboratorio_passos: {
+        Row: {
+          created_at: string
+          descricao: string
+          id: string
+          laboratorio_id: string
+          ordem: number
+          titulo: string | null
+        }
+        Insert: {
+          created_at?: string
+          descricao: string
+          id?: string
+          laboratorio_id: string
+          ordem: number
+          titulo?: string | null
+        }
+        Update: {
+          created_at?: string
+          descricao?: string
+          id?: string
+          laboratorio_id?: string
+          ordem?: number
+          titulo?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_laboratorio_passos_laboratorio_id_fkey"
+            columns: ["laboratorio_id"]
+            isOneToOne: false
+            referencedRelation: "oraculo_portal_laboratorios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_laboratorios: {
+        Row: {
+          acao_minima: string | null
+          created_at: string
+          id: string
+          observacoes: string | null
+          portal_id: string
+          regulacao_emocional: string | null
+          resultado_esperado: string | null
+          updated_at: string
+        }
+        Insert: {
+          acao_minima?: string | null
+          created_at?: string
+          id?: string
+          observacoes?: string | null
+          portal_id: string
+          regulacao_emocional?: string | null
+          resultado_esperado?: string | null
+          updated_at?: string
+        }
+        Update: {
+          acao_minima?: string | null
+          created_at?: string
+          id?: string
+          observacoes?: string | null
+          portal_id?: string
+          regulacao_emocional?: string | null
+          resultado_esperado?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_laboratorios_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: true
+            referencedRelation: "oraculo_portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_materiais: {
+        Row: {
+          created_at: string
+          descricao: string | null
+          id: string
+          is_locked: boolean
+          is_published: boolean
+          ordem: number
+          portal_id: string
+          thumbnail_url: string | null
+          tipo: string
+          titulo: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          is_locked?: boolean
+          is_published?: boolean
+          ordem?: number
+          portal_id: string
+          thumbnail_url?: string | null
+          tipo: string
+          titulo: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          is_locked?: boolean
+          is_published?: boolean
+          ordem?: number
+          portal_id?: string
+          thumbnail_url?: string | null
+          tipo?: string
+          titulo?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_materiais_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: false
+            referencedRelation: "oraculo_portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_narroterapia: {
+        Row: {
+          conto_sugerido: string | null
+          created_at: string
+          id: string
+          observacao_metodologica: string | null
+          portal_id: string
+          script_abertura: string | null
+          updated_at: string
+        }
+        Insert: {
+          conto_sugerido?: string | null
+          created_at?: string
+          id?: string
+          observacao_metodologica?: string | null
+          portal_id: string
+          script_abertura?: string | null
+          updated_at?: string
+        }
+        Update: {
+          conto_sugerido?: string | null
+          created_at?: string
+          id?: string
+          observacao_metodologica?: string | null
+          portal_id?: string
+          script_abertura?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_narroterapia_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: true
+            referencedRelation: "oraculo_portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_narroterapia_perguntas: {
+        Row: {
+          created_at: string
+          id: string
+          narroterapia_id: string
+          ordem: number
+          pergunta: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          narroterapia_id: string
+          ordem: number
+          pergunta: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          narroterapia_id?: string
+          ordem?: number
+          pergunta?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_narroterapia_perguntas_narroterapia_id_fkey"
+            columns: ["narroterapia_id"]
+            isOneToOne: false
+            referencedRelation: "oraculo_portal_narroterapia"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      oraculo_portal_riscos_eticos: {
+        Row: {
+          created_at: string
+          descricao: string | null
+          id: string
+          ordem: number
+          portal_id: string
+          risco: string
+        }
+        Insert: {
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          ordem: number
+          portal_id: string
+          risco: string
+        }
+        Update: {
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          ordem?: number
+          portal_id?: string
+          risco?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oraculo_portal_riscos_eticos_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: false
+            referencedRelation: "oraculo_portais"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portais: {
+        Row: {
+          capa_url: string | null
+          created_at: string
+          created_by: string | null
+          descricao: string | null
+          id: string
+          jornada_id: string
+          modulo_id: string | null
+          motor_geracao: string | null
+          nivel_conteudo: string | null
+          objetivo: string | null
+          ordem: number
+          portal_minimo: string | null
+          status: string
+          subtitulo: string | null
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          capa_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          descricao?: string | null
+          id?: string
+          jornada_id: string
+          modulo_id?: string | null
+          motor_geracao?: string | null
+          nivel_conteudo?: string | null
+          objetivo?: string | null
+          ordem?: number
+          portal_minimo?: string | null
+          status?: string
+          subtitulo?: string | null
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          capa_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          descricao?: string | null
+          id?: string
+          jornada_id?: string
+          modulo_id?: string | null
+          motor_geracao?: string | null
+          nivel_conteudo?: string | null
+          objetivo?: string | null
+          ordem?: number
+          portal_minimo?: string | null
+          status?: string
+          subtitulo?: string | null
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      portal_junguiano_config: {
+        Row: {
+          aviso_etico: string | null
+          created_at: string
+          descricao: string | null
+          id: string
+          modo_clinica_ativo: boolean | null
+          portal_minimo: Database["public"]["Enums"]["portal_type"]
+          status: string
+          subtitulo: string | null
+          texto_encerramento: string | null
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          aviso_etico?: string | null
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          modo_clinica_ativo?: boolean | null
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          status?: string
+          subtitulo?: string | null
+          texto_encerramento?: string | null
+          titulo?: string
+          updated_at?: string
+        }
+        Update: {
+          aviso_etico?: string | null
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          modo_clinica_ativo?: boolean | null
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          status?: string
+          subtitulo?: string | null
+          texto_encerramento?: string | null
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      portal_junguiano_modulos: {
+        Row: {
+          ativo: boolean | null
+          config_id: string | null
+          created_at: string
+          descricao: string | null
+          id: string
+          ordem: number
+          portal_minimo: Database["public"]["Enums"]["portal_type"]
+          subtitulo: string | null
+          tipo: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          config_id?: string | null
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          ordem?: number
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          subtitulo?: string | null
+          tipo?: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean | null
+          config_id?: string | null
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          ordem?: number
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          subtitulo?: string | null
+          tipo?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      portal_junguiano_portais: {
+        Row: {
+          ativo: boolean | null
+          audio_titulo: string | null
+          audio_url: string | null
+          created_at: string
+          desbloqueio_tipo: string | null
+          descricao: string | null
+          frase_oraculo: string | null
+          id: string
+          missao_criterio_conclusao: string | null
+          missao_descricao: string | null
+          missao_titulo: string | null
+          modulo_id: string | null
+          numero_ordem: number
+          portal_minimo: Database["public"]["Enums"]["portal_type"]
+          subtitulo: string | null
+          texto_aula_principal: string | null
+          titulo: string
+          updated_at: string
+          vivencia_guiada: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          audio_titulo?: string | null
+          audio_url?: string | null
+          created_at?: string
+          desbloqueio_tipo?: string | null
+          descricao?: string | null
+          frase_oraculo?: string | null
+          id?: string
+          missao_criterio_conclusao?: string | null
+          missao_descricao?: string | null
+          missao_titulo?: string | null
+          modulo_id?: string | null
+          numero_ordem?: number
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          subtitulo?: string | null
+          texto_aula_principal?: string | null
+          titulo: string
+          updated_at?: string
+          vivencia_guiada?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          audio_titulo?: string | null
+          audio_url?: string | null
+          created_at?: string
+          desbloqueio_tipo?: string | null
+          descricao?: string | null
+          frase_oraculo?: string | null
+          id?: string
+          missao_criterio_conclusao?: string | null
+          missao_descricao?: string | null
+          missao_titulo?: string | null
+          modulo_id?: string | null
+          numero_ordem?: number
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          subtitulo?: string | null
+          texto_aula_principal?: string | null
+          titulo?: string
+          updated_at?: string
+          vivencia_guiada?: string | null
+        }
+        Relationships: []
+      }
+      portal_junguiano_progresso: {
+        Row: {
+          concluido_em: string | null
+          config_id: string | null
+          created_at: string
+          id: string
+          iniciado_em: string | null
+          modo_clinica: boolean | null
+          portais_concluidos: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          concluido_em?: string | null
+          config_id?: string | null
+          created_at?: string
+          id?: string
+          iniciado_em?: string | null
+          modo_clinica?: boolean | null
+          portais_concluidos?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          concluido_em?: string | null
+          config_id?: string | null
+          created_at?: string
+          id?: string
+          iniciado_em?: string | null
+          modo_clinica?: boolean | null
+          portais_concluidos?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      portal_junguiano_registros: {
+        Row: {
+          created_at: string
+          id: string
+          missao_concluida: boolean | null
+          missao_concluida_em: string | null
+          portal_id: string | null
+          reflexao: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          missao_concluida?: boolean | null
+          missao_concluida_em?: string | null
+          portal_id?: string | null
+          reflexao?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          missao_concluida?: boolean | null
+          missao_concluida_em?: string | null
+          portal_id?: string | null
+          reflexao?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      portal_progress: {
+        Row: {
+          created_at: string
+          has_minimum_record: boolean
+          id: string
+          last_activity_at: string
+          last_position: number | null
+          portal_id: string
+          state: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          has_minimum_record?: boolean
+          id?: string
+          last_activity_at?: string
+          last_position?: number | null
+          portal_id: string
+          state?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          has_minimum_record?: boolean
+          id?: string
+          last_activity_at?: string
+          last_position?: number | null
+          portal_id?: string
+          state?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      portal_salas: {
+        Row: {
+          created_at: string
+          id: string
+          portal_type: Database["public"]["Enums"]["portal_type"]
+          sala_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          portal_type: Database["public"]["Enums"]["portal_type"]
+          sala_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          portal_type?: Database["public"]["Enums"]["portal_type"]
+          sala_id?: string
+        }
+        Relationships: []
+      }
+      post_session_closures: {
+        Row: {
+          case_id: string
+          client_id: string
+          created_at: string
+          do_not_touch: string | null
+          id: string
+          left_open: string | null
+          moved: string | null
+          therapist_id: string
+        }
+        Insert: {
+          case_id: string
+          client_id: string
+          created_at?: string
+          do_not_touch?: string | null
+          id?: string
+          left_open?: string | null
+          moved?: string | null
+          therapist_id: string
+        }
+        Update: {
+          case_id?: string
+          client_id?: string
+          created_at?: string
+          do_not_touch?: string | null
+          id?: string
+          left_open?: string | null
+          moved?: string | null
+          therapist_id?: string
+        }
+        Relationships: []
+      }
+      posts_mentoria: {
+        Row: {
+          anexo_url: string | null
+          caso_id: string | null
+          created_at: string
+          created_by: string | null
+          data_evento: string | null
+          id: string
+          link_evento: string | null
+          portal_minimo: Database["public"]["Enums"]["portal_type"]
+          status: Database["public"]["Enums"]["post_status"]
+          texto: string
+          tipo: Database["public"]["Enums"]["mentoria_tipo"]
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          anexo_url?: string | null
+          caso_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          data_evento?: string | null
+          id?: string
+          link_evento?: string | null
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          status?: Database["public"]["Enums"]["post_status"]
+          texto: string
+          tipo?: Database["public"]["Enums"]["mentoria_tipo"]
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          anexo_url?: string | null
+          caso_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          data_evento?: string | null
+          id?: string
+          link_evento?: string | null
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          status?: Database["public"]["Enums"]["post_status"]
+          texto?: string
+          tipo?: Database["public"]["Enums"]["mentoria_tipo"]
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      praticas_mudra: {
+        Row: {
+          anotacoes_pratica: string | null
+          client_id: string
+          created_at: string
+          data_pratica: string
+          distrito_associado: string | null
+          id: string
+          mudra_nome: string
+          therapist_id: string
+        }
+        Insert: {
+          anotacoes_pratica?: string | null
+          client_id: string
+          created_at?: string
+          data_pratica?: string
+          distrito_associado?: string | null
+          id?: string
+          mudra_nome: string
+          therapist_id: string
+        }
+        Update: {
+          anotacoes_pratica?: string | null
+          client_id?: string
+          created_at?: string
+          data_pratica?: string
+          distrito_associado?: string | null
+          id?: string
+          mudra_nome?: string
+          therapist_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          access_expires_at: string | null
+          access_status: string
+          avatar_url: string | null
+          cartografia_base: Json | null
+          created_at: string
+          email: string | null
+          entry_archetype: string | null
+          entry_symbol: string | null
+          formacao_oracula_concluida: boolean | null
+          id: string
+          is_professional_verified: boolean
+          nome: string | null
+          onboarding_completed: boolean
+          portal: string | null
+          role: string
+          subscription_status: string | null
+          supervisao_validada: boolean | null
+          termo_etico_aceito: boolean | null
+          updated_at: string
+          voz_apoio: string | null
+          voz_ativa: string | null
+          voz_primaria: string | null
+        }
+        Insert: {
+          access_expires_at?: string | null
+          access_status?: string
+          avatar_url?: string | null
+          cartografia_base?: Json | null
+          created_at?: string
+          email?: string | null
+          entry_archetype?: string | null
+          entry_symbol?: string | null
+          formacao_oracula_concluida?: boolean | null
+          id: string
+          is_professional_verified?: boolean
+          nome?: string | null
+          onboarding_completed?: boolean
+          portal?: string | null
+          role?: string
+          subscription_status?: string | null
+          supervisao_validada?: boolean | null
+          termo_etico_aceito?: boolean | null
+          updated_at?: string
+          voz_apoio?: string | null
+          voz_ativa?: string | null
+          voz_primaria?: string | null
+        }
+        Update: {
+          access_expires_at?: string | null
+          access_status?: string
+          avatar_url?: string | null
+          cartografia_base?: Json | null
+          created_at?: string
+          email?: string | null
+          entry_archetype?: string | null
+          entry_symbol?: string | null
+          formacao_oracula_concluida?: boolean | null
+          id?: string
+          is_professional_verified?: boolean
+          nome?: string | null
+          onboarding_completed?: boolean
+          portal?: string | null
+          role?: string
+          subscription_status?: string | null
+          supervisao_validada?: boolean | null
+          termo_etico_aceito?: boolean | null
+          updated_at?: string
+          voz_apoio?: string | null
+          voz_ativa?: string | null
+          voz_primaria?: string | null
+        }
+        Relationships: []
+      }
+      progresso_aluna: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          formacao_id: string
+          id: string
+          modulo_id: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          formacao_id: string
+          id?: string
+          modulo_id: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          formacao_id?: string
+          id?: string
+          modulo_id?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      projetos_mestria: {
+        Row: {
+          arquivo_url: string | null
+          avaliador_id: string | null
+          course_id: string
+          created_at: string | null
+          descricao: string | null
+          feedback: string | null
+          id: string
+          status: string
+          titulo: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          arquivo_url?: string | null
+          avaliador_id?: string | null
+          course_id: string
+          created_at?: string | null
+          descricao?: string | null
+          feedback?: string | null
+          id?: string
+          status?: string
+          titulo: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          arquivo_url?: string | null
+          avaliador_id?: string | null
+          course_id?: string
+          created_at?: string | null
+          descricao?: string | null
+          feedback?: string | null
+          id?: string
+          status?: string
+          titulo?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      protocolo_oracula: {
+        Row: {
+          caminho_registro_id: string | null
+          cliente_id: string
+          created_at: string
+          id: string
+          mapa_registro_id: string | null
+          objetivo_terapeutico: string | null
+          oraculo_registro_id: string | null
+          proximos_passos: string | null
+          session_case_id: string
+          sintese_narrativa: string | null
+          status: string
+          terapeuta_id: string
+          updated_at: string
+        }
+        Insert: {
+          caminho_registro_id?: string | null
+          cliente_id: string
+          created_at?: string
+          id?: string
+          mapa_registro_id?: string | null
+          objetivo_terapeutico?: string | null
+          oraculo_registro_id?: string | null
+          proximos_passos?: string | null
+          session_case_id: string
+          sintese_narrativa?: string | null
+          status?: string
+          terapeuta_id: string
+          updated_at?: string
+        }
+        Update: {
+          caminho_registro_id?: string | null
+          cliente_id?: string
+          created_at?: string
+          id?: string
+          mapa_registro_id?: string | null
+          objetivo_terapeutico?: string | null
+          oraculo_registro_id?: string | null
+          proximos_passos?: string | null
+          session_case_id?: string
+          sintese_narrativa?: string | null
+          status?: string
+          terapeuta_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      push_subscriptions: {
+        Row: {
+          auth_key: string
+          created_at: string
+          endpoint: string
+          id: string
+          p256dh: string
+          updated_at: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          auth_key: string
+          created_at?: string
+          endpoint: string
+          id?: string
+          p256dh: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          auth_key?: string
+          created_at?: string
+          endpoint?: string
+          id?: string
+          p256dh?: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      quiz_opcoes: {
+        Row: {
+          categoria: string | null
+          created_at: string
+          id: string
+          ordem: number
+          pergunta_id: string
+          texto: string
+          valor_pontuacao: number
+        }
+        Insert: {
+          categoria?: string | null
+          created_at?: string
+          id?: string
+          ordem?: number
+          pergunta_id: string
+          texto: string
+          valor_pontuacao?: number
+        }
+        Update: {
+          categoria?: string | null
+          created_at?: string
+          id?: string
+          ordem?: number
+          pergunta_id?: string
+          texto?: string
+          valor_pontuacao?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_opcoes_pergunta_id_fkey"
+            columns: ["pergunta_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_perguntas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quiz_perguntas: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          id: string
+          ordem: number
+          quiz_id: string
+          texto: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          ordem?: number
+          quiz_id: string
+          texto: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          ordem?: number
+          quiz_id?: string
+          texto?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_perguntas_quiz_id_fkey"
+            columns: ["quiz_id"]
+            isOneToOne: false
+            referencedRelation: "quizzes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quiz_respostas_usuario: {
+        Row: {
+          categoria_resultado: string | null
+          completed_at: string
+          created_at: string
+          id: string
+          pontuacao_total: number | null
+          quiz_id: string
+          respostas: Json | null
+          resultado_id: string | null
+          user_id: string
+        }
+        Insert: {
+          categoria_resultado?: string | null
+          completed_at?: string
+          created_at?: string
+          id?: string
+          pontuacao_total?: number | null
+          quiz_id: string
+          respostas?: Json | null
+          resultado_id?: string | null
+          user_id: string
+        }
+        Update: {
+          categoria_resultado?: string | null
+          completed_at?: string
+          created_at?: string
+          id?: string
+          pontuacao_total?: number | null
+          quiz_id?: string
+          respostas?: Json | null
+          resultado_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_respostas_usuario_quiz_id_fkey"
+            columns: ["quiz_id"]
+            isOneToOne: false
+            referencedRelation: "quizzes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quiz_respostas_usuario_resultado_id_fkey"
+            columns: ["resultado_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_resultados"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quiz_resultados: {
+        Row: {
+          agente_id: string | null
+          audio_url: string | null
+          categoria: string | null
+          created_at: string
+          cta_rota: string | null
+          cta_texto: string | null
+          id: string
+          imagem_url: string | null
+          ordem: number
+          pontuacao_maxima: number | null
+          pontuacao_minima: number | null
+          quiz_id: string
+          texto_interpretativo: string
+          titulo_simbolico: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          agente_id?: string | null
+          audio_url?: string | null
+          categoria?: string | null
+          created_at?: string
+          cta_rota?: string | null
+          cta_texto?: string | null
+          id?: string
+          imagem_url?: string | null
+          ordem?: number
+          pontuacao_maxima?: number | null
+          pontuacao_minima?: number | null
+          quiz_id: string
+          texto_interpretativo: string
+          titulo_simbolico: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          agente_id?: string | null
+          audio_url?: string | null
+          categoria?: string | null
+          created_at?: string
+          cta_rota?: string | null
+          cta_texto?: string | null
+          id?: string
+          imagem_url?: string | null
+          ordem?: number
+          pontuacao_maxima?: number | null
+          pontuacao_minima?: number | null
+          quiz_id?: string
+          texto_interpretativo?: string
+          titulo_simbolico?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_resultados_agente_id_fkey"
+            columns: ["agente_id"]
+            isOneToOne: false
+            referencedRelation: "agentes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quiz_resultados_quiz_id_fkey"
+            columns: ["quiz_id"]
+            isOneToOne: false
+            referencedRelation: "quizzes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quizzes: {
+        Row: {
+          ativo: boolean
+          capa_url: string | null
+          created_at: string
+          descricao: string | null
+          id: string
+          portal_id: string | null
+          sala_id: string | null
+          slug: string | null
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          capa_url?: string | null
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          portal_id?: string | null
+          sala_id?: string | null
+          slug?: string | null
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          capa_url?: string | null
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          portal_id?: string | null
+          sala_id?: string | null
+          slug?: string | null
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quizzes_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: false
+            referencedRelation: "conteudo_travessias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quizzes_sala_id_fkey"
+            columns: ["sala_id"]
+            isOneToOne: false
+            referencedRelation: "salas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reflexoes_jornada: {
+        Row: {
+          client_id: string
+          created_at: string
+          id: string
+          texto: string
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          id?: string
+          texto: string
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          id?: string
+          texto?: string
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      relacionamentos_espelho: {
+        Row: {
+          client_id: string
+          created_at: string
+          id: string
+          padrao_central: string | null
+          padroes_recorrentes: string | null
+          projecoes_json: Json
+          qualidades_admiradas: Json
+          qualidades_irritantes: Json
+          reflexao_final: string | null
+          relacionamentos_json: Json
+          sintese_json: Json | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          id?: string
+          padrao_central?: string | null
+          padroes_recorrentes?: string | null
+          projecoes_json?: Json
+          qualidades_admiradas?: Json
+          qualidades_irritantes?: Json
+          reflexao_final?: string | null
+          relacionamentos_json?: Json
+          sintese_json?: Json | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          id?: string
+          padrao_central?: string | null
+          padroes_recorrentes?: string | null
+          projecoes_json?: Json
+          qualidades_admiradas?: Json
+          qualidades_irritantes?: Json
+          reflexao_final?: string | null
+          relacionamentos_json?: Json
+          sintese_json?: Json | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      respostas_exercicios: {
+        Row: {
+          campo_corporal: string | null
+          created_at: string
+          id: string
+          pergunta_1: string | null
+          pergunta_2: string | null
+          pergunta_3: string | null
+          sessao_id: string
+        }
+        Insert: {
+          campo_corporal?: string | null
+          created_at?: string
+          id?: string
+          pergunta_1?: string | null
+          pergunta_2?: string | null
+          pergunta_3?: string | null
+          sessao_id: string
+        }
+        Update: {
+          campo_corporal?: string | null
+          created_at?: string
+          id?: string
+          pergunta_1?: string | null
+          pergunta_2?: string | null
+          pergunta_3?: string | null
+          sessao_id?: string
+        }
+        Relationships: []
+      }
+      rituais_integracao: {
+        Row: {
+          aprendizados_json: Json
+          client_id: string
+          compromisso: string | null
+          created_at: string
+          data_ritual: string | null
+          elementos_ritual: Json
+          id: string
+          intencao: string | null
+          o_que_deixo: string | null
+          o_que_levo: string | null
+          reflexao_final: string | null
+          simbolo_transicao: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          aprendizados_json?: Json
+          client_id: string
+          compromisso?: string | null
+          created_at?: string
+          data_ritual?: string | null
+          elementos_ritual?: Json
+          id?: string
+          intencao?: string | null
+          o_que_deixo?: string | null
+          o_que_levo?: string | null
+          reflexao_final?: string | null
+          simbolo_transicao?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          aprendizados_json?: Json
+          client_id?: string
+          compromisso?: string | null
+          created_at?: string
+          data_ritual?: string | null
+          elementos_ritual?: Json
+          id?: string
+          intencao?: string | null
+          o_que_deixo?: string | null
+          o_que_levo?: string | null
+          reflexao_final?: string | null
+          simbolo_transicao?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      rituais_simbolicos: {
+        Row: {
+          ativo: boolean | null
+          created_at: string | null
+          duracao_segundos: number | null
+          frase_unica: string | null
+          id: string
+          instrucao: string
+          material: string | null
+          nome: string
+          observacoes_facilitadora: string | null
+          ordem: number | null
+          porta_associada: string | null
+          silencio_obrigatorio: boolean | null
+          slug: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string | null
+          duracao_segundos?: number | null
+          frase_unica?: string | null
+          id?: string
+          instrucao: string
+          material?: string | null
+          nome: string
+          observacoes_facilitadora?: string | null
+          ordem?: number | null
+          porta_associada?: string | null
+          silencio_obrigatorio?: boolean | null
+          slug: string
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string | null
+          duracao_segundos?: number | null
+          frase_unica?: string | null
+          id?: string
+          instrucao?: string
+          material?: string | null
+          nome?: string
+          observacoes_facilitadora?: string | null
+          ordem?: number | null
+          porta_associada?: string | null
+          silencio_obrigatorio?: boolean | null
+          slug?: string
+        }
+        Relationships: []
+      }
+      ritual_definitions: {
+        Row: {
+          ativo: boolean | null
+          autoriza_acesso: boolean | null
+          campos_reflexao: Json | null
+          created_at: string
+          descricao: string | null
+          id: string
+          microcopy: string | null
+          nome: string
+          ordem: number | null
+          pergunta_compromisso: string | null
+          texto_ritual: string
+          tipo: Database["public"]["Enums"]["ritual_type"]
+          trigger_context_id: string | null
+          trigger_context_type: string | null
+          trigger_event: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          autoriza_acesso?: boolean | null
+          campos_reflexao?: Json | null
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          microcopy?: string | null
+          nome: string
+          ordem?: number | null
+          pergunta_compromisso?: string | null
+          texto_ritual: string
+          tipo: Database["public"]["Enums"]["ritual_type"]
+          trigger_context_id?: string | null
+          trigger_context_type?: string | null
+          trigger_event: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean | null
+          autoriza_acesso?: boolean | null
+          campos_reflexao?: Json | null
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          microcopy?: string | null
+          nome?: string
+          ordem?: number | null
+          pergunta_compromisso?: string | null
+          texto_ritual?: string
+          tipo?: Database["public"]["Enums"]["ritual_type"]
+          trigger_context_id?: string | null
+          trigger_context_type?: string | null
+          trigger_event?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      ritual_passages: {
+        Row: {
+          admin_marked_by: string | null
+          admin_note: string | null
+          completed_at: string | null
+          context_id: string | null
+          context_type: string | null
+          created_at: string
+          id: string
+          respostas: Json | null
+          ritual_id: string
+          started_at: string | null
+          status: Database["public"]["Enums"]["ritual_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_marked_by?: string | null
+          admin_note?: string | null
+          completed_at?: string | null
+          context_id?: string | null
+          context_type?: string | null
+          created_at?: string
+          id?: string
+          respostas?: Json | null
+          ritual_id: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["ritual_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_marked_by?: string | null
+          admin_note?: string | null
+          completed_at?: string | null
+          context_id?: string | null
+          context_type?: string | null
+          created_at?: string
+          id?: string
+          respostas?: Json | null
+          ritual_id?: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["ritual_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      sala_ferramentas: {
+        Row: {
+          ativa: boolean
+          bloco_interativo_requerido: boolean | null
+          categoria_badge: string | null
+          categoria_metodo: string | null
+          created_at: string
+          e_complementar: boolean | null
+          familia_id: string | null
+          familia_simbolica: string | null
+          ferramenta_chave: string
+          ferramenta_descricao: string | null
+          ferramenta_nome: string
+          ferramenta_pai_id: string | null
+          finalidade_pratica: string | null
+          has_blocks: boolean | null
+          icone: string | null
+          id: string
+          modo_uso: string[] | null
+          ordem: number
+          origem_metodologica: string | null
+          portal_id: string | null
+          portal_minimo: Database["public"]["Enums"]["portal_type"] | null
+          proximo_passo: string | null
+          rota: string
+          sala_id: string
+          slug: string | null
+          status_criacao: string | null
+          texto_como_atravessar: string | null
+          texto_o_que_sustenta: string | null
+          texto_quando_usar: string | null
+          tipo: string | null
+          tipo_fechamento: string | null
+          tipo_ferramenta: string | null
+          updated_at: string
+          vinculo_metodologico: string | null
+        }
+        Insert: {
+          ativa?: boolean
+          bloco_interativo_requerido?: boolean | null
+          categoria_badge?: string | null
+          categoria_metodo?: string | null
+          created_at?: string
+          e_complementar?: boolean | null
+          familia_id?: string | null
+          familia_simbolica?: string | null
+          ferramenta_chave: string
+          ferramenta_descricao?: string | null
+          ferramenta_nome: string
+          ferramenta_pai_id?: string | null
+          finalidade_pratica?: string | null
+          has_blocks?: boolean | null
+          icone?: string | null
+          id?: string
+          modo_uso?: string[] | null
+          ordem?: number
+          origem_metodologica?: string | null
+          portal_id?: string | null
+          portal_minimo?: Database["public"]["Enums"]["portal_type"] | null
+          proximo_passo?: string | null
+          rota: string
+          sala_id: string
+          slug?: string | null
+          status_criacao?: string | null
+          texto_como_atravessar?: string | null
+          texto_o_que_sustenta?: string | null
+          texto_quando_usar?: string | null
+          tipo?: string | null
+          tipo_fechamento?: string | null
+          tipo_ferramenta?: string | null
+          updated_at?: string
+          vinculo_metodologico?: string | null
+        }
+        Update: {
+          ativa?: boolean
+          bloco_interativo_requerido?: boolean | null
+          categoria_badge?: string | null
+          categoria_metodo?: string | null
+          created_at?: string
+          e_complementar?: boolean | null
+          familia_id?: string | null
+          familia_simbolica?: string | null
+          ferramenta_chave?: string
+          ferramenta_descricao?: string | null
+          ferramenta_nome?: string
+          ferramenta_pai_id?: string | null
+          finalidade_pratica?: string | null
+          has_blocks?: boolean | null
+          icone?: string | null
+          id?: string
+          modo_uso?: string[] | null
+          ordem?: number
+          origem_metodologica?: string | null
+          portal_id?: string | null
+          portal_minimo?: Database["public"]["Enums"]["portal_type"] | null
+          proximo_passo?: string | null
+          rota?: string
+          sala_id?: string
+          slug?: string | null
+          status_criacao?: string | null
+          texto_como_atravessar?: string | null
+          texto_o_que_sustenta?: string | null
+          texto_quando_usar?: string | null
+          tipo?: string | null
+          tipo_fechamento?: string | null
+          tipo_ferramenta?: string | null
+          updated_at?: string
+          vinculo_metodologico?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sala_ferramentas_ferramenta_pai_id_fkey"
+            columns: ["ferramenta_pai_id"]
+            isOneToOne: false
+            referencedRelation: "sala_ferramentas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sala_ferramentas_portal_id_fkey"
+            columns: ["portal_id"]
+            isOneToOne: false
+            referencedRelation: "conteudo_travessias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sala_ferramentas_sala_id_fkey"
+            columns: ["sala_id"]
+            isOneToOne: false
+            referencedRelation: "salas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      salas: {
+        Row: {
+          ativa: boolean
+          created_at: string
+          id: string
+          nivel_minimo: Database["public"]["Enums"]["nivel_sala"]
+          nome_exibicao: string
+          ordem: number
+          texto_bloqueio: string
+          texto_entrada: string
+          updated_at: string
+        }
+        Insert: {
+          ativa?: boolean
+          created_at?: string
+          id?: string
+          nivel_minimo?: Database["public"]["Enums"]["nivel_sala"]
+          nome_exibicao: string
+          ordem?: number
+          texto_bloqueio?: string
+          texto_entrada?: string
+          updated_at?: string
+        }
+        Update: {
+          ativa?: boolean
+          created_at?: string
+          id?: string
+          nivel_minimo?: Database["public"]["Enums"]["nivel_sala"]
+          nome_exibicao?: string
+          ordem?: number
+          texto_bloqueio?: string
+          texto_entrada?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      season_books: {
+        Row: {
+          book_id: string
+          created_at: string
+          id: string
+          season_id: string
+          tipo: string
+        }
+        Insert: {
+          book_id: string
+          created_at?: string
+          id?: string
+          season_id: string
+          tipo?: string
+        }
+        Update: {
+          book_id?: string
+          created_at?: string
+          id?: string
+          season_id?: string
+          tipo?: string
+        }
+        Relationships: []
+      }
+      season_labs: {
+        Row: {
+          arquetipo_central: string | null
+          aula_objetivo: string | null
+          aula_pergunta_fechamento: string | null
+          aula_vivencia: string | null
+          cart_arquetipos_sugeridos: string[] | null
+          cart_distrito_sugerido: string | null
+          cart_labirinto_sugerido: string | null
+          cart_observacoes_obra: string | null
+          cart_porta_sugerida: string | null
+          cart_torre_sugerida: string | null
+          ciclo_id: string | null
+          created_at: string
+          esp_categorias_padrao: string[] | null
+          esp_contraindicacoes: string | null
+          esp_exemplos_manifestacao: string | null
+          esp_riscos_clinicos: string | null
+          essencia_transformadora: string | null
+          forja_fechamento_sugerido: string | null
+          forja_intervencao_modelo: string | null
+          forja_perguntas_chave: string[] | null
+          forja_template_estrategia: string | null
+          forja_template_objetivo: string | null
+          grupo_terapeutico: Json | null
+          id: string
+          imagem_organizadora: string | null
+          nucleo_vivo: string | null
+          palestra_chamada: string | null
+          palestra_encerramento: string | null
+          palestra_imagem: string | null
+          palestra_narrativa: string | null
+          pergunta_aplicacao_1: string | null
+          pergunta_aplicacao_2: string | null
+          season_id: string | null
+          sessao_cuidado_etico: string | null
+          sessao_pergunta_acesso: string | null
+          sessao_resistencia: string | null
+          sessao_tema: string | null
+          tensao_central: string | null
+          traducao_aula: string | null
+          traducao_circulo: string | null
+          traducao_sessao: string | null
+          transformacao_exigida: string | null
+          updated_at: string
+        }
+        Insert: {
+          arquetipo_central?: string | null
+          aula_objetivo?: string | null
+          aula_pergunta_fechamento?: string | null
+          aula_vivencia?: string | null
+          cart_arquetipos_sugeridos?: string[] | null
+          cart_distrito_sugerido?: string | null
+          cart_labirinto_sugerido?: string | null
+          cart_observacoes_obra?: string | null
+          cart_porta_sugerida?: string | null
+          cart_torre_sugerida?: string | null
+          ciclo_id?: string | null
+          created_at?: string
+          esp_categorias_padrao?: string[] | null
+          esp_contraindicacoes?: string | null
+          esp_exemplos_manifestacao?: string | null
+          esp_riscos_clinicos?: string | null
+          essencia_transformadora?: string | null
+          forja_fechamento_sugerido?: string | null
+          forja_intervencao_modelo?: string | null
+          forja_perguntas_chave?: string[] | null
+          forja_template_estrategia?: string | null
+          forja_template_objetivo?: string | null
+          grupo_terapeutico?: Json | null
+          id?: string
+          imagem_organizadora?: string | null
+          nucleo_vivo?: string | null
+          palestra_chamada?: string | null
+          palestra_encerramento?: string | null
+          palestra_imagem?: string | null
+          palestra_narrativa?: string | null
+          pergunta_aplicacao_1?: string | null
+          pergunta_aplicacao_2?: string | null
+          season_id?: string | null
+          sessao_cuidado_etico?: string | null
+          sessao_pergunta_acesso?: string | null
+          sessao_resistencia?: string | null
+          sessao_tema?: string | null
+          tensao_central?: string | null
+          traducao_aula?: string | null
+          traducao_circulo?: string | null
+          traducao_sessao?: string | null
+          transformacao_exigida?: string | null
+          updated_at?: string
+        }
+        Update: {
+          arquetipo_central?: string | null
+          aula_objetivo?: string | null
+          aula_pergunta_fechamento?: string | null
+          aula_vivencia?: string | null
+          cart_arquetipos_sugeridos?: string[] | null
+          cart_distrito_sugerido?: string | null
+          cart_labirinto_sugerido?: string | null
+          cart_observacoes_obra?: string | null
+          cart_porta_sugerida?: string | null
+          cart_torre_sugerida?: string | null
+          ciclo_id?: string | null
+          created_at?: string
+          esp_categorias_padrao?: string[] | null
+          esp_contraindicacoes?: string | null
+          esp_exemplos_manifestacao?: string | null
+          esp_riscos_clinicos?: string | null
+          essencia_transformadora?: string | null
+          forja_fechamento_sugerido?: string | null
+          forja_intervencao_modelo?: string | null
+          forja_perguntas_chave?: string[] | null
+          forja_template_estrategia?: string | null
+          forja_template_objetivo?: string | null
+          grupo_terapeutico?: Json | null
+          id?: string
+          imagem_organizadora?: string | null
+          nucleo_vivo?: string | null
+          palestra_chamada?: string | null
+          palestra_encerramento?: string | null
+          palestra_imagem?: string | null
+          palestra_narrativa?: string | null
+          pergunta_aplicacao_1?: string | null
+          pergunta_aplicacao_2?: string | null
+          season_id?: string | null
+          sessao_cuidado_etico?: string | null
+          sessao_pergunta_acesso?: string | null
+          sessao_resistencia?: string | null
+          sessao_tema?: string | null
+          tensao_central?: string | null
+          traducao_aula?: string | null
+          traducao_circulo?: string | null
+          traducao_sessao?: string | null
+          transformacao_exigida?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      session_archetypes: {
+        Row: {
+          archetype_id: string
+          client_id: string
+          created_at: string
+          id: string
+          notes: string | null
+          session_id: string
+        }
+        Insert: {
+          archetype_id: string
+          client_id: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          session_id: string
+        }
+        Update: {
+          archetype_id?: string
+          client_id?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          session_id?: string
+        }
+        Relationships: []
+      }
+      session_cases: {
+        Row: {
+          client_id: string
+          created_at: string
+          id: string
+          status: string
+          therapist_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          id?: string
+          status?: string
+          therapist_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          id?: string
+          status?: string
+          therapist_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      session_interventions: {
+        Row: {
+          created_at: string
+          id: string
+          intervention_id: string
+          session_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          intervention_id: string
+          session_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          intervention_id?: string
+          session_id?: string
+        }
+        Relationships: []
+      }
+      session_oracle_draws: {
+        Row: {
+          axis_archetype: string | null
+          axis_movement: string | null
+          axis_narrative: string | null
+          case_id: string | null
+          client_id: string | null
+          created_at: string
+          id: string
+          mediator_symbol: string | null
+          mode: string
+          notes: string | null
+          oracle_image: string | null
+          suggested_rite: string | null
+          therapist_id: string
+        }
+        Insert: {
+          axis_archetype?: string | null
+          axis_movement?: string | null
+          axis_narrative?: string | null
+          case_id?: string | null
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          mediator_symbol?: string | null
+          mode: string
+          notes?: string | null
+          oracle_image?: string | null
+          suggested_rite?: string | null
+          therapist_id: string
+        }
+        Update: {
+          axis_archetype?: string | null
+          axis_movement?: string | null
+          axis_narrative?: string | null
+          case_id?: string | null
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          mediator_symbol?: string | null
+          mode?: string
+          notes?: string | null
+          oracle_image?: string | null
+          suggested_rite?: string | null
+          therapist_id?: string
+        }
+        Relationships: []
+      }
+      session_scripts: {
+        Row: {
+          case_id: string
+          client_id: string
+          closing_leave_open: string | null
+          closing_name: string | null
+          closing_seal: string | null
+          created_at: string
+          exploration_questions: string | null
+          id: string
+          intervention_prompt: string | null
+          intervention_type: string | null
+          narrative_map_id: string | null
+          opening_gesture: string | null
+          opening_question: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          case_id: string
+          client_id: string
+          closing_leave_open?: string | null
+          closing_name?: string | null
+          closing_seal?: string | null
+          created_at?: string
+          exploration_questions?: string | null
+          id?: string
+          intervention_prompt?: string | null
+          intervention_type?: string | null
+          narrative_map_id?: string | null
+          opening_gesture?: string | null
+          opening_question?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          case_id?: string
+          client_id?: string
+          closing_leave_open?: string | null
+          closing_name?: string | null
+          closing_seal?: string | null
+          created_at?: string
+          exploration_questions?: string | null
+          id?: string
+          intervention_prompt?: string | null
+          intervention_type?: string | null
+          narrative_map_id?: string | null
+          opening_gesture?: string | null
+          opening_question?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      sessions: {
+        Row: {
+          cabine_data: Json | null
+          checkin_notes: string | null
+          checkin_state: string | null
+          cidadela_card_id: string | null
+          client_id: string
+          completed_at: string | null
+          created_at: string
+          date: string
+          district_id: string | null
+          gps_suggestion_json: Json | null
+          id: string
+          insight: string | null
+          notes: string | null
+          oracle_card_id: string | null
+          session_without_profile: boolean
+          sintese_json: Json | null
+          task: string | null
+          tool_id: string | null
+          updated_at: string
+          used_intervention_ids: string[] | null
+          user_id: string
+          voz_utilizada: string | null
+        }
+        Insert: {
+          cabine_data?: Json | null
+          checkin_notes?: string | null
+          checkin_state?: string | null
+          cidadela_card_id?: string | null
+          client_id: string
+          completed_at?: string | null
+          created_at?: string
+          date?: string
+          district_id?: string | null
+          gps_suggestion_json?: Json | null
+          id?: string
+          insight?: string | null
+          notes?: string | null
+          oracle_card_id?: string | null
+          session_without_profile?: boolean
+          sintese_json?: Json | null
+          task?: string | null
+          tool_id?: string | null
+          updated_at?: string
+          used_intervention_ids?: string[] | null
+          user_id?: string
+          voz_utilizada?: string | null
+        }
+        Update: {
+          cabine_data?: Json | null
+          checkin_notes?: string | null
+          checkin_state?: string | null
+          cidadela_card_id?: string | null
+          client_id?: string
+          completed_at?: string | null
+          created_at?: string
+          date?: string
+          district_id?: string | null
+          gps_suggestion_json?: Json | null
+          id?: string
+          insight?: string | null
+          notes?: string | null
+          oracle_card_id?: string | null
+          session_without_profile?: boolean
+          sintese_json?: Json | null
+          task?: string | null
+          tool_id?: string | null
+          updated_at?: string
+          used_intervention_ids?: string[] | null
+          user_id?: string
+          voz_utilizada?: string | null
+        }
+        Relationships: []
+      }
+      sessoes_casa_maquinas: {
+        Row: {
+          cliente_id: string
+          created_at: string
+          data_sessao: string
+          id: string
+          movimento_percebido: Database["public"]["Enums"]["movimento_percebido"]
+          nota_breve: string | null
+          owner_id: string
+          updated_at: string
+        }
+        Insert: {
+          cliente_id: string
+          created_at?: string
+          data_sessao?: string
+          id?: string
+          movimento_percebido?: Database["public"]["Enums"]["movimento_percebido"]
+          nota_breve?: string | null
+          owner_id: string
+          updated_at?: string
+        }
+        Update: {
+          cliente_id?: string
+          created_at?: string
+          data_sessao?: string
+          id?: string
+          movimento_percebido?: Database["public"]["Enums"]["movimento_percebido"]
+          nota_breve?: string | null
+          owner_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      sessoes_labirinto: {
+        Row: {
+          cliente_nome: string | null
+          concluida: boolean
+          created_at: string
+          data_sessao: string
+          direcionamento_terapeutico: string | null
+          emocao_dominante: string | null
+          hipotese_terapeutica: string | null
+          id: string
+          micro_acao_definida: string | null
+          modo: string
+          observacoes_clinicas: string | null
+          padrao_defensivo: string | null
+          porta_id: string | null
+          registro_acao: string | null
+          registro_percepcao: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cliente_nome?: string | null
+          concluida?: boolean
+          created_at?: string
+          data_sessao?: string
+          direcionamento_terapeutico?: string | null
+          emocao_dominante?: string | null
+          hipotese_terapeutica?: string | null
+          id?: string
+          micro_acao_definida?: string | null
+          modo?: string
+          observacoes_clinicas?: string | null
+          padrao_defensivo?: string | null
+          porta_id?: string | null
+          registro_acao?: string | null
+          registro_percepcao?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cliente_nome?: string | null
+          concluida?: boolean
+          created_at?: string
+          data_sessao?: string
+          direcionamento_terapeutico?: string | null
+          emocao_dominante?: string | null
+          hipotese_terapeutica?: string | null
+          id?: string
+          micro_acao_definida?: string | null
+          modo?: string
+          observacoes_clinicas?: string | null
+          padrao_defensivo?: string | null
+          porta_id?: string | null
+          registro_acao?: string | null
+          registro_percepcao?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sessoes_labirinto_porta_id_fkey"
+            columns: ["porta_id"]
+            isOneToOne: false
+            referencedRelation: "labirinto_fases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      simulador_cenarios: {
+        Row: {
+          ativo: boolean | null
+          contexto: string
+          created_at: string | null
+          id: string
+          nivel: string
+          ordem: number | null
+          passos_json: Json
+          titulo: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          contexto: string
+          created_at?: string | null
+          id?: string
+          nivel?: string
+          ordem?: number | null
+          passos_json?: Json
+          titulo: string
+        }
+        Update: {
+          ativo?: boolean | null
+          contexto?: string
+          created_at?: string | null
+          id?: string
+          nivel?: string
+          ordem?: number | null
+          passos_json?: Json
+          titulo?: string
+        }
+        Relationships: []
+      }
+      simulador_progresso: {
+        Row: {
+          cenario_id: string
+          concluido: boolean | null
+          created_at: string | null
+          id: string
+          pontuacao: number | null
+          respostas_json: Json | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          cenario_id: string
+          concluido?: boolean | null
+          created_at?: string | null
+          id?: string
+          pontuacao?: number | null
+          respostas_json?: Json | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          cenario_id?: string
+          concluido?: boolean | null
+          created_at?: string | null
+          id?: string
+          pontuacao?: number | null
+          respostas_json?: Json | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "simulador_progresso_cenario_id_fkey"
+            columns: ["cenario_id"]
+            isOneToOne: false
+            referencedRelation: "simulador_cenarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sonho_estruturado: {
+        Row: {
+          amplificacao_arquetipica: Json | null
+          amplificacao_pessoal: Json | null
+          cliente_id: string
+          created_at: string
+          emocao_predominante: string | null
+          id: string
+          imagens_principais: string | null
+          pergunta_compensar: string | null
+          pergunta_conselho: string | null
+          pergunta_perspectiva: string | null
+          resposta_ao_sonho: string | null
+          sensacao_corporal: string | null
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          amplificacao_arquetipica?: Json | null
+          amplificacao_pessoal?: Json | null
+          cliente_id: string
+          created_at?: string
+          emocao_predominante?: string | null
+          id?: string
+          imagens_principais?: string | null
+          pergunta_compensar?: string | null
+          pergunta_conselho?: string | null
+          pergunta_perspectiva?: string | null
+          resposta_ao_sonho?: string | null
+          sensacao_corporal?: string | null
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          amplificacao_arquetipica?: Json | null
+          amplificacao_pessoal?: Json | null
+          cliente_id?: string
+          created_at?: string
+          emocao_predominante?: string | null
+          id?: string
+          imagens_principais?: string | null
+          pergunta_compensar?: string | null
+          pergunta_conselho?: string | null
+          pergunta_perspectiva?: string | null
+          resposta_ao_sonho?: string | null
+          sensacao_corporal?: string | null
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      sonhos_cabalisticos: {
+        Row: {
+          client_id: string
+          created_at: string
+          data_registro: string
+          descricao_sonho: string
+          distritos_relacionados: string[] | null
+          id: string
+          interpretacao_ia: string | null
+          labirintos_potenciais: string[] | null
+          praticas_sugeridas: string[] | null
+          simbolos_chave: string[]
+          therapist_id: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          data_registro?: string
+          descricao_sonho: string
+          distritos_relacionados?: string[] | null
+          id?: string
+          interpretacao_ia?: string | null
+          labirintos_potenciais?: string[] | null
+          praticas_sugeridas?: string[] | null
+          simbolos_chave?: string[]
+          therapist_id: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          data_registro?: string
+          descricao_sonho?: string
+          distritos_relacionados?: string[] | null
+          id?: string
+          interpretacao_ia?: string | null
+          labirintos_potenciais?: string[] | null
+          praticas_sugeridas?: string[] | null
+          simbolos_chave?: string[]
+          therapist_id?: string
+        }
+        Relationships: []
+      }
+      station_progress: {
+        Row: {
+          created_at: string
+          id: string
+          last_activity_at: string
+          station_id: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_activity_at?: string
+          station_id: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_activity_at?: string
+          station_id?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
       studio_episodes: {
         Row: {
-          audio_url: string | null
+          audio_final_url: string | null
+          audio_full_url: string | null
+          audio_narradora_url: string | null
+          audio_oracular_url: string | null
+          audio_public_url: string | null
+          capitulo: string
+          ciclo_id: string | null
           created_at: string
-          description: string | null
-          duration_seconds: number | null
+          created_by: string | null
+          descricao: string | null
+          duracao_segundos: number | null
+          eixo_id: string | null
+          fade_in_seconds: number | null
+          fade_out_seconds: number | null
+          formato: string
           id: string
+          imagem_capa_url: string | null
+          intencao_terapeutica: string
+          livro: string
+          published_at: string | null
+          roteiro_completo: string | null
           status: Database["public"]["Enums"]["studio_episode_status"]
-          title: string
+          texto_base: string
+          tipo_episodio: string
+          titulo: string | null
+          trilha_ativa: boolean | null
+          trilha_fundo_url: string | null
+          trilha_volume: number | null
           updated_at: string
+          versao_resumida: string | null
+          vinheta_abertura_url: string | null
+          vinheta_encerramento_url: string | null
           visibility: Database["public"]["Enums"]["studio_episode_visibility"]
+          voz_escolhida: string | null
         }
         Insert: {
-          audio_url?: string | null
+          audio_final_url?: string | null
+          audio_full_url?: string | null
+          audio_narradora_url?: string | null
+          audio_oracular_url?: string | null
+          audio_public_url?: string | null
+          capitulo?: string
+          ciclo_id?: string | null
           created_at?: string
-          description?: string | null
-          duration_seconds?: number | null
+          created_by?: string | null
+          descricao?: string | null
+          duracao_segundos?: number | null
+          eixo_id?: string | null
+          fade_in_seconds?: number | null
+          fade_out_seconds?: number | null
+          formato?: string
           id?: string
+          imagem_capa_url?: string | null
+          intencao_terapeutica?: string
+          livro: string
+          published_at?: string | null
+          roteiro_completo?: string | null
           status?: Database["public"]["Enums"]["studio_episode_status"]
-          title: string
+          texto_base?: string
+          tipo_episodio?: string
+          titulo?: string | null
+          trilha_ativa?: boolean | null
+          trilha_fundo_url?: string | null
+          trilha_volume?: number | null
           updated_at?: string
+          versao_resumida?: string | null
+          vinheta_abertura_url?: string | null
+          vinheta_encerramento_url?: string | null
           visibility?: Database["public"]["Enums"]["studio_episode_visibility"]
+          voz_escolhida?: string | null
         }
         Update: {
-          audio_url?: string | null
+          audio_final_url?: string | null
+          audio_full_url?: string | null
+          audio_narradora_url?: string | null
+          audio_oracular_url?: string | null
+          audio_public_url?: string | null
+          capitulo?: string
+          ciclo_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          descricao?: string | null
+          duracao_segundos?: number | null
+          eixo_id?: string | null
+          fade_in_seconds?: number | null
+          fade_out_seconds?: number | null
+          formato?: string
+          id?: string
+          imagem_capa_url?: string | null
+          intencao_terapeutica?: string
+          livro?: string
+          published_at?: string | null
+          roteiro_completo?: string | null
+          status?: Database["public"]["Enums"]["studio_episode_status"]
+          texto_base?: string
+          tipo_episodio?: string
+          titulo?: string | null
+          trilha_ativa?: boolean | null
+          trilha_fundo_url?: string | null
+          trilha_volume?: number | null
+          updated_at?: string
+          versao_resumida?: string | null
+          vinheta_abertura_url?: string | null
+          vinheta_encerramento_url?: string | null
+          visibility?: Database["public"]["Enums"]["studio_episode_visibility"]
+          voz_escolhida?: string | null
+        }
+        Relationships: []
+      }
+      studio_method_axes: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          descricao: string
+          id: string
+          instrucao_especifica: string
+          nome: string
+          ordem: number
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          descricao?: string
+          id?: string
+          instrucao_especifica?: string
+          nome: string
+          ordem?: number
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          descricao?: string
+          id?: string
+          instrucao_especifica?: string
+          nome?: string
+          ordem?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      symbolic_rewards: {
+        Row: {
+          created_at: string
+          description: string | null
+          icon_name: string | null
+          id: string
+          name: string
+          rarity: string | null
+          slug: string
+        }
+        Insert: {
           created_at?: string
           description?: string | null
-          duration_seconds?: number | null
+          icon_name?: string | null
           id?: string
-          status?: Database["public"]["Enums"]["studio_episode_status"]
+          name: string
+          rarity?: string | null
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          icon_name?: string | null
+          id?: string
+          name?: string
+          rarity?: string | null
+          slug?: string
+        }
+        Relationships: []
+      }
+      symbolic_template_sessions: {
+        Row: {
+          case_id: string | null
+          cliente_id: string | null
+          created_at: string
+          id: string
+          notes: Json | null
+          sections: Json
+          template_type: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          case_id?: string | null
+          cliente_id?: string | null
+          created_at?: string
+          id?: string
+          notes?: Json | null
+          sections?: Json
+          template_type: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          case_id?: string | null
+          cliente_id?: string | null
+          created_at?: string
+          id?: string
+          notes?: Json | null
+          sections?: Json
+          template_type?: string
           title?: string
           updated_at?: string
-          visibility?: Database["public"]["Enums"]["studio_episode_visibility"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      syntheia_conversations: {
+        Row: {
+          context_data: Json | null
+          created_at: string
+          id: string
+          mode_id: string | null
+          title: string | null
+          updated_at: string
+          user_id: string
+          voice_id: string | null
+        }
+        Insert: {
+          context_data?: Json | null
+          created_at?: string
+          id?: string
+          mode_id?: string | null
+          title?: string | null
+          updated_at?: string
+          user_id: string
+          voice_id?: string | null
+        }
+        Update: {
+          context_data?: Json | null
+          created_at?: string
+          id?: string
+          mode_id?: string | null
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+          voice_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "syntheia_conversations_mode_id_fkey"
+            columns: ["mode_id"]
+            isOneToOne: false
+            referencedRelation: "syntheia_modes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "syntheia_conversations_voice_id_fkey"
+            columns: ["voice_id"]
+            isOneToOne: false
+            referencedRelation: "syntheia_voices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      syntheia_creations: {
+        Row: {
+          chave_simbolica: string | null
+          created_at: string
+          estrutura_pratica: string | null
+          fechamento_integracao: string | null
+          id: string
+          intencao_terapeutica: string | null
+          momento_jornada: string
+          publico_alvo: string
+          suporte_linguagem: string | null
+          tags: string[] | null
+          tema_principal: string
+          tempo_disponivel: string
+          tipo: string
+          titulo: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          chave_simbolica?: string | null
+          created_at?: string
+          estrutura_pratica?: string | null
+          fechamento_integracao?: string | null
+          id?: string
+          intencao_terapeutica?: string | null
+          momento_jornada: string
+          publico_alvo: string
+          suporte_linguagem?: string | null
+          tags?: string[] | null
+          tema_principal: string
+          tempo_disponivel: string
+          tipo: string
+          titulo?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          chave_simbolica?: string | null
+          created_at?: string
+          estrutura_pratica?: string | null
+          fechamento_integracao?: string | null
+          id?: string
+          intencao_terapeutica?: string | null
+          momento_jornada?: string
+          publico_alvo?: string
+          suporte_linguagem?: string | null
+          tags?: string[] | null
+          tema_principal?: string
+          tempo_disponivel?: string
+          tipo?: string
+          titulo?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      syntheia_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          role: string
+          tokens_used: number | null
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          role: string
+          tokens_used?: number | null
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+          tokens_used?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "syntheia_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "syntheia_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      syntheia_modes: {
+        Row: {
+          active: boolean
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: string
+          ordem: number | null
+          system_prompt: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id: string
+          ordem?: number | null
+          system_prompt: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          ordem?: number | null
+          system_prompt?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      syntheia_voices: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          ordem: number | null
+          title: string
+          trigger_context: Json | null
+          type: string
+          updated_at: string
+          voice_prompt: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          ordem?: number | null
+          title: string
+          trigger_context?: Json | null
+          type: string
+          updated_at?: string
+          voice_prompt: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          ordem?: number | null
+          title?: string
+          trigger_context?: Json | null
+          type?: string
+          updated_at?: string
+          voice_prompt?: string
+        }
+        Relationships: []
+      }
+      tecela_casos_espelho: {
+        Row: {
+          alerta_etico: string | null
+          aprovado: boolean
+          contexto_anonimizado: string
+          created_at: string
+          created_by: string
+          demanda_simbolica: string
+          district_id: string | null
+          erro_evitar: string | null
+          id: string
+          leitura_oracula: string | null
+          resultado: string | null
+          tags: string[] | null
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          alerta_etico?: string | null
+          aprovado?: boolean
+          contexto_anonimizado: string
+          created_at?: string
+          created_by: string
+          demanda_simbolica: string
+          district_id?: string | null
+          erro_evitar?: string | null
+          id?: string
+          leitura_oracula?: string | null
+          resultado?: string | null
+          tags?: string[] | null
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          alerta_etico?: string | null
+          aprovado?: boolean
+          contexto_anonimizado?: string
+          created_at?: string
+          created_by?: string
+          demanda_simbolica?: string
+          district_id?: string | null
+          erro_evitar?: string | null
+          id?: string
+          leitura_oracula?: string | null
+          resultado?: string | null
+          tags?: string[] | null
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      tecela_conselho: {
+        Row: {
+          autor_id: string
+          created_at: string | null
+          id: string
+          pergunta_facilitadora: string
+          situacao: string
+          territorio_cidadela: string | null
+          torre_envolvida: string | null
+          updated_at: string | null
+          visivel: boolean | null
+        }
+        Insert: {
+          autor_id: string
+          created_at?: string | null
+          id?: string
+          pergunta_facilitadora: string
+          situacao: string
+          territorio_cidadela?: string | null
+          torre_envolvida?: string | null
+          updated_at?: string | null
+          visivel?: boolean | null
+        }
+        Update: {
+          autor_id?: string
+          created_at?: string | null
+          id?: string
+          pergunta_facilitadora?: string
+          situacao?: string
+          territorio_cidadela?: string | null
+          torre_envolvida?: string | null
+          updated_at?: string | null
+          visivel?: boolean | null
+        }
+        Relationships: []
+      }
+      tecela_conselho_respostas: {
+        Row: {
+          autor_id: string
+          conselho_id: string
+          conteudo: string
+          created_at: string | null
+          id: string
+        }
+        Insert: {
+          autor_id: string
+          conselho_id: string
+          conteudo: string
+          created_at?: string | null
+          id?: string
+        }
+        Update: {
+          autor_id?: string
+          conselho_id?: string
+          conteudo?: string
+          created_at?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      tecela_registros_campo: {
+        Row: {
+          arquetipo_presente: string | null
+          autor_id: string
+          created_at: string | null
+          estado_campo: string
+          id: string
+          porta_ativa: string | null
+          texto: string
+          titulo_simbolico: string
+          torre_ativa: string | null
+          updated_at: string | null
+          visivel: boolean | null
+        }
+        Insert: {
+          arquetipo_presente?: string | null
+          autor_id: string
+          created_at?: string | null
+          estado_campo?: string
+          id?: string
+          porta_ativa?: string | null
+          texto: string
+          titulo_simbolico: string
+          torre_ativa?: string | null
+          updated_at?: string | null
+          visivel?: boolean | null
+        }
+        Update: {
+          arquetipo_presente?: string | null
+          autor_id?: string
+          created_at?: string | null
+          estado_campo?: string
+          id?: string
+          porta_ativa?: string | null
+          texto?: string
+          titulo_simbolico?: string
+          torre_ativa?: string | null
+          updated_at?: string | null
+          visivel?: boolean | null
+        }
+        Relationships: []
+      }
+      tecela_ressonancias: {
+        Row: {
+          created_at: string | null
+          id: string
+          registro_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          registro_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          registro_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tecela_supervisoes: {
+        Row: {
+          caso_id: string | null
+          created_at: string
+          created_by: string
+          data_evento: string
+          descricao: string | null
+          id: string
+          link_ao_vivo: string | null
+          link_replay: string | null
+          status: string
+          tema: string | null
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          caso_id?: string | null
+          created_at?: string
+          created_by: string
+          data_evento: string
+          descricao?: string | null
+          id?: string
+          link_ao_vivo?: string | null
+          link_replay?: string | null
+          status?: string
+          tema?: string | null
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          caso_id?: string | null
+          created_at?: string
+          created_by?: string
+          data_evento?: string
+          descricao?: string | null
+          id?: string
+          link_ao_vivo?: string | null
+          link_replay?: string | null
+          status?: string
+          tema?: string | null
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      therapeutic_groups: {
+        Row: {
+          created_at: string
+          descricao: string | null
+          id: string
+          nome: string
+          status: string
+          therapist_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          nome: string
+          status?: string
+          therapist_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          nome?: string
+          status?: string
+          therapist_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      therapy_groups: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          theme: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          theme?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          theme?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tool_districts: {
+        Row: {
+          created_at: string | null
+          district_id: string
+          id: string
+          tipo: string
+          tool_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          district_id: string
+          id?: string
+          tipo?: string
+          tool_id: string
+        }
+        Update: {
+          created_at?: string | null
+          district_id?: string
+          id?: string
+          tipo?: string
+          tool_id?: string
+        }
+        Relationships: []
+      }
+      tools: {
+        Row: {
+          acao_central: string | null
+          ambiente: string
+          ativa: boolean | null
+          categoria_metodo: string | null
+          created_at: string
+          descricao: string | null
+          district_id: string | null
+          e_complementar: boolean | null
+          entrada: string | null
+          ferramenta_pai_id: string | null
+          funcao_principal: string | null
+          icone: string | null
+          id: string
+          nivel: string
+          nome: string
+          ordem: number | null
+          proximo_passo_id: string | null
+          quando_usar: string | null
+          rota: string | null
+          saida: string | null
+          slug: string | null
+          tipo: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          acao_central?: string | null
+          ambiente?: string
+          ativa?: boolean | null
+          categoria_metodo?: string | null
+          created_at?: string
+          descricao?: string | null
+          district_id?: string | null
+          e_complementar?: boolean | null
+          entrada?: string | null
+          ferramenta_pai_id?: string | null
+          funcao_principal?: string | null
+          icone?: string | null
+          id?: string
+          nivel?: string
+          nome: string
+          ordem?: number | null
+          proximo_passo_id?: string | null
+          quando_usar?: string | null
+          rota?: string | null
+          saida?: string | null
+          slug?: string | null
+          tipo?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          acao_central?: string | null
+          ambiente?: string
+          ativa?: boolean | null
+          categoria_metodo?: string | null
+          created_at?: string
+          descricao?: string | null
+          district_id?: string | null
+          e_complementar?: boolean | null
+          entrada?: string | null
+          ferramenta_pai_id?: string | null
+          funcao_principal?: string | null
+          icone?: string | null
+          id?: string
+          nivel?: string
+          nome?: string
+          ordem?: number | null
+          proximo_passo_id?: string | null
+          quando_usar?: string | null
+          rota?: string | null
+          saida?: string | null
+          slug?: string | null
+          tipo?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      torre_arquetipo_sugestao: {
+        Row: {
+          arquetipo_id: string | null
+          frequencia: string | null
+          id: string
+          nota_clinica: string | null
+          ordem: number | null
+          torre_id: string
+        }
+        Insert: {
+          arquetipo_id?: string | null
+          frequencia?: string | null
+          id?: string
+          nota_clinica?: string | null
+          ordem?: number | null
+          torre_id: string
+        }
+        Update: {
+          arquetipo_id?: string | null
+          frequencia?: string | null
+          id?: string
+          nota_clinica?: string | null
+          ordem?: number | null
+          torre_id?: string
+        }
+        Relationships: []
+      }
+      torre_porta_relacao: {
+        Row: {
+          ajuste_com_torre: string | null
+          created_at: string | null
+          frequencia: string | null
+          id: string
+          natureza_porta: string | null
+          ordem: number | null
+          porta_id: string | null
+          risco_conducao: string | null
+          torre_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          ajuste_com_torre?: string | null
+          created_at?: string | null
+          frequencia?: string | null
+          id?: string
+          natureza_porta?: string | null
+          ordem?: number | null
+          porta_id?: string | null
+          risco_conducao?: string | null
+          torre_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          ajuste_com_torre?: string | null
+          created_at?: string | null
+          frequencia?: string | null
+          id?: string
+          natureza_porta?: string | null
+          ordem?: number | null
+          porta_id?: string | null
+          risco_conducao?: string | null
+          torre_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      towers: {
+        Row: {
+          client_id: string
+          clinical_posture: string | null
+          created_at: string
+          date: string
+          id: string
+          notes: string | null
+          session_id: string | null
+          tower_primary: string | null
+          tower_secondary: string | null
+        }
+        Insert: {
+          client_id: string
+          clinical_posture?: string | null
+          created_at?: string
+          date?: string
+          id?: string
+          notes?: string | null
+          session_id?: string | null
+          tower_primary?: string | null
+          tower_secondary?: string | null
+        }
+        Update: {
+          client_id?: string
+          clinical_posture?: string | null
+          created_at?: string
+          date?: string
+          id?: string
+          notes?: string | null
+          session_id?: string | null
+          tower_primary?: string | null
+          tower_secondary?: string | null
+        }
+        Relationships: []
+      }
+      travessia_comentarios: {
+        Row: {
+          conteudo: string
+          created_at: string
+          id: string
+          travessia_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          conteudo: string
+          created_at?: string
+          id?: string
+          travessia_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          conteudo?: string
+          created_at?: string
+          id?: string
+          travessia_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      travessia_day_unlocks: {
+        Row: {
+          aula_id: string
+          created_at: string
+          first_accessed_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          aula_id: string
+          created_at?: string
+          first_accessed_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          aula_id?: string
+          created_at?: string
+          first_accessed_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      travessia_familias: {
+        Row: {
+          ativa: boolean | null
+          created_at: string
+          descricao: string | null
+          icone: string | null
+          id: string
+          nome: string
+          o_que_sustenta: string | null
+          ordem: number | null
+          quando_usar: string | null
+          slug: string | null
+          updated_at: string
+        }
+        Insert: {
+          ativa?: boolean | null
+          created_at?: string
+          descricao?: string | null
+          icone?: string | null
+          id?: string
+          nome: string
+          o_que_sustenta?: string | null
+          ordem?: number | null
+          quando_usar?: string | null
+          slug?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ativa?: boolean | null
+          created_at?: string
+          descricao?: string | null
+          icone?: string | null
+          id?: string
+          nome?: string
+          o_que_sustenta?: string | null
+          ordem?: number | null
+          quando_usar?: string | null
+          slug?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      travessia_library_items: {
+        Row: {
+          capa_url: string | null
+          categoria: string
+          como_atravessar: string
+          created_at: string
+          familia_id: string | null
+          id: string
+          o_que_sustenta: string
+          ordem: number
+          portal_minimo: Database["public"]["Enums"]["portal_type"]
+          publicado: boolean
+          quando_chamada: string
+          slug: string
+          subtitulo: string | null
+          titulo_ritual: string
+          updated_at: string
+        }
+        Insert: {
+          capa_url?: string | null
+          categoria?: string
+          como_atravessar?: string
+          created_at?: string
+          familia_id?: string | null
+          id?: string
+          o_que_sustenta?: string
+          ordem?: number
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          publicado?: boolean
+          quando_chamada?: string
+          slug: string
+          subtitulo?: string | null
+          titulo_ritual: string
+          updated_at?: string
+        }
+        Update: {
+          capa_url?: string | null
+          categoria?: string
+          como_atravessar?: string
+          created_at?: string
+          familia_id?: string | null
+          id?: string
+          o_que_sustenta?: string
+          ordem?: number
+          portal_minimo?: Database["public"]["Enums"]["portal_type"]
+          publicado?: boolean
+          quando_chamada?: string
+          slug?: string
+          subtitulo?: string | null
+          titulo_ritual?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      travessia_library_media: {
+        Row: {
+          created_at: string
+          id: string
+          item_id: string
+          ordem: number
+          tipo: string
+          titulo: string | null
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          item_id: string
+          ordem?: number
+          tipo: string
+          titulo?: string | null
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          item_id?: string
+          ordem?: number
+          tipo?: string
+          titulo?: string | null
+          url?: string
+        }
+        Relationships: []
+      }
+      travessia_library_tags: {
+        Row: {
+          id: string
+          item_id: string
+          tag: string
+        }
+        Insert: {
+          id?: string
+          item_id: string
+          tag: string
+        }
+        Update: {
+          id?: string
+          item_id?: string
+          tag?: string
+        }
+        Relationships: []
+      }
+      travessias: {
+        Row: {
+          ativa: boolean | null
+          closing_ritual: string
+          cor_acento: string | null
+          created_at: string
+          description: string
+          icone: string | null
+          id: string
+          number: number
+          ordem: number | null
+          portal_minimo: Database["public"]["Enums"]["portal_type"] | null
+          requer_profissional: boolean | null
+          slug: string | null
+          subtitle: string
+          temas: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          ativa?: boolean | null
+          closing_ritual: string
+          cor_acento?: string | null
+          created_at?: string
+          description: string
+          icone?: string | null
+          id?: string
+          number: number
+          ordem?: number | null
+          portal_minimo?: Database["public"]["Enums"]["portal_type"] | null
+          requer_profissional?: boolean | null
+          slug?: string | null
+          subtitle: string
+          temas?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          ativa?: boolean | null
+          closing_ritual?: string
+          cor_acento?: string | null
+          created_at?: string
+          description?: string
+          icone?: string | null
+          id?: string
+          number?: number
+          ordem?: number | null
+          portal_minimo?: Database["public"]["Enums"]["portal_type"] | null
+          requer_profissional?: boolean | null
+          slug?: string | null
+          subtitle?: string
+          temas?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      treinamento_casos_simulados: {
+        Row: {
+          ativo: boolean | null
+          contexto_breve: string
+          created_at: string | null
+          distrito_referencia: string | null
+          estado_referencia: string | null
+          fala_inicial: string
+          feedback_json: Json | null
+          ferramenta_referencia: string | null
+          hipotese_referencia: string | null
+          id: string
+          nivel: string
+          ordem: number | null
+          perguntas_leitura: string[] | null
+          sinais: string[] | null
+          titulo: string
+          updated_at: string | null
+          vetor_referencia: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          contexto_breve: string
+          created_at?: string | null
+          distrito_referencia?: string | null
+          estado_referencia?: string | null
+          fala_inicial: string
+          feedback_json?: Json | null
+          ferramenta_referencia?: string | null
+          hipotese_referencia?: string | null
+          id?: string
+          nivel?: string
+          ordem?: number | null
+          perguntas_leitura?: string[] | null
+          sinais?: string[] | null
+          titulo: string
+          updated_at?: string | null
+          vetor_referencia?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          contexto_breve?: string
+          created_at?: string | null
+          distrito_referencia?: string | null
+          estado_referencia?: string | null
+          fala_inicial?: string
+          feedback_json?: Json | null
+          ferramenta_referencia?: string | null
+          hipotese_referencia?: string | null
+          id?: string
+          nivel?: string
+          ordem?: number | null
+          perguntas_leitura?: string[] | null
+          sinais?: string[] | null
+          titulo?: string
+          updated_at?: string | null
+          vetor_referencia?: string | null
+        }
+        Relationships: []
+      }
+      treinamento_respostas: {
+        Row: {
+          caso_id: string
+          concluido: boolean | null
+          created_at: string | null
+          distrito_escolhido: string | null
+          estado_escolhido: string | null
+          feedback_recebido: Json | null
+          ferramenta_escolhida: string | null
+          hipotese_texto: string | null
+          id: string
+          leitura_texto: string | null
+          nivel_usado: string | null
+          updated_at: string | null
+          user_id: string
+          vetor_texto: string | null
+        }
+        Insert: {
+          caso_id: string
+          concluido?: boolean | null
+          created_at?: string | null
+          distrito_escolhido?: string | null
+          estado_escolhido?: string | null
+          feedback_recebido?: Json | null
+          ferramenta_escolhida?: string | null
+          hipotese_texto?: string | null
+          id?: string
+          leitura_texto?: string | null
+          nivel_usado?: string | null
+          updated_at?: string | null
+          user_id: string
+          vetor_texto?: string | null
+        }
+        Update: {
+          caso_id?: string
+          concluido?: boolean | null
+          created_at?: string | null
+          distrito_escolhido?: string | null
+          estado_escolhido?: string | null
+          feedback_recebido?: Json | null
+          ferramenta_escolhida?: string | null
+          hipotese_texto?: string | null
+          id?: string
+          leitura_texto?: string | null
+          nivel_usado?: string | null
+          updated_at?: string | null
+          user_id?: string
+          vetor_texto?: string | null
+        }
+        Relationships: []
+      }
+      upsell_opportunities: {
+        Row: {
+          channel_used: string | null
+          churn_risk: number | null
+          converted_at: string | null
+          created_at: string | null
+          days_to_conversion: number | null
+          declined_count: number | null
+          engagement_score: number | null
+          estimated_value: number | null
+          first_touch_channel: string | null
+          historical_segment_rate: number | null
+          id: string
+          ignored_count: number | null
+          last_action_at: string | null
+          last_offered_at: string | null
+          last_touch_channel: string | null
+          paused_until: string | null
+          probability_reason: string | null
+          probability_score: number | null
+          reason: string | null
+          refusal_count: number | null
+          rule_id: string | null
+          segment_from: string
+          segment_to: string
+          status: Database["public"]["Enums"]["upsell_status"] | null
+          timing_factor: number | null
+          touch_count: number | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          channel_used?: string | null
+          churn_risk?: number | null
+          converted_at?: string | null
+          created_at?: string | null
+          days_to_conversion?: number | null
+          declined_count?: number | null
+          engagement_score?: number | null
+          estimated_value?: number | null
+          first_touch_channel?: string | null
+          historical_segment_rate?: number | null
+          id?: string
+          ignored_count?: number | null
+          last_action_at?: string | null
+          last_offered_at?: string | null
+          last_touch_channel?: string | null
+          paused_until?: string | null
+          probability_reason?: string | null
+          probability_score?: number | null
+          reason?: string | null
+          refusal_count?: number | null
+          rule_id?: string | null
+          segment_from: string
+          segment_to: string
+          status?: Database["public"]["Enums"]["upsell_status"] | null
+          timing_factor?: number | null
+          touch_count?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          channel_used?: string | null
+          churn_risk?: number | null
+          converted_at?: string | null
+          created_at?: string | null
+          days_to_conversion?: number | null
+          declined_count?: number | null
+          engagement_score?: number | null
+          estimated_value?: number | null
+          first_touch_channel?: string | null
+          historical_segment_rate?: number | null
+          id?: string
+          ignored_count?: number | null
+          last_action_at?: string | null
+          last_offered_at?: string | null
+          last_touch_channel?: string | null
+          paused_until?: string | null
+          probability_reason?: string | null
+          probability_score?: number | null
+          reason?: string | null
+          refusal_count?: number | null
+          rule_id?: string | null
+          segment_from?: string
+          segment_to?: string
+          status?: Database["public"]["Enums"]["upsell_status"] | null
+          timing_factor?: number | null
+          touch_count?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      upsell_rules: {
+        Row: {
+          created_at: string | null
+          estimated_value_increase: number | null
+          id: string
+          is_active: boolean | null
+          max_churn_risk: number | null
+          min_engagement_score: number | null
+          min_recurrent_use_days: number | null
+          segment_from: string
+          segment_to: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          estimated_value_increase?: number | null
+          id?: string
+          is_active?: boolean | null
+          max_churn_risk?: number | null
+          min_engagement_score?: number | null
+          min_recurrent_use_days?: number | null
+          segment_from: string
+          segment_to: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          estimated_value_increase?: number | null
+          id?: string
+          is_active?: boolean | null
+          max_churn_risk?: number | null
+          min_engagement_score?: number | null
+          min_recurrent_use_days?: number | null
+          segment_from?: string
+          segment_to?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_aula_progress: {
+        Row: {
+          aula_id: string
+          completed_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          aula_id: string
+          completed_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          aula_id?: string
+          completed_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_cidadela_estado: {
+        Row: {
+          competencias: Json | null
+          created_at: string
+          distrito_atual: string | null
+          distritos_ativados: string[] | null
+          historico_travessias: Json | null
+          intensidade_por_distrito: Json | null
+          ultimo_movimento: string | null
+          updated_at: string
+          user_id: string
+          voz: string | null
+        }
+        Insert: {
+          competencias?: Json | null
+          created_at?: string
+          distrito_atual?: string | null
+          distritos_ativados?: string[] | null
+          historico_travessias?: Json | null
+          intensidade_por_distrito?: Json | null
+          ultimo_movimento?: string | null
+          updated_at?: string
+          user_id: string
+          voz?: string | null
+        }
+        Update: {
+          competencias?: Json | null
+          created_at?: string
+          distrito_atual?: string | null
+          distritos_ativados?: string[] | null
+          historico_travessias?: Json | null
+          intensidade_por_distrito?: Json | null
+          ultimo_movimento?: string | null
+          updated_at?: string
+          user_id?: string
+          voz?: string | null
+        }
+        Relationships: []
+      }
+      user_favorites: {
+        Row: {
+          created_at: string
+          id: string
+          library_item_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          library_item_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          library_item_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_progress: {
+        Row: {
+          completed_at: string
+          id: string
+          lesson_id: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          id?: string
+          lesson_id: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          id?: string
+          lesson_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          portal: Database["public"]["Enums"]["portal_type"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          portal?: Database["public"]["Enums"]["portal_type"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          portal?: Database["public"]["Enums"]["portal_type"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_unlocked_rewards: {
+        Row: {
+          id: string
+          reward_id: string
+          unlocked_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          reward_id: string
+          unlocked_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          reward_id?: string
+          unlocked_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      video_playback_logs: {
+        Row: {
+          action: string
+          context_id: string | null
+          context_type: string
+          created_at: string
+          error_message: string | null
+          id: string
+          ip_address: string | null
+          portal_level: string
+          success: boolean
+          token_used: string | null
+          user_agent: string | null
+          user_id: string | null
+          video_id: string
+        }
+        Insert: {
+          action?: string
+          context_id?: string | null
+          context_type: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          ip_address?: string | null
+          portal_level: string
+          success?: boolean
+          token_used?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+          video_id: string
+        }
+        Update: {
+          action?: string
+          context_id?: string | null
+          context_type?: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          ip_address?: string | null
+          portal_level?: string
+          success?: boolean
+          token_used?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+          video_id?: string
         }
         Relationships: []
       }
@@ -748,7 +18188,125 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_client_invitation: { Args: { _token: string }; Returns: Json }
+      activate_fundadora_plan: {
+        Args: { user_id_param: string }
+        Returns: undefined
+      }
+      activate_mentoria_plan: {
+        Args: { user_id_param: string }
+        Returns: undefined
+      }
+      activate_subscription: {
+        Args: { user_id_param: string }
+        Returns: undefined
+      }
+      can_receive_upsell_offer: {
+        Args: { p_segment_to: string; p_user_id: string }
+        Returns: boolean
+      }
+      cancel_subscription: {
+        Args: { user_id_param: string }
+        Returns: undefined
+      }
+      check_and_expire_access: { Args: never; Returns: number }
+      close_expired_jardins: { Args: never; Returns: number }
+      delete_email: {
+        Args: { message_id: number; queue_name: string }
+        Returns: boolean
+      }
+      enqueue_email: {
+        Args: { payload: Json; queue_name: string }
+        Returns: number
+      }
+      get_clube_proximo_passo: {
+        Args: { p_rota_id: string; p_user_id: string }
+        Returns: string
+      }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      log_automation_simulation: {
+        Args: {
+          p_action_type: string
+          p_admin_id: string
+          p_channel: string
+          p_portal: string
+          p_risk_type: string
+          p_snapshot: Json
+        }
+        Returns: string
+      }
+      move_to_dlq: {
+        Args: {
+          dlq_name: string
+          message_id: number
+          payload: Json
+          source_queue: string
+        }
+        Returns: number
+      }
+      process_webhook_subscription: {
+        Args: {
+          _current_period_end: string
+          _current_period_start: string
+          _customer_name?: string
+          _external_subscription_id: string
+          _next_billing_date: string
+          _plan_id: string
+          _portal: string
+          _provider: string
+          _status: string
+          _subscription_status_profile: string
+          _user_id: string
+        }
+        Returns: Json
+      }
+      read_email_batch: {
+        Args: { batch_size: number; queue_name: string; vt: number }
+        Returns: {
+          message: Json
+          msg_id: number
+          read_ct: number
+        }[]
+      }
+      refresh_founder_daily_metrics: {
+        Args: { target_date: string }
+        Returns: undefined
+      }
+      refresh_student_progress: {
+        Args: { _user_id: string }
+        Returns: undefined
+      }
+      refresh_upsell_opportunities: { Args: never; Returns: undefined }
+      update_cidadela_from_session: {
+        Args: {
+          _arquetipo?: string
+          _client_id: string
+          _distrito?: string
+          _ferramenta?: string
+          _insight?: string
+          _labirinto?: string
+          _porta?: string
+          _therapist_id: string
+          _torre?: string
+        }
+        Returns: undefined
+      }
+      update_cidadela_on_tool_usage: {
+        Args: { _arquetipo_id?: string; _session_id: string; _tool_id: string }
+        Returns: Json
+      }
+      upsert_pattern_stat: {
+        Args: {
+          _client_id: string
+          _pattern_name: string
+          _pattern_type: Database["public"]["Enums"]["pattern_stat_type"]
+        }
+        Returns: undefined
+      }
+      user_has_portal_access: {
+        Args: { required_portal: Database["public"]["Enums"]["portal_type"] }
+        Returns: boolean
+      }
     }
     Enums: {
       agente_status: "ativo" | "inativo"
