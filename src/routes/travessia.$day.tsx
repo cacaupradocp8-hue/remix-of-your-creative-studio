@@ -109,7 +109,7 @@ function TravessiaPage() {
             to="/travessia/$day" 
             params={{ day: (dayNum + 1).toString() }}
             disabled={dayNum === 3}
-            className={`flex items-center gap-1 ${dayNum === 8 ? 'opacity-0' : 'hover:text-wine transition-colors'}`}
+            className={`flex items-center gap-1 ${dayNum === 3 ? 'opacity-50 grayscale' : 'hover:text-wine transition-colors'}`}
           >
             {dayNum === 3 ? 'Bloqueado' : 'Próximo'} <ChevronRight size={14} />
           </Link>
