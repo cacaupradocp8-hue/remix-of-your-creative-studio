@@ -3,6 +3,7 @@ import { SectionOpener } from '@/components/casa/SectionOpener';
 import { EditorialButton } from '@/components/casa/EditorialButton';
 import { Rule } from '@/components/casa/Rule';
 import { QuietLink } from '@/components/casa/QuietLink';
+import casaOraculaLogo from '@/assets/casa-oracula-logo.png';
 
 export const Route = createFileRoute('/')({
   component: LandingPage,
