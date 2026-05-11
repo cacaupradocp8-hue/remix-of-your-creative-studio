@@ -640,6 +640,33 @@ export type Database = {
           },
         ]
       }
+      asaas_webhook_events: {
+        Row: {
+          created_at: string | null
+          event_id: string
+          event_type: string
+          id: string
+          payload: Json
+          processed_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          event_id: string
+          event_type: string
+          id?: string
+          payload: Json
+          processed_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          event_id?: string
+          event_type?: string
+          id?: string
+          payload?: Json
+          processed_at?: string | null
+        }
+        Relationships: []
+      }
       atelie_conteudos: {
         Row: {
           conteudo_gerado: Json | null
@@ -2549,6 +2576,27 @@ export type Database = {
           ritual_base?: string
           status_circulo?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      citadela_progress: {
+        Row: {
+          district: string
+          id: string
+          unlocked_at: string | null
+          user_id: string
+        }
+        Insert: {
+          district: string
+          id?: string
+          unlocked_at?: string | null
+          user_id: string
+        }
+        Update: {
+          district?: string
+          id?: string
+          unlocked_at?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -12625,6 +12673,35 @@ export type Database = {
         }
         Relationships: []
       }
+      member_route_progress: {
+        Row: {
+          completed_at: string | null
+          id: string
+          module_id: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          id?: string
+          module_id: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          id?: string
+          module_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_route_progress_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "route_modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       message_campaigns: {
         Row: {
           body: string
@@ -15347,6 +15424,33 @@ export type Database = {
           },
         ]
       }
+      quiz_results: {
+        Row: {
+          answers: Json
+          archetype: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          answers: Json
+          archetype?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          answers?: Json
+          archetype?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       quizzes: {
         Row: {
           ativo: boolean
@@ -15707,6 +15811,71 @@ export type Database = {
           status?: Database["public"]["Enums"]["ritual_status"]
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      route_modules: {
+        Row: {
+          audio_path: string
+          created_at: string | null
+          id: string
+          order_index: number
+          reflection_prompt: string | null
+          route_id: string
+          title: string
+        }
+        Insert: {
+          audio_path: string
+          created_at?: string | null
+          id?: string
+          order_index: number
+          reflection_prompt?: string | null
+          route_id: string
+          title: string
+        }
+        Update: {
+          audio_path?: string
+          created_at?: string | null
+          id?: string
+          order_index?: number
+          reflection_prompt?: string | null
+          route_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "route_modules_route_id_fkey"
+            columns: ["route_id"]
+            isOneToOne: false
+            referencedRelation: "routes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      routes: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          is_published: boolean | null
+          slug: string
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_published?: boolean | null
+          slug: string
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_published?: boolean | null
+          slug?: string
+          title?: string
         }
         Relationships: []
       }
@@ -16738,6 +16907,42 @@ export type Database = {
         }
         Relationships: []
       }
+      subscriptions: {
+        Row: {
+          asaas_customer_id: string | null
+          asaas_subscription_id: string | null
+          current_period_end: string | null
+          id: string
+          payment_method: string | null
+          plan: string | null
+          status: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          asaas_customer_id?: string | null
+          asaas_subscription_id?: string | null
+          current_period_end?: string | null
+          id?: string
+          payment_method?: string | null
+          plan?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          asaas_customer_id?: string | null
+          asaas_subscription_id?: string | null
+          current_period_end?: string | null
+          id?: string
+          payment_method?: string | null
+          plan?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       symbolic_rewards: {
         Row: {
           created_at: string
@@ -17694,6 +17899,27 @@ export type Database = {
         }
         Relationships: []
       }
+      travessia_zero_progress: {
+        Row: {
+          completed_at: string | null
+          day: number
+          id: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          day: number
+          id?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          day?: number
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       travessias: {
         Row: {
           ativa: boolean | null
@@ -18098,18 +18324,21 @@ export type Database = {
       }
       user_roles: {
         Row: {
+          created_at: string | null
           id: string
-          portal: Database["public"]["Enums"]["portal_type"]
+          role: string
           user_id: string
         }
         Insert: {
+          created_at?: string | null
           id?: string
-          portal?: Database["public"]["Enums"]["portal_type"]
+          role: string
           user_id: string
         }
         Update: {
+          created_at?: string | null
           id?: string
-          portal?: Database["public"]["Enums"]["portal_type"]
+          role?: string
           user_id?: string
         }
         Relationships: []
@@ -18223,6 +18452,7 @@ export type Database = {
         Args: { p_rota_id: string; p_user_id: string }
         Returns: string
       }
+      has_role: { Args: { _role: string; _user_id: string }; Returns: boolean }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
       log_automation_simulation: {
         Args: {
