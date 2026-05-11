@@ -2,6 +2,9 @@
 @source "../src";
 @import "tw-animate-css";
 
+/* Typography: Cormorant Garamond (Serif) & Inter Tight (Sans) */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@100..900&display=swap');
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -46,82 +49,90 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Casa Orácula Custom Tokens */
-  --color-bone: var(--bone);
-  --color-wine: var(--wine);
-  --color-forest: var(--forest);
-  --color-gold: var(--gold);
+  /* Casa Orácula Custom Tokens (OKLCH) */
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-leaf: var(--leaf);
+  --color-oxblood: var(--oxblood);
+
+  /* Font Families */
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Inter", sans-serif;
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(0.96 0.01 90); /* Bone: #F5F2ED approx */
-  --foreground: oklch(0.25 0.05 15); /* Wine: #4A1A1A approx */
-  --card: oklch(0.98 0.005 90);
-  --card-foreground: oklch(0.25 0.05 15);
-  --popover: oklch(0.98 0.005 90);
-  --popover-foreground: oklch(0.25 0.05 15);
-  --primary: oklch(0.25 0.05 15); /* Wine */
-  --primary-foreground: oklch(0.96 0.01 90); /* Bone */
-  --secondary: oklch(0.2 0.03 140); /* Forest: #1B2B1B approx */
-  --secondary-foreground: oklch(0.96 0.01 90);
-  --muted: oklch(0.9 0.01 90);
-  --muted-foreground: oklch(0.4 0.02 140);
-  --accent: oklch(0.75 0.12 85); /* Gold: #C5A059 approx */
-  --accent-foreground: oklch(0.15 0.02 15);
-  --destructive: oklch(0.5 0.2 25);
-  --destructive-foreground: oklch(0.98 0.005 90);
-  --border: oklch(0.85 0.02 90);
-  --input: oklch(0.85 0.02 90);
-  --ring: oklch(0.75 0.12 85);
-  --chart-1: oklch(0.25 0.05 15);
-  --chart-2: oklch(0.2 0.03 140);
-  --chart-3: oklch(0.75 0.12 85);
-  --chart-4: oklch(0.82 0.15 80);
-  --chart-5: oklch(0.7 0.1 75);
-  --sidebar: oklch(0.96 0.01 90);
-  --sidebar-foreground: oklch(0.25 0.05 15);
-  --sidebar-primary: oklch(0.25 0.05 15);
-  --sidebar-primary-foreground: oklch(0.96 0.01 90);
-  --sidebar-accent: oklch(0.75 0.12 85);
-  --sidebar-accent-foreground: oklch(0.15 0.02 15);
-  --sidebar-border: oklch(0.85 0.02 90);
-  --sidebar-ring: oklch(0.75 0.12 85);
+  --radius: 0rem; /* No rounding for Casa Orácula editorial look */
+  
+  /* Casa Orácula Editorial Palette */
+  --paper: oklch(0.96 0.008 85);   /* warm off-white */
+  --paper-2: oklch(0.93 0.010 85); /* subtle tonal shift */
+  --ink: oklch(0.18 0.020 30);     /* near-black warm */
+  --ink-2: oklch(0.30 0.018 30);   /* secondary text */
+  --ink-3: oklch(0.55 0.012 30);   /* metadata */
+  --rule: oklch(0.18 0.020 30 / 0.12); /* hairlines */
+  --leaf: oklch(0.72 0.09 75);     /* muted gold */
+  --oxblood: oklch(0.32 0.07 25);  /* reserved accent */
 
-  --bone: oklch(0.96 0.01 90);
-  --wine: oklch(0.25 0.05 15);
-  --forest: oklch(0.2 0.03 140);
-  --gold: oklch(0.75 0.12 85);
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper-2);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: var(--ink-2);
+  --secondary-foreground: var(--paper);
+  --muted: var(--paper-2);
+  --muted-foreground: var(--ink-3);
+  --accent: var(--leaf);
+  --accent-foreground: var(--ink);
+  --destructive: var(--oxblood);
+  --destructive-foreground: var(--paper);
+  --border: var(--rule);
+  --input: var(--rule);
+  --ring: var(--leaf);
+
+  --chart-1: var(--ink);
+  --chart-2: var(--oxblood);
+  --chart-3: var(--leaf);
+  --chart-4: var(--ink-2);
+  --chart-5: var(--ink-3);
+
+  --sidebar: var(--paper-2);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: var(--paper);
+  --sidebar-accent: var(--leaf);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--rule);
+  --sidebar-ring: var(--leaf);
 }
 
 .dark {
-  --background: oklch(0.15 0.02 15);
-  --foreground: oklch(0.96 0.01 90);
-  --card: oklch(0.2 0.03 140);
-  --card-foreground: oklch(0.96 0.01 90);
-  --popover: oklch(0.2 0.03 140);
-  --popover-foreground: oklch(0.96 0.01 90);
-  --primary: oklch(0.75 0.12 85);
-  --primary-foreground: oklch(0.15 0.02 15);
-  --secondary: oklch(0.25 0.05 15);
-  --secondary-foreground: oklch(0.96 0.01 90);
-  --muted: oklch(0.2 0.02 140);
-  --muted-foreground: oklch(0.7 0.02 90);
-  --accent: oklch(0.75 0.12 85);
-  --accent-foreground: oklch(0.15 0.02 15);
-  --destructive: oklch(0.4 0.15 25);
-  --destructive-foreground: oklch(0.96 0.01 90);
-  --border: oklch(1 0 0 / 15%);
-  --input: oklch(1 0 0 / 20%);
-  --ring: oklch(0.75 0.12 85);
-  --sidebar: oklch(0.15 0.02 15);
-  --sidebar-foreground: oklch(0.96 0.01 90);
-  --sidebar-primary: oklch(0.75 0.12 85);
-  --sidebar-primary-foreground: oklch(0.15 0.02 15);
-  --sidebar-accent: oklch(0.2 0.03 140);
-  --sidebar-accent-foreground: oklch(0.96 0.01 90);
-  --sidebar-border: oklch(1 0 0 / 15%);
-  --sidebar-ring: oklch(0.75 0.12 85);
+  --background: var(--ink);
+  --foreground: var(--paper);
+  --card: oklch(0.14 0.015 30);
+  --card-foreground: var(--paper);
+  --popover: var(--ink);
+  --popover-foreground: var(--paper);
+  --primary: var(--paper);
+  --primary-foreground: var(--ink);
+  --secondary: var(--ink-2);
+  --secondary-foreground: var(--paper);
+  --muted: oklch(0.14 0.015 30);
+  --muted-foreground: var(--ink-3);
+  --accent: var(--leaf);
+  --accent-foreground: var(--ink);
+  --destructive: var(--oxblood);
+  --destructive-foreground: var(--paper);
+  --border: oklch(0.96 0.008 85 / 0.15);
+  --input: oklch(0.96 0.008 85 / 0.15);
+  --ring: var(--leaf);
 }
 
 @layer base {
@@ -132,5 +143,52 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+}
+
+@layer utilities {
+  .display-xl {
+    font-size: clamp(3rem, 9vw, 6rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .display-lg {
+    font-size: clamp(2.25rem, 6vw, 4rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .display-md {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    line-height: 1.1;
+  }
+  .serif-lead {
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    line-height: 1.6;
+  }
+  .caption {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+  }
+  .hairline-rule {
+    height: 1px;
+    background-color: var(--color-rule);
+    width: 100%;
+  }
+  .hairline-rule-v {
+    width: 1px;
+    background-color: var(--color-rule);
+    height: 100%;
   }
 }
