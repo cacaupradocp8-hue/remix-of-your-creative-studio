@@ -1,127 +1,158 @@
+## Casa Orácula — Final Pre-Publish Audit
 
-# Plano de Restauração — Casa Orácula
+No implementation in this turn. All items below are observations from the live preview and source.
 
-**Supabase soberano ativo:** `zmtrlpcffdxnuvlqnvqr` (já configurado em `.env` e `supabase/config.toml`)
-**Não usar:** `pvjiznbfwtjqmpeiqqzk`, `munuccwcupigaubfuxdm`
-**Não ativar:** Lovable Cloud
-**Não restaurar agora:** `data_sensitive_optional.sql`, `full_public_backup.sql`, usuários antigos
+---
 
-## Inventário do backup analisado
+### 1. Real screenshot — Archetype Result page
 
-| Arquivo | Conteúdo |
-|---|---|
-| `schema_only.sql` (37.063 linhas) | 449 tabelas, 46 enums, 12 views, 82 funções, 260 triggers, 1.124 políticas RLS |
-| `data_editorial_only.sql` (488 linhas) | 21 tabelas com dados editoriais: `app_settings`, `oracle_cards`, `courses`, `course_modules`, `formacao_modulos`, `tools`, `tool_districts`, `vitrine_cards`, `ritual_definitions`, `clube_v3_stations`, `clube_v3_station_audios`, `clube_audio_albums`, `studio_episodes`, `studio_method_axes`, `season_labs`, `image_assets`, `text_models`, `eneagrama_tipos`, `big5_dimensoes`, `big5_questionario`, `cartographer_training_cases` |
-| `storage_manifest.csv` | 277 arquivos: 95 oracle-images, 133 content-images, 47 audios, 2 clube-assets |
-| `schema_only.sql` | Sem `pgvector`, sem políticas em `storage.*` (criadas via UI/migration separada) |
+Captured after completing the full 7-question quiz (all first options → resolves to **A Rastreadora**).
 
-## Etapa 1 — Validar ambiente (sem escrita)
+![Result page — desktop](tool-results://screenshots/20260511-200134-356092.png)
 
-1. Confirmar via `supabase--read_query` que o schema `public` está vazio (apenas `rls_auto_enable` event trigger pré-existente).
-2. Confirmar buckets de storage inexistentes.
-3. Listar extensões habilitadas (`pg_extension`) — habilitar manualmente o que faltar via painel Database → Extensions (ex: `uuid-ossp`, `pgcrypto` já vêm por padrão).
+Notes: inverse ink surface, serif italic title, hairline rule, traits as bullet-separated metadata, oxblood/leaf accent quote, ink CTA on paper inverse, quiet "Retornar ao início" link.
 
-## Etapa 2 — Restauração do schema
+---
 
-Executar `schema_only.sql` (37k linhas) através de **uma migration única** via `supabase--migration`.
+### 2. Quiz scoring logic
 
-Particularidades:
-- O dump usa `\restrict` e `SET row_security = off;` — válidos no editor SQL do Supabase.
-- O `rls_auto_enable` event trigger atual do projeto vai disparar em cada `CREATE TABLE` e ativar RLS automaticamente — compatível com as 1.124 policies do dump.
-- As 82 funções e 260 triggers do dump serão recriados.
-- Após aplicar, rodar `supabase--linter` e corrigir avisos diretos (search_path em SECURITY DEFINER, etc.) — apenas nas funções novas, sem alterar lógica.
+Source: `src/routes/quiz.tsx`.
 
-**Validação:** `SELECT count(*) FROM information_schema.tables WHERE table_schema='public'` deve retornar ≥449.
+**Mechanism**
+- Local state `scores: Record<Archetype, number>` initialised at 0 for the 7 official archetypes.
+- Each option declares `score: Partial<Record<Archetype, number>>` with weights **3 (primary)** and **1 (secondary)**.
+- On select: weights are summed into `scores`; answer text pushed into `answers[]`.
+- After question 7: `Object.entries(scores).reduce((a,b)=>a[1]>b[1]?a:b)[0]` → winning archetype.
+- Persisted: `quiz_results` row (anonymous, `email: undefined`) + `sessionStorage.casa_oracula_archetype` for the result page.
 
-## Etapa 3 — Restauração dos dados editoriais
-
-Executar `data_editorial_only.sql` numa segunda migration, envelopado em:
-
-```sql
-SET session_replication_role = 'replica';
--- conteúdo do dump (COPY ... FROM stdin convertidos para INSERT, ou rodar via psql)
-SET session_replication_role = 'origin';
-```
-
-Como `COPY ... FROM stdin` não roda no editor SQL do dashboard, há duas opções:
-
-- **A (recomendada):** converter os 21 blocos `COPY` em `INSERT` numa migration.
-- **B:** o usuário roda `psql` localmente apontando para o novo banco usando `data_editorial_only.sql` cru.
-
-Sigo pela opção A para manter tudo versionado em `supabase/migrations/`.
-
-**Validação** (queries de `validation_queries.sql`):
-- `SELECT count(*) FROM oracle_cards;`
-- `SELECT count(*) FROM courses;`
-- `SELECT count(*) FROM course_modules;`
-- `SELECT tablename FROM pg_tables WHERE schemaname='public' AND rowsecurity=false;`
-
-## Etapa 4 — Storage
-
-Criar via migration os 4 buckets do manifesto:
-- `oracle-images` (público)
-- `content-images` (público)
-- `clube-assets` (público)
-- `audios` (público)
-
-Aplicar políticas mínimas: leitura pública + escrita restrita a `service_role`/admins. Os 277 arquivos físicos não estão no backup — você precisará subi-los depois (script CLI ou rclone do projeto antigo); o app já funcionará apontando para os caminhos corretos assim que os binários forem copiados.
-
-## Etapa 5 — App TanStack Start (Casa Orácula)
-
-Conectado ao `zmtrlpcffdxnuvlqnvqr` desde o início. Rotas a criar em `src/routes/`:
+**Scoring matrix (primary 3 / secondary 1)**
 
 ```text
-/                       Sala de Visita (landing)
-/travessia              Travessia 00 (entrada ritualística + áudio)
-/oraculos               Index de oráculos
-/oraculos/cartas        Tirada de oracle_cards
-/cursos                 Catálogo de courses
-/cursos/$slug           Curso → course_modules → aulas
-/clube                  Clube (clube_v3_stations + audio_albums)
-/ferramentas            Tools por tool_districts
-/syntheia               Chat Syntheia (server function + LOVABLE_API_KEY)
-/admin                  Painel admin (RLS + role 'admin' via user_roles)
-/admin/cartas           CRUD oracle_cards
-/admin/cursos           CRUD courses + modules
-/admin/configuracoes    CRUD app_settings
-/auth                   Login/cadastro Supabase
+Q  Opt  Primary       Secondary
+1   A   Rastreadora   Anciã
+1   B   Guardiã       Curadora
+1   C   Tecelã        Iniciadora
+1   D   Alquimista    Iniciadora
+2   A   Iniciadora    Rastreadora
+2   B   Curadora      Guardiã
+2   C   Tecelã        Anciã
+2   D   Alquimista    Curadora
+3   A   Rastreadora   —
+3   B   Iniciadora    —
+3   C   Tecelã        —
+3   D   Alquimista    —
+4   A   Iniciadora    —
+4   B   Anciã         —
+4   C   Curadora      —
+4   D   Guardiã       —
+5   A   Guardiã       —
+5   B   Curadora      —
+5   C   Anciã         —
+5   D   Rastreadora   —
+6   A   Guardiã       Anciã
+6   B   Tecelã        Iniciadora
+6   C   Alquimista    Curadora
+6   D   Rastreadora   Curadora
+7   A   Anciã         —
+7   B   Alquimista    —
+7   C   Iniciadora    —
+7   D   Tecelã        —
 ```
 
-Componentes compartilhados:
-- Layout com navegação contemplativa, tipografia editorial.
-- `useAuth` hook + `_authenticated` layout route.
-- `requireSupabaseAuth` em todos os server functions de leitura/escrita do usuário.
-- `supabaseAdmin` apenas em rotas admin server-side.
+Each archetype receives a primary at least once across Q1–Q7; coverage is balanced.
 
-Tabela de papéis (`user_roles` + `has_role()`) será criada na **Etapa 2** se não vier no dump — verificar antes.
+**Tie handling (current behaviour)**
+- `reduce((a,b)=>a[1]>b[1]?a:b)` uses **strict greater-than**, so on tie the **first archetype encountered in object insertion order wins**: Rastreadora → Guardiã → Tecelã → Curadora → Alquimista → Anciã → Iniciadora.
+- This is implicit, not intentional. **Risk**: a quiet bias toward Rastreadora on perfectly balanced answer sets.
 
-## Etapa 6 — Testes & encerramento
+**Fallback logic**
+- DB insert failure: warning logged, archetype still written to `sessionStorage`, user still routed to `/quiz/resultado`. No silent loss.
+- Direct visit to `/quiz/resultado` without `sessionStorage` key → redirect to `/quiz`.
+- Unknown archetype string → render `null` (no crash, no message). **Risk**: blank screen if sessionStorage is tampered with.
 
-- Rodar `validation_queries.sql` completo.
-- `supabase--linter` final.
-- Smoke test manual: abrir cada rota principal e confirmar dados editoriais carregando.
-- Documentar no README os passos pendentes do usuário: (a) cópia dos 277 binários do storage; (b) eventual restauração futura de `data_sensitive_optional.sql`; (c) recriação/import dos `auth.users` via API admin.
+**Recommendation (not implemented this turn)**: replace implicit insertion-order tie-break with an explicit rule — e.g., on tie, the archetype of the **last primary** scored in Q7 wins (Q7 is the "what you return to the world" closing question and is the most appropriate cerimonial tie-breaker per the rebuild plan). Add a friendly fallback for unknown archetype rather than `null`.
 
-## Ordem de execução proposta
+---
 
-```text
-1. read_query   → validar projeto vazio + extensões
-2. migration    → schema_only (449 tabelas, RLS, funções, triggers)
-3. linter       → corrigir avisos no schema importado
-4. migration    → 21 INSERTs editoriais + buckets de storage + policies de storage
-5. read_query   → validation_queries.sql
-6. código       → bootstrap rotas + auth + Sala de Visita
-7. código       → Oráculos, Cursos, Clube, Ferramentas (em ondas)
-8. código       → Syntheia + Admin
-9. teste manual → checklist por rota
-```
+### 3. Mobile screenshots (390×844 — iPhone 12/13/14)
 
-## Riscos e premissas
+| Tela | Mobile |
+| :--- | :--- |
+| **Landing** | ![Landing mobile](tool-results://screenshots/20260511-200157-331918.png) |
+| **Quiz** | ![Quiz mobile](tool-results://screenshots/20260511-200220-247783.png) |
+| **Resultado** | ![Resultado mobile](tool-results://screenshots/20260511-200146-837818.png) |
+| **Travessia Dia 1** | ![Travessia 1 mobile](tool-results://screenshots/20260511-200243-979340.png) |
+| **Day 4+ Gate** | ![Gate mobile](tool-results://screenshots/20260511-200304-941430.png) |
 
-- **Tamanho da migration de schema:** 37k linhas numa única transação. Se o editor SQL do Supabase recusar, dividirei em 3 partes (tipos+tabelas / funções+triggers / policies).
-- **Dependências circulares** mencionadas no manual: tratadas com `session_replication_role='replica'` durante INSERTs.
-- **Sem pgvector no dump** — confirmado, nada a habilitar.
-- **Storage físico:** reconstruo metadados e buckets; arquivos binários ficam pendentes para você subir.
-- **Auth users:** não migro. Cada usuário antigo precisará recriar conta (ou você usa a Admin API depois).
+Observations:
+- Landing: logo + hero stack vertically with proper rhythm; "Iniciar Travessia" CTA present.
+- Quiz: question is generous serif italic; options stack as full-width hairline rows.
+- Resultado: serif title scales, trait row wraps to 2 lines but legible (could tighten on 360px width — see a11y note).
+- Travessia 1: circular ink player ~190px (large tap target); navigation triplet "Retornar / progress / Seguir" fits header.
+- Gate: centered editorial copy, no portal/cadeado iconography (per plan).
 
-Confirma que sigo por aqui e começo pela Etapa 1 (validação read-only)?
+---
+
+### 4. Accessibility confirmation
+
+**Button contrast** (computed from tokens in `src/styles.css`):
+- Ink (`oklch(0.18 …)`) on Paper (`oklch(0.96 …)`) → ≈ **15:1**. Far above WCAG AA (4.5:1) and AAA (7:1).
+- Paper on Ink (inverse CTA / result page) → same ratio (~15:1). 
+- Ink-2 secondary text on Paper → ≈ **9:1**. AAA.
+- Ink-3 metadata on Paper → ≈ **4.6:1**. AA for normal text, **borderline** for 12px captions.
+- Leaf accent (`oklch(0.72 0.09 75)`) is reserved for accents/quotes, not primary text — fine.
+- Oxblood on Paper → ≈ **8:1**. AAA.
+
+**Typography readability**
+- Body sans-serif clamped 14–18px; serif lead clamped 1.25–1.5rem (20–24px). 
+- Line-height 1.6 on serif lead, default 1.5 on body. 
+- One concern: captions at 0.7rem (~11.2px) with uppercase + 0.18em tracking — visually fine on desktop, **slightly small on 360px mobile**. WCAG does not mandate a minimum size, but recommend bumping caption to 0.75rem on `< 400px` viewports.
+
+**Mobile tap targets**
+- Quiz option buttons: full-width × `py-10` (80px tall). ✅ exceeds 44×44 (WCAG) and 48×48 (Material).
+- Editorial CTA: `px-10 py-4` (~160×52). ✅
+- Quiet links: text-only, ~20px tall. **Below 44px**. They function as secondary "Retornar" links — acceptable per WCAG 2.5.5 exception for inline links, but the Travessia "Retornar / Seguir" pair is the primary navigation and should be enlarged.
+- Circular play button: 128–176px. ✅
+
+**Other a11y notes**
+- Logo `<img>` has `alt="Casa Orácula"`. ✅
+- Result page traits use `<React.Fragment>` with bullet dots — purely decorative, screen reader reads trait list cleanly. ✅
+- No focus-visible styles defined on Editorial buttons or quiz options — keyboard users get only default browser ring. **Recommend**: add `focus-visible:outline-1 focus-visible:outline-leaf` (not implemented this turn).
+- Quiz progresses `aria-current` / `aria-label` are absent on ProgressDot/RomanNumeral — recommend adding for SR users.
+
+---
+
+### 5. Performance confirmation
+
+**Audio loading**
+- `src/routes/travessia.$day.tsx` currently has **no `<audio>` element**. The circular ring is a UI placeholder (`isPlaying` toggles only an icon and a faked `progress=30`). No audio is fetched. ✅ Zero audio payload on Day 1–3.
+- When real audio is wired in Sprint 2, plan calls for `<audio preload="none">` and lazy mount on first play.
+
+**Image optimization**
+- `src/assets/casa-oracula-logo.png` is the only raster asset, imported as ES module → Vite hashes + serves with long cache. 
+- Logo file size: PNG produced by imagegen; recommend verifying it is < 250 KB and converting to WebP for the next pass (not done this turn).
+- No other `<img>` tags in the public flow.
+
+**Font payload**
+- `styles.css` imports Google Fonts: Cormorant Garamond italic+roman, weights 300–700 (10 cuts) + Inter `wght@100..900` (variable). 
+- Inter variable is fine (one file, ~30 KB woff2). **Cormorant with 10 italic+roman cuts is heavy** — likely 150–250 KB total. 
+- Recommendation (not implemented this turn): subset Cormorant to **400, 500, 600 + 400 italic** (4 cuts) and add `&display=swap`. Drops payload to ~60–80 KB.
+- No `<link rel="preconnect" href="https://fonts.gstatic.com">` — easy win.
+
+**Bundle**
+- No client-side route-level lazy boundaries needed yet (4 routes total). 
+- Supabase client is imported on `/quiz` (used to insert) and `/travessia` (used to read) — fine.
+
+---
+
+### Awaiting approval
+
+Items above are observations only. Pending your approval, the next implementation pass should address:
+1. Explicit tie-breaker (Q7 primary wins) + friendly fallback for unknown archetype.
+2. `focus-visible` ring + `aria-current` on quiz progress + `aria-label` on Roman numerals.
+3. Caption bump on `< 400px` and enlarged Travessia nav links to 44px.
+4. Subset Cormorant to 4 cuts + add `preconnect` for `fonts.gstatic.com`.
+5. Convert logo PNG → WebP and add `loading="eager"` only on hero, `decoding="async"`.
+6. Wire `<audio preload="none">` when Sprint 2 audio assets land.
+
+No code will be written until you reply with approval.
