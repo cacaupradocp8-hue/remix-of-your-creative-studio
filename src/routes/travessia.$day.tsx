@@ -111,7 +111,7 @@ function TravessiaPage() {
             disabled={dayNum === 8}
             className={`flex items-center gap-1 ${dayNum === 8 ? 'opacity-0' : 'hover:text-wine transition-colors'}`}
           >
-            {dayNum >= 3 && dayNum < 8 ? 'Bloqueado' : 'Próximo'} <ChevronRight size={14} />
+            {dayNum === 3 ? 'Bloqueado' : 'Próximo'} <ChevronRight size={14} />
           </Link>
         </div>
 
