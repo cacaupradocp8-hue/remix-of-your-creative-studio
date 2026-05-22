@@ -23,7 +23,7 @@ function LandingPage() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-paper selection:bg-oxblood/10 selection:text-oxblood overflow-hidden relative">
+    <main className="min-h-screen bg-paper selection:bg-oxblood/10 selection:text-oxblood overflow-x-hidden relative">
       {/* 1. Transition Overlay */}
       {isTransitioning && (
         <div className="fixed inset-0 z-50 bg-paper flex flex-col items-center justify-center gap-4 animate-in fade-in duration-500">
@@ -40,104 +40,96 @@ function LandingPage() {
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-oxblood/[0.04] blur-[100px]" />
       </div>
 
-      <style>{`
-        @keyframes mandala-breathe {
-          0%, 100% { transform: scale(1); opacity: 0.6; }
-          50% { transform: scale(1.05); opacity: 0.9; }
-        }
-        .mandala-animation {
-          animation: mandala-breathe 8s ease-in-out infinite;
-        }
-      `}</style>
-
-      {/* 3. Main Content (Sala de Visita) */}
-      <div className="min-h-screen flex flex-col items-center justify-center relative z-10 px-6 py-20 text-center space-y-16">
+      <div className="relative z-10 flex flex-col items-center max-w-5xl mx-auto px-6 py-20">
         
         {/* Logo/Identity */}
-        <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        <header className="animate-in fade-in slide-in-from-bottom-4 duration-1000 mb-20">
           <img
             src={casaOraculaLogo}
             alt="Casa Orácula"
             className="w-48 md:w-64 h-auto select-none mx-auto opacity-80"
             draggable={false}
           />
-        </div>
+        </header>
 
-        {/* Sensory/Symbolic Portal */}
-        <div className="relative flex items-center justify-center py-12">
-          {/* Subtle Glow */}
-          <div className="absolute w-64 h-64 bg-leaf/10 rounded-full blur-3xl mandala-animation" />
+        {/* Section: Sala de Visita */}
+        <section className="text-center space-y-12 mb-32 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+          <SectionOpener 
+            eyebrow="Sala de Visita"
+            title="A Casa Orácula ensina como sustentar processos humanos."
+            lead="Existe uma pergunta que precisa ser ouvida antes de entrar na Casa. Sua Voz é a bússola deste território."
+            className="items-center"
+          />
           
-          {/* Breathing Mandala Placeholder (using stylized circle for visual fidelity) */}
-          <div className="relative z-10 w-32 h-32 md:w-40 md:h-40 border border-leaf/20 rounded-full flex items-center justify-center p-4 mandala-animation">
-            <div className="w-full h-full border border-leaf/40 rounded-full rotate-45 flex items-center justify-center">
-               <div className="w-2 h-2 bg-leaf/60 rounded-full" />
-            </div>
-            {/* Outer rings */}
-            <div className="absolute inset-0 border border-leaf/10 rounded-full scale-110" />
-            <div className="absolute inset-0 border border-leaf/5 rounded-full scale-125" />
+          <div className="flex flex-col items-center gap-6">
+            <EditorialButton 
+              onClick={handleStartQuiz}
+              className={cn("px-16", isTransitioning && "opacity-50 pointer-events-none")}
+            >
+              Descobrir minha Voz
+            </EditorialButton>
+            <p className="caption text-ink-3/50 text-[10px]">Experiência Gratuita • Inicie agora</p>
           </div>
+        </section>
+
+        <Rule className="w-full opacity-10 mb-32" />
+
+        {/* Other Sections Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-32 w-full mb-32">
+          
+          <section className="space-y-6">
+            <SectionOpener 
+              eyebrow="Clube Oracular"
+              title="Sustentação e Prática"
+              lead="Onde o cotidiano se torna solo fértil para a percepção profunda e a integração da sabedoria oracular."
+            />
+            <EditorialButton variant="ghost" className="w-fit" to="/">Conhecer Clube</EditorialButton>
+          </section>
+
+          <section className="space-y-6">
+            <SectionOpener 
+              eyebrow="Formação Orácula"
+              title="Caminho de Maestria"
+              lead="Para quem deseja mergulhar na condução de processos e na filosofia que sustenta a Casa Orácula."
+            />
+            <EditorialButton variant="ghost" className="w-fit" to="/">Ver Formação</EditorialButton>
+          </section>
+
+          <section className="space-y-6">
+            <SectionOpener 
+              eyebrow="Jardim da Heroína"
+              title="Território de Cura"
+              lead="Um mergulho nos arquétipos e nas águas profundas do feminino essencial."
+            />
+            <EditorialButton variant="ghost" className="w-fit" to="/">Explorar Jardim</EditorialButton>
+          </section>
+
+          <section className="space-y-6">
+            <SectionOpener 
+              eyebrow="Atlas Orácula"
+              title="Mapeamento Simbólico"
+              lead="Navegação conceitual pelas ferramentas e pela visão de mundo que compõem este ecossistema."
+            />
+            <EditorialButton variant="ghost" className="w-fit" to="/">Abrir Atlas</EditorialButton>
+          </section>
+
         </div>
 
-        {/* Portal Text */}
-        <div className="max-w-xl space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
-          <div className="space-y-4">
-            <p className="caption text-ink-3">Antes de entrar na Casa…</p>
-            <p className="serif-lead text-ink-2">
-              existe uma pergunta que precisa ser ouvida.
-            </p>
-            <h1 className="display-lg italic text-ink pt-2">
-              Sua Voz.
-            </h1>
+        <Rule className="w-full opacity-10 mb-20" />
+
+        {/* Footer utilities */}
+        <footer className="w-full flex flex-col md:flex-row justify-between items-center gap-12 py-12 border-t border-ink/5 opacity-60">
+          <div className="flex gap-8">
+            <QuietLink to="/" className="text-[11px]">Casa das Máquinas</QuietLink>
+            <QuietLink to="/" className="text-[11px]">Sobre a Casa</QuietLink>
           </div>
           
-          <div className="w-12 h-px bg-rule mx-auto" />
-          
-          <div className="space-y-8 pt-4">
-             <p className="text-[11px] uppercase tracking-[0.25em] text-ink-3/60">
-                Respire um instante…
-             </p>
-             
-             <div className="flex flex-col items-center gap-6">
-                <EditorialButton 
-                  onClick={handleStartQuiz}
-                  className={cn("w-full sm:w-fit px-12", isTransitioning && "opacity-50 pointer-events-none")}
-                >
-                  Descobrir minha Voz
-                </EditorialButton>
-                
-                <p className="caption text-ink-3/40 text-[10px]">
-                  Leva menos de 3 minutos
-                </p>
-             </div>
+          <div className="text-[10px] uppercase tracking-widest text-ink-3">
+            Casa Orácula &copy; 2024
           </div>
-        </div>
+        </footer>
 
-        {/* Path Indicator */}
-        <div className="pt-24 animate-in fade-in duration-1000 delay-700">
-          <div className="flex items-center gap-4 text-[10px] uppercase tracking-widest text-ink-3/30 font-semibold">
-            <span>Quiz da Voz</span>
-            <span className="w-4 h-px bg-rule" />
-            <span>Travessia</span>
-            <span className="w-4 h-px bg-rule" />
-            <span>Casa Orácula</span>
-          </div>
-        </div>
-
-        {/* Final Whisper */}
-        <div className="max-w-xs mx-auto animate-in fade-in duration-1000 delay-1000 opacity-40">
-           <p className="text-[10px] italic text-ink-3 leading-relaxed">
-             A Casa Orácula ensina como sustentar processos humanos com consciência.
-           </p>
-        </div>
-
-        {/* Access link (Quiet) */}
-        <div className="fixed bottom-8 right-8 animate-in fade-in duration-1000 delay-1000">
-           <QuietLink to="/" className="text-[10px] pointer-events-none opacity-20">
-             Acesso Profissional
-           </QuietLink>
-        </div>
       </div>
-    </div>
+    </main>
   );
 }
