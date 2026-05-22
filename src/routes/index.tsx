@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useState, useCallback } from 'react';
+import { cn } from '@/lib/utils';
 import { SectionOpener } from '@/components/casa/SectionOpener';
 import { EditorialButton } from '@/components/casa/EditorialButton';
 import { Rule } from '@/components/casa/Rule';
@@ -100,8 +101,7 @@ function LandingPage() {
              <div className="flex flex-col items-center gap-6">
                 <EditorialButton 
                   onClick={handleStartQuiz}
-                  className="w-full sm:w-fit px-12"
-                  disabled={isTransitioning}
+                  className={cn("w-full sm:w-fit px-12", isTransitioning && "opacity-50 pointer-events-none")}
                 >
                   Descobrir minha Voz
                 </EditorialButton>
